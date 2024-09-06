@@ -66,8 +66,8 @@ app.listen(port, () => {
 
 ### No terminal, execute o comando:
 
-    ```sh
+```sh
     node index.js
-    ```
+```
 
 ### Abra o navegador e acesse http://localhost:3000. Você verá "Hello World" exibido na página.
