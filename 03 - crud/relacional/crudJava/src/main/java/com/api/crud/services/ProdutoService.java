@@ -1,4 +1,4 @@
-package com.api.crud.service;
+package com.api.crud.services;
 
 import java.util.List;
 import java.util.Optional;
@@ -6,8 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.api.crud.model.Produto;
-import com.api.crud.repository.ProdutoRepository;
+import com.api.crud.models.Produto;
+import com.api.crud.repositories.ProdutoRepository;
 
 @Service
 public class ProdutoService {

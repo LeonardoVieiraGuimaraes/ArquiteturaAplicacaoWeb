@@ -1,4 +1,4 @@
-package com.api.crud.model;
+package com.api.crud.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
