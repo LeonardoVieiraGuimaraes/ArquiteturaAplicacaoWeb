@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: api
+  data:
+    mongodb:
+      uri: mongodb+srv://leonardovieiraxy:sNVa3nHNlQhKRp0U@apicrud.qv7kj.mongodb.net/dbitem?retryWrites=true&w=majority&appName=APICRUD
+# pring.application.name=api
+# spring.data.mongodb.uri=mongodb+srv://leonardovieiraxy:sNVa3nHNlQhKRp0U@dbitem.qv7kj.mongodb.net/dbitem?retryWrites=true&w=majority
+# sNVa3nHNlQhKRp0U
+# leonardovieiraxy
+# 187.15.76.45)

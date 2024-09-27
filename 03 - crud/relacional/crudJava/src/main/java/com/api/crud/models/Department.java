@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 // Anotação Lombok que gera um construtor sem argumentos
 @NoArgsConstructor
 public class Department {
-    // Anotação que indica que este campo é a chave primária da entidade
+    // Anotação que indica que este campo é a chave pri++ária da entidade
     @Id
     // Anotação que indica que o valor deste campo será gerado automaticamente pelo banco de dados
     @GeneratedValue(strategy = GenerationType.IDENTITY)

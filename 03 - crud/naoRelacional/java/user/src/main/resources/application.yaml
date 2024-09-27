@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: user
+
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/db_user
+
+server:
+  port: 8080
