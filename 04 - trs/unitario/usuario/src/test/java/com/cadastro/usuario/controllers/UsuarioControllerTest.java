@@ -40,8 +40,12 @@ public class UsuarioControllerTest {
     // Teste para o método obterTodos do controlador
     @Test
     void testObterTodos() {
-        // Cria uma lista de usuários mockada
-        List<Usuario> usuarios = Arrays.asList(new Usuario(), new Usuario());
+        // Cria uma lista de usuários mockada usando o construtor com todos os parâmetros
+        List<Usuario> usuarios = Arrays.asList(
+            new Usuario(1L, "User1", "user1@example.com"),
+            new Usuario(2L, "User2", "user2@example.com")
+        );
+
         // Define o comportamento do serviço mockado
         when(usuarioService.findAll()).thenReturn(usuarios);
 
@@ -58,8 +62,8 @@ public class UsuarioControllerTest {
     @Test
     void testObterPorId() {
         Long usuarioId = 1L;
-        Usuario usuario = new Usuario();
-        usuario.setId(usuarioId);
+        Usuario usuario = new Usuario(usuarioId, "User1", "user1@example.com");
+
         // Define o comportamento do serviço mockado
         when(usuarioService.findById(usuarioId)).thenReturn(Optional.of(usuario));
 
@@ -75,9 +79,8 @@ public class UsuarioControllerTest {
     // Teste para o método inserir do controlador
     @Test
     void testInserir() {
-        Usuario usuario = new Usuario();
-        usuario.setNome("Novo Usuario");
-        usuario.setEmail("novo.usuario@example.com");
+        Usuario usuario = new Usuario(1L, "User1", "user1@example.com");
+
         // Define o comportamento do serviço mockado
         when(usuarioService.save(usuario)).thenReturn(usuario);
 
@@ -93,20 +96,27 @@ public class UsuarioControllerTest {
     // Teste para o método atualizar do controlador
     @Test
     void testAtualizar() {
+        // Define o ID do usuário que será atualizado
         Long usuarioId = 1L;
-        Usuario usuario = new Usuario();
-        usuario.setNome("Usuario Atualizado");
-        usuario.setEmail("usuario.atualizado@example.com");
-        Usuario updatedUsuario = new Usuario(usuarioId, usuario.getNome(), usuario.getEmail());
-        // Define o comportamento do serviço mockado
+
+        // Cria um objeto Usuario com os dados iniciais
+        Usuario usuario = new Usuario(usuarioId, "User1", "user1@example.com");
+
+        // Cria um objeto Usuario com os dados atualizados
+        Usuario updatedUsuario = new Usuario(usuarioId, "User2", "user2@example.com");
+
+        // Configura o comportamento simulado do serviço de usuário para o método update
+        // Quando o método update é chamado com os parâmetros usuarioId e usuario,
+        // ele deve retornar um Optional contendo updatedUsuario
         when(usuarioService.update(usuarioId, usuario)).thenReturn(Optional.of(updatedUsuario));
 
-        // Chama o método do controlador
+        // Chama o método atualizar do controlador e obtém a resposta
         ResponseEntity<Usuario> response = usuarioController.atualizar(usuarioId, usuario);
 
-        // Verifica se a resposta é a esperada
+        // Verifica se a resposta é igual à resposta esperada (ResponseEntity.ok(updatedUsuario))
         assertEquals(ResponseEntity.ok(updatedUsuario), response);
-        // Verifica se o método update do serviço foi chamado uma vez
+
+        // Verifica se o método update do serviço de usuário foi chamado exatamente uma vez com os parâmetros fornecidos
         verify(usuarioService, times(1)).update(usuarioId, usuario);
     }
 
@@ -114,10 +124,11 @@ public class UsuarioControllerTest {
     @Test
     void testExcluir() {
         Long usuarioId = 1L;
-        Usuario usuario = new Usuario();
-        usuario.setId(usuarioId);
+        Usuario usuario = new Usuario(usuarioId, "User1", "user1@example.com");
+
         // Define o comportamento do serviço mockado
         when(usuarioService.findById(usuarioId)).thenReturn(Optional.of(usuario));
+        // Define o comportamento do mock para o método deleteById do serviço de usuário.
         doNothing().when(usuarioService).deleteById(usuarioId);
 
         // Chama o método do controlador
@@ -135,6 +146,7 @@ public class UsuarioControllerTest {
         int a = 1;
         int b = 2;
         int resultadoEsperado = 10;
+
         // Define o comportamento do método somar do controlador
         when(usuarioController.somar(a, b)).thenReturn(3);
 
@@ -146,5 +158,4 @@ public class UsuarioControllerTest {
         // Verifica se o método somar do serviço foi chamado uma vez
         verify(usuarioService, times(1)).somar(a, b);
     }
-
 }

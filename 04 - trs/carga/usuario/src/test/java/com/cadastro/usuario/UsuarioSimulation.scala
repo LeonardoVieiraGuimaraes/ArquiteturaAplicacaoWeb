@@ -8,10 +8,19 @@ class UsuarioSimulation extends Simulation {
     .baseUrl("http://localhost:8080") // URL do seu servidor Spring Boot
     .acceptHeader("application/json")
 
-  val scn = scenario("Teste de Carga de Usuário")
+  val scn = scenario("Teste de Carga de Usuario")
     .exec(http("Requisição para listar usuários")
       .get("/usuarios")
       .check(status.is(200)))
+    .pause(5)
+    .exec(http("Requisição para criar usuário")
+      .post("/usuarios")
+      .body(StringBody("""{"nome": "Teste", "email": "teste@example.com"}""")).asJson
+      .check(status.is(200)))
+    .pause(5)
+    .exec(http("Requisição para deletar usuário")
+      .delete("/usuarios/1")
+      .check(status.is(204)))
 
   setUp(
     scn.inject(
