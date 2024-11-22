@@ -1,0 +1,22 @@
+meta {
+  name: Login
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:8080/login
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+      "username": "admin",
+      "password": "123"
+  }
+}
+
+vars:post-response {
+  acessToken: res.body.accessToken
+}

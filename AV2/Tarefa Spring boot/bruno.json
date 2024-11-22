@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "Tarefa Spring boot",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

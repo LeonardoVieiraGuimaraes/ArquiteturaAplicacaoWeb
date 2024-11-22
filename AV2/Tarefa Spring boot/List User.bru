@@ -1,0 +1,15 @@
+meta {
+  name: List User
+  type: http
+  seq: 4
+}
+
+get {
+  url: http://localhost:8080/users
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{acessToken}}
+}
