@@ -1,0 +1,75 @@
+name: Hostinger Workflow
+
+on:
+  push:
+    branches:
+      - main
+  # workflow_dispatch:
+jobs:
+  web-deploy:
+    name: 🎉 Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v3
+
+      - name: Prepare files chatbot
+        run: |
+          mkdir -p chatbot-estomia
+          cp -r chatbot chatbot-estomia
+          cp -r front chatbot-estomia
+
+      - name: deletando
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.sftp_host }}
+          username: ${{ secrets.sftp_user }}
+          # password: ${{ secrets.sftp_password }}
+          key: ${{ secrets.sftp_private_key }}
+          port: ${{ secrets.sftp_port }}
+          script: |
+            rm -rf chatbot-estomia/
+
+      - name: Copy files
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.sftp_host }}
+          username: ${{ secrets.sftp_user }}
+          key: ${{ secrets.sftp_private_key }}
+          port: ${{ secrets.sftp_port }}
+          source: "./chatbot-estomia"
+          target: "/root"
+          overwrite: true
+
+      # - name: 📂 Sync files
+      #   uses: pressidium/lftp-mirror-action@v1
+      #   with:
+      #     host: ${{ secrets.sftp_host }}
+      #     user: ${{ secrets.sftp_user }}
+      #     pass: ${{ secrets.sftp_password }}
+      #     port: ${{ secrets.sftp_port }}
+      #     localDir: "./leo-portifolio"
+      #     remoteDir: "leo-portifolio"
+
+      # ignoreFile: '.lftp_ignore'
+      # reverse: true
+
+      - name: executing remote ssh
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.sftp_host }}
+          username: ${{ secrets.sftp_user }}
+          # password: ${{ secrets.sftp_password }}
+          key: ${{ secrets.sftp_private_key }}
+          port: ${{ secrets.sftp_port }}
+          script: |
+            cd chatbot-estomia/chatbot/
+            docker compose up -d --build
+            docker compose restart
+            cd ../front/
+            docker compose up -d --build
+            docker compose restart
+
+          # script: |
+          #   cd leo-portifolio
+          #   docker compose up -d
