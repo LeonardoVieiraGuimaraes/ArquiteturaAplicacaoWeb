@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Tasks</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5">Tasks</h1>
+        <form th:action="@{/tasks}" method="post">
+            <div class="form-group">
+                <label for="descricao">Description:</label>
+                <input type="text" class="form-control" id="descricao" name="descricao" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Create Task</button>
+        </form>
+        <hr>
+        <h2>Task List</h2>
+        <ul class="list-group">
+            <!-- Example of task item -->
+            <li class="list-group-item">
+                Task description
+                <button class="btn btn-danger btn-sm float-right">Delete</button>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
