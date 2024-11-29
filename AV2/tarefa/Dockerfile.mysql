@@ -1,0 +1,11 @@
+# Use a imagem base do MySQL
+FROM mysql:8.0
+
+# Defina variáveis de ambiente para o MySQL
+ENV MYSQL_USER=admin
+ENV MYSQL_PASSWORD=123
+ENV MYSQL_DATABASE=mydb
+ENV MYSQL_ROOT_PASSWORD=123
+
+# Exponha a porta que o MySQL irá usar
+EXPOSE 3306

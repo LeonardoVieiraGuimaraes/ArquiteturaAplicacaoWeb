@@ -2,7 +2,6 @@ version: '3.8'
 
 services:
   app:
-    image: my-spring-boot-app
     build:
       context: .
       dockerfile: Dockerfile
@@ -10,7 +9,23 @@ services:
       - "8080:8080"
     environment:
       - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/mydb
+      - SPRING_DATASOURCE_USERNAME=admin
+      - SPRING_DATASOURCE_PASSWORD=123
+    networks:
+      - nginx-network
 
+  mysql:
+    build:
+      context: .
+      dockerfile: Dockerfile.mysql
+    ports:
+      - "3308:3306"
+    environment:
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=123
+      - MYSQL_DATABASE=mydb
+      - MYSQL_ROOT_PASSWORD=123
     networks:
       - nginx-network
 

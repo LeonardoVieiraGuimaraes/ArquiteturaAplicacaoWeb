@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Users</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5">Users</h1>
+        <form th:action="@{/api/users}" method="post">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" class="form-control" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Create User</button>
+        </form>
+        <hr>
+        <h2>User List</h2>
+        <ul class="list-group">
+            <li class="list-group-item" th:each="user : ${users}">
+                <span th:text="${user.username}">Username</span>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
