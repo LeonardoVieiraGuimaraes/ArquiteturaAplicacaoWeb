@@ -1,4 +1,4 @@
-package com.example.tarefa.model;
+package com.cadastro.tarefas.model;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -17,7 +17,9 @@ import java.util.UUID;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.example.tarefa.dto.LoginRequest;
+import com.cadastro.tarefas.dto.LoginRequest;
+
+
 
 @Entity
 @Data
@@ -26,7 +28,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "user_id")
-    private UUID Id;
+    private UUID id;
     private String username;
     private String password;
 

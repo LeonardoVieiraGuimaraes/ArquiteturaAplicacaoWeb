@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: tarefa
+
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3308/mydb
+    username: admin
+    password: 123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    defer-datasource-initialization: true
+
+  sql:
+    init:
+      mode: always
+
+jwt:
+  public-key:
+    key: classpath:app.pub
+  private-key:
+    key: classpath:app.key

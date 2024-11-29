@@ -1,23 +1,29 @@
-package com.example.tarefa.controller;
+package com.cadastro.tarefas.controller;
 
-import com.example.tarefa.dto.CreateTaskDto;
-import com.example.tarefa.model.Role;
-import com.example.tarefa.model.Task;
-import com.example.tarefa.repository.TaskRepository;
-import com.example.tarefa.repository.UserRepository;
+
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.cadastro.tarefas.dto.CreateTaskDto;
+import com.cadastro.tarefas.dto.TaskDto;
+import com.cadastro.tarefas.dto.TaskItemDto;
+import com.cadastro.tarefas.model.Role;
+import com.cadastro.tarefas.model.Task;
+import com.cadastro.tarefas.repository.TaskRepository;
+import com.cadastro.tarefas.repository.UserRepository;
+
+
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/tasks")
 public class TaskController {
 
-   private final TaskRepository taskRepository;
+    private final TaskRepository taskRepository;
     private final UserRepository userRepository;
 
     public TaskController(TaskRepository taskRepository,
@@ -26,54 +32,49 @@ public class TaskController {
         this.userRepository = userRepository;
     }
 
+    @GetMapping("/task")
+    public ResponseEntity<TaskDto> feed(@RequestParam(value = "page", defaultValue = "0") int page,
+                                        @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
 
-    // @GetMapping("/list")
-    // public ResponseEntity<ListTask> feed(@RequestParam(value = "page", defaultValue = "0") int page,
-    //                                     @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+        var tasks = taskRepository.findAll(
+                PageRequest.of(page, pageSize, Sort.Direction.DESC, "creationTimestamp"))
+                .map(task ->
+                        new TaskItemDto(
+                            task.getId(),
+                            task.getUser().getUsername(),
+                            task.getDescricao(),
+                            task.getConcluida())
+                );
+        return ResponseEntity.ok(new TaskDto(
+            tasks.getContent(), page, pageSize, tasks.getTotalPages(), tasks.getTotalElements()));
+    }
 
-    //     var task = taskRepository.findAll(
-    //             PageRequest.of(page, pageSize, Sort.Direction.DESC, "creationTimestamp"))
-    //             .map(tweet ->
-    //                     new ListItem(
-    //                         task.getTweetId(),
-    //                         task.getContent(),
-    //                         task.getUser().getUsername())
-    //             );
-
-    //     return ResponseEntity.ok(new ListTask(
-    //         task.getDescricao(), page, pageSize, task.getTotalPages(), task.getTotalElements()));
-    // }
-
-
-    @PostMapping
+    @PostMapping("/task")
     public ResponseEntity<Void> createTweet(@RequestBody CreateTaskDto dto,
                                             JwtAuthenticationToken token) {
         var user = userRepository.findById(UUID.fromString(token.getName()));
 
         var task = new Task();
         task.setUser(user.get());
-        
         task.setDescricao(dto.descricao());
-        // task.setConcluida(dto.concluida());
 
         taskRepository.save(task);
 
         return ResponseEntity.ok().build();
-        
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/task/{id}")
     public ResponseEntity<Void> deleteTweet(@PathVariable("id") Long taskId,
                                             JwtAuthenticationToken token) {
         var user = userRepository.findById(UUID.fromString(token.getName()));
-        var task = taskRepository.findById(taskId)
+        var tweet = taskRepository.findById(taskId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         var isAdmin = user.get().getRoles()
                 .stream()
                 .anyMatch(role -> role.getName().equalsIgnoreCase(Role.Values.ADMIN.name()));
 
-        if (isAdmin || task.getUser().getId().equals(UUID.fromString(token.getName()))) {
+        if (isAdmin || tweet.getUser().getId().equals(UUID.fromString(token.getName()))) {
             taskRepository.deleteById(taskId);
 
         } else {
@@ -83,5 +84,4 @@ public class TaskController {
 
         return ResponseEntity.ok().build();
     }
-
 }

@@ -1,12 +1,19 @@
+version: '3.8'
+
 services:
-  mysql:
-    image: mysql
+  app:
+    image: my-spring-boot-app
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - "3308:3306"
-    expose:
-      - "3308"
+      - "8080:8080"
     environment:
-      - MYSQL_USER=admin
-      - MYSQL_PASSWORD=123
-      - MYSQL_DATABASE=mydb
-      - MYSQL_ROOT_PASSWORD=123
+      - SPRING_PROFILES_ACTIVE=prod
+
+    networks:
+      - nginx-network
+
+networks:
+  nginx-network:
+    external: true

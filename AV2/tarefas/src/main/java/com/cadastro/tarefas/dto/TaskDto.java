@@ -1,8 +1,8 @@
-package com.example.tarefa.service;
+package com.cadastro.tarefas.dto;
 
 import java.util.List;
 
-public record ListTask(List<ListItem> Itens,
+public record TaskDto(List<TaskItemDto> feedItens,
                       int page,
                       int pageSize,
                       int totalPages,

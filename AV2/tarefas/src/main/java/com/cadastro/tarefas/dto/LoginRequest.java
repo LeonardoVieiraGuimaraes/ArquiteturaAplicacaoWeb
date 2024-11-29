@@ -1,5 +1,4 @@
-package com.example.tarefa.service;
-;
+package com.cadastro.tarefas.dto;
 
 public record LoginRequest(String username, String password) {
 }
