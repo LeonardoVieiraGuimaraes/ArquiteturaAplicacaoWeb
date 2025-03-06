@@ -71,5 +71,54 @@ public class CollectionExamples {
         deque.addLast("End"); // Adiciona "End" ao final do Deque
         System.out.println(deque.removeFirst()); // Remove e imprime o primeiro elemento do Deque
         System.out.println(deque.removeLast()); // Remove e imprime o último elemento do Deque
+
+        // Exemplo de Lambda
+        List<String> names = Arrays.asList("John", "Jane", "Jack", "Doe");
+        // Antes do Lambda
+        for (String name : names) {
+            System.out.println(name); // Imprime cada nome usando loop tradicional
+        }
+        // Usando Lambda
+        names.forEach(name -> System.out.println(name)); // Imprime cada nome usando lambda
+
+        // Exemplo de Optional
+        Optional<String> optionalName = names.stream().filter(name -> name.startsWith("J")).findFirst();
+        optionalName.ifPresent(name -> System.out.println("Primeiro nome que começa com J: " + name)); // Imprime o primeiro nome que começa com "J"
+
+        // Exemplo de Stream
+        List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
+        // Antes do Stream
+        int sum = 0;
+        for (int number : numbers) {
+            sum += number; // Soma todos os números da lista usando loop tradicional
+        }
+        System.out.println("Soma dos números: " + sum);
+        // Usando Stream
+        int streamSum = numbers.stream().mapToInt(Integer::intValue).sum(); // Soma todos os números da lista usando stream
+        System.out.println("Soma dos números com Stream: " + streamSum);
+
+        // Exemplo de Stream - Filtrando e coletando resultados
+        List<String> filteredNames = names.stream()
+                                          .filter(name -> name.startsWith("J"))
+                                          .collect(Collectors.toList()); // Filtra nomes que começam com "J" e coleta em uma lista
+        System.out.println("Nomes que começam com J: " + filteredNames);
+
+        // Exemplo de Stream - Convertendo elementos
+        List<String> upperCaseNames = names.stream()
+                                           .map(String::toUpperCase)
+                                           .collect(Collectors.toList()); // Converte todos os nomes para maiúsculas
+        System.out.println("Nomes em maiúsculas: " + upperCaseNames);
+
+        // Exemplo de Stream - Encontrando o máximo
+        Optional<Integer> maxNumber = numbers.stream().max(Integer::compareTo); // Encontra o maior número na lista
+        maxNumber.ifPresent(max -> System.out.println("Maior número: " + max));
+
+        // Exemplo de Stream - Encontrando o mínimo
+        Optional<Integer> minNumber = numbers.stream().min(Integer::compareTo); // Encontra o menor número na lista
+        minNumber.ifPresent(min -> System.out.println("Menor número: " + min));
+
+        // Exemplo de Stream - Contando elementos
+        long count = names.stream().filter(name -> name.length() > 3).count(); // Conta quantos nomes têm mais de 3 caracteres
+        System.out.println("Nomes com mais de 3 caracteres: " + count);
     }
 }
