@@ -25,7 +25,9 @@ public class ProductService {
     public Optional<Product> getProductById(Long id) {
         // Filtra a lista de produtos para encontrar o produto com o ID especificado
         return products.stream()
+                // Verifica se o ID do produto é igual ao ID fornecido
                 .filter(p -> p.getId().equals(id))
+                // Retorna o primeiro produto encontrado, se existir
                 .findFirst();
     }
 
@@ -33,7 +35,9 @@ public class ProductService {
     public Optional<Product> getProductByName(String name) {
         // Filtra a lista de produtos para encontrar o produto com o nome especificado
         return products.stream()
+                // Verifica se o nome do produto é igual ao nome fornecido
                 .filter(p -> p.getName().equals(name))
+                // Retorna o primeiro produto encontrado, se existir
                 .findFirst();
     }
 
