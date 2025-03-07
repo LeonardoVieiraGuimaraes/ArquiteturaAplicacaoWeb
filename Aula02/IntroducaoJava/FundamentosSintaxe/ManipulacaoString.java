@@ -22,5 +22,12 @@ public class ManipulacaoString {
         int idade = 25;
         String formato = String.format("Meu nome é %s e eu tenho %d anos.", nome, idade);
         System.out.println(formato);
+
+        String str1 = "java";
+        String str2 = "Java";
+
+        System.out.println("str1 == str2: " + str1.compareTo(str2));
+        System.out.println("str1 == str2: " + str1.equals(str2));
+        
     }
 }

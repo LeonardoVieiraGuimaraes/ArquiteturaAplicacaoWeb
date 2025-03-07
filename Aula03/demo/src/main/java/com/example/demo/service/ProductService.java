@@ -31,13 +31,11 @@ public class ProductService {
     }
 
     // GET: Busca um produto por nome
-    public Product getProductByName(String name) {
-        for (Product product : products) {
-            if (product.getName().equals(name)) {
-                return product;
-            }
-        }
-        return null;
+    public Optional<Product> getProductByName(String name) {
+        // Filtra a lista de produtos para encontrar o produto com o nome especificado
+        return products.stream()
+                .filter(p -> p.getName().equals(name))
+                .findFirst();
     }
 
     // POST: Adiciona um novo produto
