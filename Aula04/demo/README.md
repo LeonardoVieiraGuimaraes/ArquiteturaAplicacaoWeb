@@ -1,101 +1,111 @@
+# Aplicação de Gerenciamento de Produtos
 
+Esta aplicação é um exemplo de um sistema de gerenciamento de produtos utilizando Spring Boot. A aplicação permite listar, buscar, adicionar, atualizar e deletar produtos.
 
+## Estrutura do Projeto
 
+- **Controller**: Lida com as requisições HTTP e define as rotas.
+- **Service**: Contém a lógica de negócios.
+- **Model**: Define a estrutura dos dados (neste caso, o modelo `Product`).
 
-# API de Produtos
+## Bibliotecas e Códigos Utilizados
 
-## Descrição do Problema
+### Spring Boot
 
-O objetivo deste projeto é criar uma API RESTful para gerenciar produtos. A API deve permitir a criação, atualização, listagem, busca por ID e remoção de produtos. Cada produto possui um identificador único, um nome e uma descrição.
+- **@RestController**: Marca a classe como um controlador que lida com requisições HTTP.
+- **@RequestMapping**: Define a rota base para os métodos do controlador.
+- **@Autowired**: Injeta automaticamente uma instância de uma classe (neste caso, `ProductService`).
+- **@GetMapping, @PostMapping, @PutMapping, @DeleteMapping**: Mapeiam métodos HTTP (GET, POST, PUT, DELETE) para métodos específicos no controlador.
+- **@ResponseStatus**: Define o status HTTP padrão para a resposta de um método (neste caso, `HttpStatus.CREATED` para o método `addProduct`).
 
-## Passos para Construção do Projeto
+### Java Util
 
-1. **Configuração do Ambiente de Desenvolvimento**:
-   - Instale o JDK (Java Development Kit).
-   - Instale o Maven para gerenciamento de dependências.
-   - Configure uma IDE de sua escolha (Eclipse, IntelliJ, etc.).
+- **Optional**: Uma classe que pode ou não conter um valor. Evita `NullPointerException`. O NullPointerException é um erro em Java que ocorre quando o código tenta usar uma referência que não aponta para nenhum objeto (ou seja, a referência é null).
+  - **map**: Aplica uma função ao valor contido, se presente, e retorna um novo `Optional` com o resultado.
+  - **orElse**: Retorna o valor contido, se presente, ou um valor padrão se não estiver presente.
+- **Stream API**: Processa coleções de forma funcional.
+  - **filter**: Filtra elementos de um stream com base em uma condição.
+  - **findFirst**: Retorna o primeiro elemento de um stream, se presente.
+- **removeIf**: Remove todos os elementos de uma coleção que atendem a uma condição especificada.
 
-2. **Criação do Projeto Spring Boot**:
-   - Use o Spring Initializr para gerar a estrutura básica do projeto Spring Boot.
-   - Inclua dependências como Spring Web e Spring Data JPA.
+### Exemplo de Uso
 
-3. **Definição do Modelo**:
-   - Crie a classe `Product` no pacote `com.example.demo.model` com os atributos `id`, `name` e `description`.
+#### Controller
 
-4. **Criação do Repositório**:
-   - Crie a interface `ProductRepository` no pacote `com.example.demo.repository` estendendo `JpaRepository`.
+```java
+@GetMapping("/{id}")
+public ResponseEntity<Product> getProductById(@PathVariable Long id) {
+    Optional<Product> product = productService.getProductById(id);
+    return product.map(ResponseEntity::ok)
+            .orElse(ResponseEntity.notFound().build());
+}
+```
 
-5. **Implementação do Serviço**:
-   - Crie a classe `ProductService` no pacote `com.example.demo.service` para encapsular a lógica de negócios.
+- **@GetMapping("/{id}")**: Mapeia requisições GET para o método `getProductById`.
+- **@PathVariable**: Extrai o valor da variável de caminho `{id}`.
+- **Optional.map**: Aplica `ResponseEntity::ok` ao produto, se presente.
+- **Optional.orElse**: Retorna `ResponseEntity.notFound().build()` se o produto não estiver presente.
 
-6. **Criação do Controlador**:
-   - Crie a classe `ProductController` no pacote `com.example.demo.controller` para expor os endpoints da API.
+#### Service
 
-7. **Testes**:
-   - Implemente testes unitários e de integração para garantir o funcionamento correto da API.
+```java
+public boolean deleteProduct(Long id) {
+    return products.removeIf(p -> p.getId().equals(id));
+}
+```
 
-8. **Documentação**:
-   - Atualize o arquivo README.md com instruções de uso e exemplos de chamadas de API.
+- **removeIf**: Remove o produto da lista se o ID corresponder.
 
-9. **Execução do Projeto**:
-   - Execute a aplicação Spring Boot e teste os endpoints usando ferramentas como Postman ou curl.
+### Model
 
-Seguindo esses passos, você será capaz de construir uma API RESTful completa para gerenciar produtos.
+```java
+public class Product {
+    private Long id;
+    private String name;
+
+    // Getters e setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+}
+```
+
+- **Product**: Classe que representa o modelo de dados do produto.
+- **Long id**: Identificador único do produto.
+- **String name**: Nome do produto.
+- **Getters e setters**: Métodos para acessar e modificar os atributos do produto.
+
+## Executando a Aplicação
+
+1. Clone o repositório.
+2. Navegue até o diretório do projeto.
+3. Execute `mvn spring-boot:run` para iniciar a aplicação.
+
+A aplicação estará disponível em `http://localhost:8080/api/products`.
 
 ## Endpoints
 
-### 1. POST (Criar Produto)
+- **GET /api/products**: Lista todos os produtos.
+- **GET /api/products/{id}**: Busca um produto por ID.
+- **POST /api/products**: Adiciona um novo produto.
+- **PUT /api/products/{id}**: Atualiza um produto existente.
+- **DELETE /api/products/{id}**: Remove um produto por ID.
 
-Usando curl:
-```powershell
-curl -X POST -H "Content-Type: application/json" -d '{"name": "Notebook"}' http://localhost:8080/api/products
-```
+## Tecnologias Utilizadas
 
-Usando Invoke-RestMethod (PowerShell):
-```powershell
-Invoke-RestMethod -Uri http://localhost:8080/api/products -Method Post -ContentType "application/json" -Body '{"name": "Notebook"}'
-```
-
-### 2. PUT (Atualizar Produto)
-
-Usando curl:
-```powershell
-curl -X PUT -H "Content-Type: application/json" -d '{"name": "Notebook Gamer"}' http://localhost:8080/api/products/1
-```
-
-Usando Invoke-RestMethod (PowerShell):
-```powershell
-Invoke-RestMethod -Uri http://localhost:8080/api/products/1 -Method Put -ContentType "application/json" -Body '{"name": "Notebook Gamer"}'
-```
-
-### 3. GET (Listar Produtos)
-
-Usando curl:
-```powershell
-curl http://localhost:8080/api/products
-```
-
-Usando Invoke-RestMethod (PowerShell):
-```powershell
-Invoke-RestMethod -Uri http://localhost:8080/api/products -Method Get
-```
-
-### 4. GET (Buscar Produto por ID)
-
-Usando curl:
-```powershell
-curl http://localhost:8080/api/products/1
-```
-
-Usando Invoke-RestMethod (PowerShell):
-```powershell
-Invoke-RestMethod -Uri http://localhost:8080/api/products/1 -Method Get
-```
-
-### 5. DELETE (Remover Produto)
-
-Usando curl:
-```powershell
-curl -X DELETE http://localhost:8080/api/products/1
-```
+- **Spring Boot**: Framework para criação de aplicações Java baseadas em Spring.
+- **Maven**: Ferramenta de automação de compilação e gerenciamento de dependências.
+- **Java 8+**: Linguagem de programação utilizada para desenvolver a aplicação.
 
