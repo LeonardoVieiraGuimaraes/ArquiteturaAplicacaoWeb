@@ -13,6 +13,7 @@ public class Product {
     // Construtor vazio (obrigatório para desserialização)
     public Product() {
     }
+    
 
     // Construtor com campos para inicializar os atributos id e name
     public Product(Long id, String name) {
