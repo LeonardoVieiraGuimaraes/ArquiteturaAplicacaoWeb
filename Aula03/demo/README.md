@@ -1,101 +1,105 @@
+# Spring Boot Application
 
+Este projeto demonstra como criar uma aplicação Spring Boot com um exemplo de HelloWorld e um exemplo de Product usando Model e Controller.
 
+## Requisitos
 
+- JDK 11 ou superior
+- Maven
 
-# API de Produtos
+## Passos para criar a aplicação
 
-## Descrição do Problema
+### 1. Criar a estrutura do projeto
 
-O objetivo deste projeto é criar uma API RESTful para gerenciar produtos. A API deve permitir a criação, atualização, listagem, busca por ID e remoção de produtos. Cada produto possui um identificador único, um nome e uma descrição.
+Use o Spring Initializr para gerar a estrutura básica do projeto Spring Boot.
 
-## Passos para Construção do Projeto
+### 2. Exemplo HelloWorld
 
-1. **Configuração do Ambiente de Desenvolvimento**:
-   - Instale o JDK (Java Development Kit).
-   - Instale o Maven para gerenciamento de dependências.
-   - Configure uma IDE de sua escolha (Eclipse, IntelliJ, etc.).
+#### Criar o Controller
 
-2. **Criação do Projeto Spring Boot**:
-   - Use o Spring Initializr para gerar a estrutura básica do projeto Spring Boot.
-   - Inclua dependências como Spring Web e Spring Data JPA.
+Crie um arquivo `HelloWorldController.java` no pacote `com.example.demo.controller` com o seguinte conteúdo:
 
-3. **Definição do Modelo**:
-   - Crie a classe `Product` no pacote `com.example.demo.model` com os atributos `id`, `name` e `description`.
-
-4. **Criação do Repositório**:
-   - Crie a interface `ProductRepository` no pacote `com.example.demo.repository` estendendo `JpaRepository`.
-
-5. **Implementação do Serviço**:
-   - Crie a classe `ProductService` no pacote `com.example.demo.service` para encapsular a lógica de negócios.
-
-6. **Criação do Controlador**:
-   - Crie a classe `ProductController` no pacote `com.example.demo.controller` para expor os endpoints da API.
-
-7. **Testes**:
-   - Implemente testes unitários e de integração para garantir o funcionamento correto da API.
-
-8. **Documentação**:
-   - Atualize o arquivo README.md com instruções de uso e exemplos de chamadas de API.
-
-9. **Execução do Projeto**:
-   - Execute a aplicação Spring Boot e teste os endpoints usando ferramentas como Postman ou curl.
-
-Seguindo esses passos, você será capaz de construir uma API RESTful completa para gerenciar produtos.
-
-## Endpoints
-
-### 1. POST (Criar Produto)
-
-Usando curl:
-```powershell
-curl -X POST -H "Content-Type: application/json" -d '{"name": "Notebook"}' http://localhost:8080/api/products
+```java
+// filepath: d:\GitHub\NewtonPaiva\ArquiteturaAplicacaoWeb\Aula03\demo\src\main\java\com\example\demo\controller\HelloWorldController.java
+// ...existing code...
 ```
 
-Usando Invoke-RestMethod (PowerShell):
-```powershell
-Invoke-RestMethod -Uri http://localhost:8080/api/products -Method Post -ContentType "application/json" -Body '{"name": "Notebook"}'
+### 3. Exemplo Product
+
+#### Criar o Model
+
+Crie um arquivo `Product.java` no pacote `com.example.demo.model` com o seguinte conteúdo:
+
+```java
+// filepath: d:\GitHub\NewtonPaiva\ArquiteturaAplicacaoWeb\Aula03\demo\src\main\java\com\example\demo\model\Product.java
+// ...existing code...
 ```
 
-### 2. PUT (Atualizar Produto)
+#### Criar o Controller
 
-Usando curl:
-```powershell
-curl -X PUT -H "Content-Type: application/json" -d '{"name": "Notebook Gamer"}' http://localhost:8080/api/products/1
+Crie um arquivo `ProductController.java` no pacote `com.example.demo.controller` com o seguinte conteúdo:
+
+```java
+// filepath: d:\GitHub\NewtonPaiva\ArquiteturaAplicacaoWeb\Aula03\demo\src\main\java\com\example\demo\controller\ProductController.java
+// ...existing code...
 ```
 
-Usando Invoke-RestMethod (PowerShell):
-```powershell
-Invoke-RestMethod -Uri http://localhost:8080/api/products/1 -Method Put -ContentType "application/json" -Body '{"name": "Notebook Gamer"}'
+### 4. Testar a aplicação
+
+#### Testar HelloWorld
+
+Para testar o endpoint HelloWorld, execute o seguinte comando `curl`:
+
+```
+curl http://localhost:8080/hello
 ```
 
-### 3. GET (Listar Produtos)
+Você deve ver a resposta:
 
-Usando curl:
-```powershell
-curl http://localhost:8080/api/products
+```
+Hello, World!
 ```
 
-Usando Invoke-RestMethod (PowerShell):
-```powershell
-Invoke-RestMethod -Uri http://localhost:8080/api/products -Method Get
+#### Testar Product
+
+Para testar os endpoints Product, execute os seguintes comandos `curl`:
+
+- **POST** (Criar um produto):
+
+```
+curl -X POST http://localhost:8080/products -H "Content-Type: application/json" -d '{"name": "Product1"}'
 ```
 
-### 4. GET (Buscar Produto por ID)
+- **GET** (Listar todos os produtos):
 
-Usando curl:
-```powershell
-curl http://localhost:8080/api/products/1
+```
+curl http://localhost:8080/products
 ```
 
-Usando Invoke-RestMethod (PowerShell):
-```powershell
-Invoke-RestMethod -Uri http://localhost:8080/api/products/1 -Method Get
+- **GET por ID** (Obter um produto pelo ID):
+
+```
+curl http://localhost:8080/products/1
 ```
 
-### 5. DELETE (Remover Produto)
+- **PUT** (Atualizar um produto):
 
-Usando curl:
-```powershell
-curl -X DELETE http://localhost:8080/api/products/1
+```
+curl -X PUT http://localhost:8080/products/1 -H "Content-Type: application/json" -d '{"name": "UpdatedProduct"}'
 ```
 
+- **DELETE** (Deletar um produto):
+
+```
+curl -X DELETE http://localhost:8080/products/1
+```
+
+## Executar a aplicação
+
+Para executar a aplicação, use o seguinte comando Maven:
+
+```
+mvn spring-boot:run
+```
+
+Isso iniciará a aplicação Spring Boot no endereço `http://localhost:8080`.
