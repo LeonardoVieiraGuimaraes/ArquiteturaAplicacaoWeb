@@ -1,4 +1,4 @@
-package IntroducaoJava.HelloWold;
+package IntroducaoJava.HelloWorld;
 
 public class HelloWorld {
 
