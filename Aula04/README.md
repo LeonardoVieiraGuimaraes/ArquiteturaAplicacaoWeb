@@ -162,3 +162,31 @@ async function deleteDocument(filter) {
 4. Clique com o botão direito no arquivo e selecione "Run MongoDB Script" para executar o script diretamente no MongoDB.
 
 O arquivo `mongoScript.js` contém um exemplo de como se conectar ao MongoDB e realizar operações CRUD diretamente.
+
+
+show collections
+
+
+db.nomeDaColecao.drop()
+
+use nomeDoBanco
+db.dropDatabase()
+
+
+Criação de Banco de Dados e Coleções:
+
+use(database): Seleciona ou cria o banco de dados "Aula".
+db.createCollection(collection): Cria a coleção "Produtos".
+Inserção de Documentos:
+
+insertMany: Insere múltiplos documentos na coleção "Produtos".
+Listagem de Documentos:
+
+find(): Retorna todos os documentos da coleção.
+toArray(): Converte o cursor em um array para exibição.
+printjson(): Exibe os documentos no console em formato JSON.
+Filtragem de Documentos:
+
+find({ status: "D" }): Retorna os documentos que têm o campo status igual a "D".
+find({ status: { $in: ["A", "D"] } }): Retorna os documentos que têm o campo status igual a "A" ou "D".
+find({ status: "A", qty: { $lt: 30 } }): Retorna os documentos que têm o campo status igual a "A" e quantidade (qty) menor que 30.
