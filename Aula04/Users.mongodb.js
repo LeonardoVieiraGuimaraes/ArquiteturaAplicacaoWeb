@@ -11,14 +11,14 @@ use(database);
 // // Create a new collection.
 // db.createCollection(collection);
 
-// // Insert a single document with user data.
-// db[collection].insertOne({
-//   nome: "Daniel Silva e Silva",
-//   idade: 20,
-//   pais: "Brasil",
-//   estado: "SP",
-//   cidade: "São Paulo",
-// });
+// Insert a single document with user data.
+db[collection].insertOne({
+  nome: "Daniel Silva e Silva",
+  idade: 20,
+  pais: "Brasil",
+  estado: "SP",
+  cidade: "São Paulo",
+});
 
 // // Insert multiple documents into the collection.
 // db[collection].insertMany([
@@ -43,7 +43,7 @@ use(database);
 // ]);
 
 // List all documents in the collection.
-const inventario = db[collection].find();
+const inventario = db[collection].find().toArray();
 print("Itens cadastrados no inventário:");
 printjson(inventario);
 

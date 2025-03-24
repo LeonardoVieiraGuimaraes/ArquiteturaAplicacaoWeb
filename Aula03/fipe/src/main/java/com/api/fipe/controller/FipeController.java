@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.api.fipe.service.FipeService;
 
-
-
 @RestController
 public class FipeController {
 
