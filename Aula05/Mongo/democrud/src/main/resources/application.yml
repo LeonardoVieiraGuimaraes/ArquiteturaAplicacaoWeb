@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: democrud
+  profiles:
+    active: h2 # Define o perfil ativo como "h2".
+  sql:
+    init:
+      mode: always # Garante que o banco seja inicializado automaticamente.
