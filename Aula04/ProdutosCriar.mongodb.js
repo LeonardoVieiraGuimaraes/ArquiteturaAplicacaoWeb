@@ -9,7 +9,7 @@ const collection = "Produtos";
 use(database);
 
 // Create a new collection.
-db.createCollection(collection);
+// db.createCollection(collection);
 
 // Insert multiple documents into the collection.
 db[collection].insertMany([

@@ -9,7 +9,7 @@ const collection = "Users";
 use(database);
 
 // // Create a new collection.
-// db.createCollection(collection);
+db.createCollection(collection);
 
 // Insert a single document with user data.
 db[collection].insertOne({
