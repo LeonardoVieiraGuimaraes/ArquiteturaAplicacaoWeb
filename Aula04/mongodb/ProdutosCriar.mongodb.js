@@ -1,16 +1,12 @@
 /* global use, db */
 // MongoDB Playground
 // Use Ctrl+Space inside a snippet or a string literal to trigger completions.
-
 const database = "Aula";
 const collection = "Produtos";
-
 // Create a new database.
 use(database);
-
 // Create a new collection.
-// db.createCollection(collection);
-
+db.createCollection(collection);
 // Insert multiple documents into the collection.
 db[collection].insertMany([
   {

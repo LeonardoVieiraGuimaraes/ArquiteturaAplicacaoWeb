@@ -1,23 +1,8 @@
 spring:
   application:
-    name: democrud 
+    name: democrud
+  profiles:
+    active: h2 # Define o perfil ativo como "h2".
   sql:
     init:
-      mode: always # Garante que o banco seja inicializado automaticamente
-  datasource:
-    # url: jdbc:h2:file:D:/GitHub/NewtonPaiva/ArquiteturaAplicacaoWeb/Aula04/democrud/src/main/resources/db/bancoDeDados;DB_CLOSE_DELAY=-1
-    # url: jdbc:h2:mem:testdb
-    driverClassName: org.h2.Driver
-    username: sa
-    password:
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.H2Dialect
+      mode: always # Garante que o banco seja inicializado automaticamente.

@@ -1,7 +1,7 @@
 spring:
   datasource:
-    url: jdbc:h2:file:D:/GitHub/NewtonPaiva/ArquiteturaAplicacaoWeb/Aula04/democrud/src/main/resources/;DB_CLOSE_DELAY=-1
-    # url: jdbc:h2:mem:testdb
+    # url: jdbc:h2:file:D:/GitHub/NewtonPaiva/ArquiteturaAplicacaoWeb/Aula04/democrud/src/main/resources/db/bancoDeDados;DB_CLOSE_DELAY=-1
+    url: jdbc:h2:mem:testdb
     driverClassName: org.h2.Driver
     username: sa
     password:

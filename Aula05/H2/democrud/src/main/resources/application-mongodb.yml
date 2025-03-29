@@ -1,4 +1,0 @@
-spring:
-  data:
-    mongodb:
-      uri: mongodb://localhost:27017/testdb # Define a URI de conexão para o banco MongoDB local na porta 27017.
