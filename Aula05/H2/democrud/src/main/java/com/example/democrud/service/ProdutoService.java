@@ -27,29 +27,16 @@ public class ProdutoService {
         // Chama o método findAll() do repositório para buscar todos os produtos.
     }
 
-    public Optional<Produto> findById(Long id) {
-        // Método público que busca um registro pelo ID.
-        return produtoRepository.findById(id); 
-        // Chama o método findById() do repositório para buscar o produto correspondente ao ID.
-    }
-
     public Produto save(Produto model) {
         // Método público que salva um novo registro no banco de dados.
         return produtoRepository.save(model); 
         // Chama o método save() do repositório para persistir o produto.
     }
 
-    public boolean deleteById(Long id) {
-        // Método público que remove um registro pelo ID, se ele existir.
-        if (produtoRepository.existsById(id)) { 
-            // Verifica se o registro existe no banco de dados.
-            produtoRepository.deleteById(id); 
-            // Remove o registro correspondente ao ID.
-            return true; 
-            // Retorna true indicando que a exclusão foi bem-sucedida.
-        }
-        return false; 
-        // Retorna false se o registro não existir.
+    public Optional<Produto> findById(Long id) {
+        // Método público que busca um registro pelo ID.
+        return produtoRepository.findById(id); 
+        // Chama o método findById() do repositório para buscar o produto correspondente ao ID.
     }
 
     public Optional<Produto> update(Long id, Produto updatedModel) {
@@ -64,4 +51,18 @@ public class ProdutoService {
             // Salva as alterações no banco de dados e retorna o registro atualizado.
         });
     }
+    public boolean deleteById(Long id) {
+        // Método público que remove um registro pelo ID, se ele existir.
+        if (produtoRepository.existsById(id)) { 
+            // Verifica se o registro existe no banco de dados.
+            produtoRepository.deleteById(id); 
+            // Remove o registro correspondente ao ID.
+            return true; 
+            // Retorna true indicando que a exclusão foi bem-sucedida.
+        }
+        return false; 
+        // Retorna false se o registro não existir.
+    }
+
+   
 }
