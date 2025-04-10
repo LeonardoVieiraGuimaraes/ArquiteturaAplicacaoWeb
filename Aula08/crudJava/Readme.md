@@ -1,4 +1,4 @@
-# Projeto Spring Boot - Aula 07
+# Projeto Spring Boot
 
 ## Descrição
 Este projeto foi desenvolvido como parte da aula de Arquitetura de Aplicação Web, utilizando o framework Spring Boot. O objetivo principal foi demonstrar a criação de uma aplicação CRUD com as entidades **Departamento** e **Empregado**, além de um exemplo de "Hello World" para introduzir o uso do Spring Boot.
