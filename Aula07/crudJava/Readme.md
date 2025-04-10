@@ -40,7 +40,13 @@ Essa estrutura reflete uma organização típica, onde os empregados são agrupa
 ![Relacionamento Empregado-Departamento](EmpregadoDepartamento.png)
 
 ## Configuração do Banco de Dados
-O projeto utiliza o MariaDB como banco de dados. Certifique-se de configurar as credenciais no arquivo `application.properties` ou `application.yaml`:
+O projeto utiliza o MariaDB como banco de dados. Para facilitar a configuração e execução do MariaDB, recomendamos o uso do [XAMPP](https://www.apachefriends.org/pt_br/index.html), que fornece um ambiente integrado com MariaDB, Apache e outras ferramentas úteis.
+
+### Configurando o XAMPP
+1. Baixe e instale o XAMPP a partir do site oficial: [https://www.apachefriends.org/pt_br/index.html](https://www.apachefriends.org/pt_br/index.html).
+2. Após a instalação, inicie o painel de controle do XAMPP.
+3. Inicie o serviço do **MariaDB** clicando em "Start" ao lado de "MySQL".
+4. Configure as credenciais do banco de dados no arquivo `application.properties` ou `application.yaml` do projeto:
 
 ```properties
 spring.datasource.url=jdbc:mariadb://localhost:3306/seu_banco
@@ -50,15 +56,10 @@ spring.jpa.hibernate.ddl-auto=update
 ```
 
 ## Executando o Projeto
-1. Certifique-se de que o MariaDB está em execução.
-2. Clone este repositório.
-3. Configure o arquivo `application.properties` ou `application.yaml` com as credenciais do banco de dados.
-4. Execute o comando abaixo para iniciar a aplicação:
-
-```bash
-./mvnw spring-boot:run
-```
-
+1. Certifique-se de que o MariaDB está em execução no XAMPP.
+2. Abra o projeto no **Visual Studio Code**.
+3. Certifique-se de que a extensão **Spring Boot Extension Pack** está instalada no VS Code.
+4. No painel do **Spring Boot Dashboard**, localize o projeto e clique no botão de "play" para iniciar a aplicação.
 5. Acesse a aplicação no navegador ou via ferramentas como Postman em: `http://localhost:8080`.
 
 ## Endpoints Principais
