@@ -1,0 +1,43 @@
+@startuml DiagramaProdutoCategoria
+skinparam classAttributeIconSize 0
+left to right direction
+
+entity Produto {
+    -- Atributos --
+    - Long id
+    - String nome
+    - Double preco
+    - String descricao
+
+    -- Métodos --
+    + Produto() // Construtor sem argumentos
+    + Produto(Long id, String nome, Double preco, String descricao) // Construtor com argumentos
+    + Long getId()
+    + void setId(Long id)
+    + String getNome()
+    + void setNome(String nome)
+    + Double getPreco()
+    + void setPreco(Double preco)
+    + String getDescricao()
+    + void setDescricao(String descricao)
+}
+
+entity Categoria {
+    -- Atributos --
+    - Long id
+    - String nome
+    - String descricao
+
+    -- Métodos --
+    + Categoria() // Construtor sem argumentos
+    + Categoria(Long id, String nome, String descricao) // Construtor com argumentos
+    + Long getId()
+    + void setId(Long id)
+    + String getNome()
+    + void setNome(String nome)
+    + String getDescricao()
+    + void setDescricao(String descricao)
+}
+
+Produto "N" --> "1" Categoria : pertence a
+@enduml

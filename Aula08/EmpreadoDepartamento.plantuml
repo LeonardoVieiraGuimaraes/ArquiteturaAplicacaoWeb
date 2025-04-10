@@ -1,0 +1,46 @@
+@startuml DiagramaEmpregadoDepartamento
+skinparam classAttributeIconSize 0
+
+
+entity Empregado {
+    -- Atributos --
+    - Long id
+    - String primeiroNome
+    - String ultimoNome
+    - Date dataNascimento
+    - String curriculo
+
+    -- Métodos --
+    + Empregado() // Construtor sem argumentos
+    + Empregado(Long id, String primeiroNome, String ultimoNome, Date dataNascimento, String curriculo) // Construtor com argumentos
+    + Long getId()
+    + void setId(Long id)
+    + String getPrimeiroNome()
+    + void setPrimeiroNome(String primeiroNome)
+    + String getUltimoNome()
+    + void setUltimoNome(String ultimoNome)
+    + Date getDataNascimento()
+    + void setDataNascimento(Date dataNascimento)
+    + String getCurriculo()
+    + void setCurriculo(String curriculo)
+}
+
+entity Departamento {
+    -- Atributos --
+    - Long id
+    - String nome
+    - String descricao
+
+    -- Métodos --
+    + Departamento() // Construtor sem argumentos
+    + Departamento(Long id, String nome, String descricao) // Construtor com argumentos
+    + Long getId()
+    + void setId(Long id)
+    + String getNome()
+    + void setNome(String nome)
+    + String getDescricao()
+    + void setDescricao(String descricao)
+}
+
+Empregado "N" --> "1" Departamento : pertence a
+@enduml
