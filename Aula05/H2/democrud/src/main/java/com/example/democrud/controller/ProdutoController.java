@@ -1,63 +1,74 @@
 package com.example.democrud.controller;
 
-import java.util.List;
-
+// Importações necessárias para o funcionamento do controlador REST.
+import java.util.List; // Para trabalhar com listas de objetos.
 import org.springframework.beans.factory.annotation.Autowired; // Injeta dependências automaticamente.
 import org.springframework.http.ResponseEntity; // Representa respostas HTTP.
-import org.springframework.web.bind.annotation.DeleteMapping; // Importa anotações para endpoints REST.
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.DeleteMapping; // Define endpoints para requisições DELETE.
+import org.springframework.web.bind.annotation.GetMapping; // Define endpoints para requisições GET.
+import org.springframework.web.bind.annotation.PathVariable; // Captura variáveis de caminho na URL.
+import org.springframework.web.bind.annotation.PostMapping; // Define endpoints para requisições POST.
+import org.springframework.web.bind.annotation.PutMapping; // Define endpoints para requisições PUT.
+import org.springframework.web.bind.annotation.RequestBody; // Captura o corpo da requisição.
+import org.springframework.web.bind.annotation.RequestMapping; // Define o caminho base para os endpoints.
+import org.springframework.web.bind.annotation.RestController; // Marca a classe como um controlador REST.
 
-import com.example.democrud.model.Produto;
-import com.example.democrud.service.ProdutoService;
+import com.example.democrud.model.Produto; // Importa o modelo Produto.
+import com.example.democrud.service.ProdutoService; // Importa o serviço ProdutoService para lógica de negócios.
 
-@RestController // Indica que esta classe é um controlador REST.
-@RequestMapping("/api/crud") // Define o caminho base para os endpoints.
+// Indica que esta classe é um controlador REST, permitindo que ela manipule requisições HTTP.
+@RestController
+// Define o caminho base "/api/crud" para todos os endpoints desta classe.
+@RequestMapping("/api/crud")
 public class ProdutoController {
 
-    @Autowired // Injeta automaticamente a instância do CrudService.
-    private ProdutoService crudService;
+    // Injeta automaticamente uma instância de ProdutoService para uso no controlador.
+    @Autowired
+    private ProdutoService produtoService;
 
-    @GetMapping // Mapeia requisições GET para "/api/crud".
+    // Endpoint para obter todos os produtos.
+    @GetMapping
     public List<Produto> getAll() {
-        // Retorna todos os registros.
-        return crudService.findAll();
+        // Chama o serviço para buscar todos os produtos e retorna a lista.
+        return produtoService.findAll();
     }
 
-    @GetMapping("/{id}") // Mapeia requisições GET para "/api/crud/{id}".
+    // Endpoint para obter um produto específico pelo ID.
+    @GetMapping("/{id}")
     public ResponseEntity<Produto> getById(@PathVariable Long id) {
-        // Retorna um registro pelo ID ou 404 se não encontrado.
-        return crudService.findById(id)
-                .map(ResponseEntity::ok) // Retorna 200 OK com o registro.
-                .orElse(ResponseEntity.notFound().build()); // Retorna 404 Not Found.
+        // Busca o produto pelo ID. Se encontrado, retorna 200 OK com o produto.
+        // Caso contrário, retorna 404 Not Found.
+        return produtoService.findById(id)
+                .map(ResponseEntity::ok) // Retorna 200 OK com o produto encontrado.
+                .orElse(ResponseEntity.notFound().build()); // Retorna 404 se não encontrado.
     }
 
-    @PostMapping // Mapeia requisições POST para "/api/crud".
-    public Produto create(@RequestBody Produto model) {
-        // Cria um novo registro.
-        return crudService.save(model);
+    // Endpoint para criar um novo produto.
+    @PostMapping
+    public Produto create(@RequestBody Produto produto) {
+        // Recebe o produto no corpo da requisição e o salva no banco de dados.
+        return produtoService.save(produto);
     }
 
-    @PutMapping("/{id}") // Mapeia requisições PUT para "/api/crud/{id}".
+    // Endpoint para atualizar um produto existente.
+    @PutMapping("/{id}")
     public ResponseEntity<Produto> update(@PathVariable Long id, @RequestBody Produto model) {
-        // Atualiza um registro existente ou retorna 404 se não encontrado.
-        return crudService.update(id, model)
-                .map(ResponseEntity::ok) // Retorna 200 OK com o registro atualizado.
-                .orElse(ResponseEntity.notFound().build()); // Retorna 404 Not Found.
+        // Atualiza o produto pelo ID. Se encontrado, retorna 200 OK com o produto atualizado.
+        // Caso contrário, retorna 404 Not Found.
+        return produtoService.update(id, model)
+                .map(ResponseEntity::ok) // Retorna 200 OK com o produto atualizado.
+                .orElse(ResponseEntity.notFound().build()); // Retorna 404 se não encontrado.
     }
 
-    @DeleteMapping("/{id}") // Mapeia requisições DELETE para "/api/crud/{id}".
+    // Endpoint para deletar um produto pelo ID.
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        // Remove um registro pelo ID ou retorna 404 se não encontrado.
-        if (crudService.deleteById(id)) {
-            return ResponseEntity.noContent().build(); // Retorna 204 No Content.
+        // Remove o produto pelo ID. Se encontrado e removido, retorna 204 No Content.
+        // Caso contrário, retorna 404 Not Found.
+        if (produtoService.deleteById(id)) {
+            return ResponseEntity.noContent().build(); // Retorna 204 No Content se a exclusão for bem-sucedida.
         } else {
-            return ResponseEntity.notFound().build(); // Retorna 404 Not Found.
+            return ResponseEntity.notFound().build(); // Retorna 404 se o produto não for encontrado.
         }
     }
 }
