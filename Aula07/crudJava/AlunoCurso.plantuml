@@ -1,0 +1,46 @@
+@startuml DiagramaAlunoCurso
+skinparam classAttributeIconSize 0
+left to right direction
+
+entity Aluno {
+    -- Atributos --
+    - Long id
+    - String nome
+    - String email
+    - Date dataNascimento
+
+    -- Métodos --
+    + Aluno() // Construtor sem argumentos
+    + Aluno(Long id, String nome, String email, Date dataNascimento) // Construtor com argumentos
+    + Long getId()
+    + void setId(Long id)
+    + String getNome()
+    + void setNome(String nome)
+    + String getEmail()
+    + void setEmail(String email)
+    + Date getDataNascimento()
+    + void setDataNascimento(Date dataNascimento)
+}
+
+entity Curso {
+    -- Atributos --
+    - Long id
+    - String nome
+    - String descricao
+    - Integer cargaHoraria
+
+    -- Métodos --
+    + Curso() // Construtor sem argumentos
+    + Curso(Long id, String nome, String descricao, Integer cargaHoraria) // Construtor com argumentos
+    + Long getId()
+    + void setId(Long id)
+    + String getNome()
+    + void setNome(String nome)
+    + String getDescricao()
+    + void setDescricao(String descricao)
+    + Integer getCargaHoraria()
+    + void setCargaHoraria(Integer cargaHoraria)
+}
+
+Aluno "N" --> "1" Curso : está matriculado em
+@enduml
