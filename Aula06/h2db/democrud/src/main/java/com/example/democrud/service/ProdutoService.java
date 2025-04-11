@@ -28,7 +28,7 @@ public class ProdutoService {
         return produtoRepository.findById(id);
     }
 
-    public Optional<Produto> update (Long id, Produto updateProduto){
+    public Optional<Produto> update(Long id, Produto updateProduto){
         return produtoRepository.findById(id).map(existingModel -> {
             existingModel.setName(updateProduto.getName());
             existingModel.setDescription(updateProduto.getDescription());
@@ -37,16 +37,26 @@ public class ProdutoService {
     }
 
     public boolean deleteById(Long id){
-        
         if(produtoRepository.existsById(id)){
             produtoRepository.deleteById(id);
             return true;
-            
         }
         else {
-            return false;
+            return false; 
         }
     }
+
+    // public boolean deleteById(Long id){
+        
+    //     if(produtoRepository.existsById(id)){
+    //         produtoRepository.deleteById(id);
+    //         return true;
+            
+    //     }
+    //     else {
+    //         return false;
+    //     }
+    // }
     }
 
 //     public Optional<Produto> update(Long id, Produto updatedModel) {
