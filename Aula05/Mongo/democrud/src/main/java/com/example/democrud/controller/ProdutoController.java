@@ -1,63 +1,49 @@
 package com.example.democrud.controller;
 
 import java.util.List;
+import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired; // Injeta dependências automaticamente.
-import org.springframework.http.ResponseEntity; // Representa respostas HTTP.
-import org.springframework.web.bind.annotation.DeleteMapping; // Importa anotações para endpoints REST.
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.democrud.model.Produto;
 import com.example.democrud.service.ProdutoService;
 
-@RestController // Indica que esta classe é um controlador REST.
-@RequestMapping("/api/crud") // Define o caminho base para os endpoints.
+@RestController
+@RequestMapping("/api/crud")
 public class ProdutoController {
 
-    @Autowired // Injeta automaticamente a instância do CrudService.
-    private ProdutoService crudService;
+    @Autowired
+    private ProdutoService produtoService;
 
-    @GetMapping // Mapeia requisições GET para "/api/crud".
-    public List<Produto> getAll() {
-        // Retorna todos os registros.
-        return crudService.findAll();
+    @GetMapping
+    public List<Produto> findAll() {
+        return produtoService.findAll();
     }
 
-    @GetMapping("/{id}") // Mapeia requisições GET para "/api/crud/{id}".
-    public ResponseEntity<Produto> getById(@PathVariable Long id) {
-        // Retorna um registro pelo ID ou 404 se não encontrado.
-        return crudService.findById(id)
-                .map(ResponseEntity::ok) // Retorna 200 OK com o registro.
-                .orElse(ResponseEntity.notFound().build()); // Retorna 404 Not Found.
+    @GetMapping("/{id}")
+    public ResponseEntity<Produto> findById(@PathVariable String id) {
+        Optional<Produto> produto = produtoService.findById(id);
+        return produto.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping // Mapeia requisições POST para "/api/crud".
-    public Produto create(@RequestBody Produto model) {
-        // Cria um novo registro.
-        return crudService.save(model);
+    @PostMapping
+    public Produto save(@RequestBody Produto produto) {
+        return produtoService.save(produto);
     }
 
-    @PutMapping("/{id}") // Mapeia requisições PUT para "/api/crud/{id}".
-    public ResponseEntity<Produto> update(@PathVariable Long id, @RequestBody Produto model) {
-        // Atualiza um registro existente ou retorna 404 se não encontrado.
-        return crudService.update(id, model)
-                .map(ResponseEntity::ok) // Retorna 200 OK com o registro atualizado.
-                .orElse(ResponseEntity.notFound().build()); // Retorna 404 Not Found.
+    @PutMapping("/{id}")
+    public ResponseEntity<Produto> update(@PathVariable String id, @RequestBody Produto produto) {
+        Optional<Produto> updatedProduto = produtoService.update(id, produto);
+        return updatedProduto.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
-    @DeleteMapping("/{id}") // Mapeia requisições DELETE para "/api/crud/{id}".
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        // Remove um registro pelo ID ou retorna 404 se não encontrado.
-        if (crudService.deleteById(id)) {
-            return ResponseEntity.noContent().build(); // Retorna 204 No Content.
-        } else {
-            return ResponseEntity.notFound().build(); // Retorna 404 Not Found.
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteById(@PathVariable String id) {
+        if (produtoService.deleteById(id)) {
+            return ResponseEntity.noContent().build();
         }
+        return ResponseEntity.notFound().build();
     }
 }

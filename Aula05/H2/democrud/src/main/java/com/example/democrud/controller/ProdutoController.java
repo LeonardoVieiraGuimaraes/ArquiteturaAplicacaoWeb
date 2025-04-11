@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,14 +38,25 @@ public class ProdutoController{
         return produtoService.findByid(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
-    // public ResponseEntity<Produto> getById(@PathVariable Long id) {
-        //         // Busca o produto pelo ID. Se encontrado, retorna 200 OK com o produto.
-        //         // Caso contrário, retorna 404 Not Found.
-        //         return produtoService.findById(id)
-        //                 .map(ResponseEntity::ok) // Retorna 200 OK com o produto encontrado.
-        //                 .orElse(ResponseEntity.notFound().build()); // Retorna 404 se não encontrado.
-        //     }
+    @PutMapping("/{id}")
+    public ResponseEntity<Produto> update(@PathVariable Long id, @RequestBody Produto updateProduto){
+        return produtoService.update(id, updateProduto).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        
+        if (produtoService.deleteById(id)) {
+            return ResponseEntity.noContent().build(); 
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }
+
+
+  
 
 
 // // Importações necessárias para o funcionamento do controlador REST.

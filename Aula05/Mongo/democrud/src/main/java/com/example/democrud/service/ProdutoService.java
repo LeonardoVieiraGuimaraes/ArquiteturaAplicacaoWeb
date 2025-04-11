@@ -20,7 +20,7 @@ public class ProdutoService {
         return produtoRepository.findAll();
     }
 
-    public Optional<Produto> findById(Long id) {
+    public Optional<Produto> findById(String id) {
         // Busca um registro pelo ID no banco de dados.
         return produtoRepository.findById(id);
     }
@@ -30,21 +30,32 @@ public class ProdutoService {
         return produtoRepository.save(model);
     }
 
-    public boolean deleteById(Long id) {
+    public boolean deleteById(String id) {
         // Remove um registro pelo ID, se existir.
-        if (produtoRepository.existsById(id)) {
+        // Corrigido para verificar se o registro existe usando isPresent()
+        if (produtoRepository.findById(id).isPresent()) {
             produtoRepository.deleteById(id);
             return true;
         }
         return false;
     }
 
-    public Optional<Produto> update(Long id, Produto updatedModel) {
+    public Optional<Produto> update(String id, Produto updatedModel) {
         // Atualiza um registro existente pelo ID.
         return produtoRepository.findById(id).map(existingModel -> {
             existingModel.setName(updatedModel.getName()); // Atualiza o campo "name".
             existingModel.setDescription(updatedModel.getDescription()); // Atualiza o campo "description".
             return produtoRepository.save(existingModel); // Salva as alterações no banco de dados.
         });
+    }
+
+    public List<Produto> findByName(String name) {
+        // Busca produtos pelo nome.
+        return produtoRepository.findByName(name);
+    }
+
+    public List<Produto> findByDescription(String description) {
+        // Busca produtos pela descrição.
+        return produtoRepository.findByDescription(description);
     }
 }

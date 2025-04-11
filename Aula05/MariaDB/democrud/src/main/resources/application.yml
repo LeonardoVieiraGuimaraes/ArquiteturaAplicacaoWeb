@@ -5,7 +5,7 @@ spring:
     init:
       mode: always # Garante que o banco de dados seja inicializado automaticamente ao iniciar a aplicação.
   datasource: # Configurações de conexão com o banco de dados.
-    url: jdbc:mariadb://localhost:3306/test # URL de conexão para o banco MariaDB local na porta 3306.
+    url: jdbc:mariadb://localhost:3306/product # URL de conexão para o banco MariaDB local na porta 3306.
     driverClassName: org.mariadb.jdbc.Driver # Define o driver JDBC para MariaDB.
     username: root # Nome de usuário para conexão com o banco.
     password:  # Senha para conexão com o banco.

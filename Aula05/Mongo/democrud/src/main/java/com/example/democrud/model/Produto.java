@@ -1,25 +1,18 @@
 package com.example.democrud.model;
 
-import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.data.annotation.Id; // Importa a anotação para ID no MongoDB.
+import org.springframework.data.mongodb.core.mapping.Document; // Importa a anotação para documentos MongoDB.
 
-import jakarta.persistence.Entity; // Importa anotações para mapeamento JPA.
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-
-@EntityScan("com.example.democrud.model")
-
-@Entity // Indica que esta classe é uma entidade JPA.
+@Document(collection = "produtos") // Indica que esta classe é um documento MongoDB.
 public class Produto {
 
-    @Id // Define o campo "id" como chave primária.
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Gera o ID automaticamente.
-    private Long id;
+    @Id // Define o campo "id" como identificador único.
+    private String id; // Alterado para String, pois o MongoDB usa ObjectId como padrão.
     private String name; // Nome do registro.
     private String description; // Descrição do registro.
 
     public Produto() {
-        // Construtor padrão necessário para o JPA.
+        // Construtor padrão necessário para o MongoDB.
     }
 
     public Produto(String name, String description) {
@@ -29,11 +22,11 @@ public class Produto {
     }
 
     // Métodos getters e setters para acessar e modificar os campos.
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

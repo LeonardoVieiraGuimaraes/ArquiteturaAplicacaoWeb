@@ -27,7 +27,58 @@ public class ProdutoService {
     public Optional<Produto> findByid(Long id){
         return produtoRepository.findById(id);
     }
-}
+
+    public Optional<Produto> update (Long id, Produto updateProduto){
+        return produtoRepository.findById(id).map(existingModel -> {
+            existingModel.setName(updateProduto.getName());
+            existingModel.setDescription(updateProduto.getDescription());
+            return produtoRepository.save(existingModel);
+        });
+    }
+
+    public boolean deleteById(Long id){
+        
+        if(produtoRepository.existsById(id)){
+            produtoRepository.deleteById(id);
+            return true;
+            
+        }
+        else {
+            return false;
+        }
+    }
+    }
+
+//     public Optional<Produto> update(Long id, Produto updatedModel) {
+//         // Método público que atualiza um registro existente pelo ID.
+//         return produtoRepository.findById(id).map(existingModel -> { 
+//             // Busca o registro pelo ID e, se encontrado, executa a atualização.
+//             existingModel.setName(updatedModel.getName()); 
+//             // Atualiza o campo "name" do registro existente.
+//             existingModel.setDescription(updatedModel.getDescription()); 
+//             // Atualiza o campo "description" do registro existente.
+//             return produtoRepository.save(existingModel); 
+//             // Salva as alterações no banco de dados e retorna o registro atualizado.
+//         });
+//     }
+//     public boolean deleteById(Long id) {
+//         // Método público que remove um registro pelo ID, se ele existir.
+//         if (produtoRepository.existsById(id)) { 
+//             // Verifica se o registro existe no banco de dados.
+//             produtoRepository.deleteById(id); 
+//             // Remove o registro correspondente ao ID.
+//             return true; 
+//             // Retorna true indicando que a exclusão foi bem-sucedida.
+//         }
+//         return false; 
+//         // Retorna false se o registro não existir.
+//     }
+
+
+    
+
+
+
 
     // @Autowired
     // private ProdutoRepository produtoRepository; 
