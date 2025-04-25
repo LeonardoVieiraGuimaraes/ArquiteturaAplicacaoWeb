@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.FetchType;
 import lombok.Data;
 import lombok.NoArgsConstructor; // Adicione esta linha para importar a classe Date
 
@@ -32,9 +33,9 @@ public class Employee {
 
     // Anotação que indica um relacionamento muitos-para-um com a entidade Department
     // A anotação @ManyToOne indica que muitos empregados podem pertencer a um departamento
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER) // EAGER significa que o departamento será carregado imediatamente com o funcionário
     // Anotação que especifica a coluna de junção para o relacionamento muitos-para-um
-    @JoinColumn(name = "department_id")
+    @JoinColumn(name = "department_id", referencedColumnName = "id")
     private Department department;
 
     // Campo que representa a data de nascimento do funcionário

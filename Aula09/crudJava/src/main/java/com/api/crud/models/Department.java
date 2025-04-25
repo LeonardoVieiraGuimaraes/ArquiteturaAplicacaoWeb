@@ -5,8 +5,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 
 // Anotação que indica que esta classe é uma entidade JPA
 @Entity
@@ -14,8 +16,9 @@ import lombok.NoArgsConstructor;
 @Data
 // Anotação Lombok que gera um construtor sem argumentos
 @NoArgsConstructor
+@AllArgsConstructor
 public class Department {
-    // Anotação que indica que este campo é a chave pri++ária da entidade
+    // Anotação que indica que este campo é a chave primária da entidade
     @Id
     // Anotação que indica que o valor deste campo será gerado automaticamente pelo banco de dados
     @GeneratedValue(strategy = GenerationType.IDENTITY)
