@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: democrud # Nome da aplicação, usado para identificação em logs e monitoramento.
+  sql:
+    init:
+      mode: always # Garante que o banco de dados seja inicializado automaticamente ao iniciar a aplicação.
+  datasource: # Configurações de conexão com o banco de dados.
+    url: jdbc:mariadb://localhost:3306/product # URL de conexão para o banco MariaDB local na porta 3306.
+    driverClassName: org.mariadb.jdbc.Driver # Define o driver JDBC para MariaDB.
+    username: root # Nome de usuário para conexão com o banco.
+    password:  # Senha para conexão com o banco.
+  jpa:
+    hibernate:
+      ddl-auto: update # Configura o Hibernate para atualizar o esquema do banco automaticamente.
+    show-sql: true # Habilita a exibição das consultas SQL no console para depuração.
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MariaDBDialect # Define o dialeto do Hibernate para MariaDB, garantindo compatibilidade com o banco.
