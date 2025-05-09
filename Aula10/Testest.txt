@@ -1,0 +1,107 @@
+// public class UsuarioSimulation extends Simulation {
+//     // Configuração do protocolo HTTP
+//     HttpProtocolBuilder httpProtocol = http
+//             .baseUrl("http://localhost:8080") // URL base do seu serviço
+//             .acceptHeader("application/json"); // Cabeçalho de aceitação para JSON
+//     // Definição da cadeia de ações para listar todos os usuários
+//     ChainBuilder listarTodos = exec(
+//             http("Listar Todos os Usuários") // Nome da requisição
+//                     .get("/usuarios") // Método GET para o endpoint /usuarios
+//                     .check(status().is(200)) // Verifica se o status da resposta é 200 (OK)
+//     ).pause(1); // Pausa de 1 segundo entre as requisições
+//     // Definição da cadeia de ações para buscar um usuário por ID
+//     ChainBuilder buscarPorId = exec(
+//             http("Buscar Usuário por ID") // Nome da requisição
+//                     .get("/usuarios/1") // Método GET para o endpoint /usuarios/1
+//                     .check(status().is(200)) // Verifica se o status da resposta é 200 (OK)
+//     ).pause(1); // Pausa de 1 segundo entre as requisições
+//     // Definição da cadeia de ações para salvar um novo usuário
+//     ChainBuilder salvar = exec(
+//             http("Salvar Usuário") // Nome da requisição
+//                     .post("/usuarios") // Método POST para o endpoint /usuarios
+//                     .body(StringBody("{\"nome\": \"Teste\", \"email\": \"teste@exemplo.com\"}")).asJson() // Corpo da requisição em JSON
+//                     .check(status().is(201)) // Verifica se o status da resposta é 201 (Criado)
+//     ).pause(1); // Pausa de 1 segundo entre as requisições
+//     // Definição da cadeia de ações para atualizar um usuário existente
+//     ChainBuilder atualizar = exec(
+//             http("Atualizar Usuário") // Nome da requisição
+//                     .put("/usuarios/1") // Método PUT para o endpoint /usuarios/1
+//                     .body(StringBody("{\"nome\": \"Teste Atualizado\", \"email\": \"teste.atualizado@exemplo.com\"}")).asJson() // Corpo da requisição em JSON
+//                     .check(status().is(200)) // Verifica se o status da resposta é 200 (OK)
+//     ).pause(1); // Pausa de 1 segundo entre as requisições
+//     // Definição da cadeia de ações para deletar um usuário
+//     ChainBuilder deletar = exec(
+//             http("Deletar Usuário") // Nome da requisição
+//                     .delete("/usuarios/1") // Método DELETE para o endpoint /usuarios/1
+//                     .check(status().is(204)) // Verifica se o status da resposta é 204 (Sem Conteúdo)
+//     ).pause(1); // Pausa de 1 segundo entre as requisições
+//     // Definição do cenário de teste que executa todas as ações CRUD
+//     ScenarioBuilder usuarios = scenario("Usuarios")
+//             .exec(listarTodos, buscarPorId, salvar, atualizar, deletar);
+//     // Definição da cadeia de ações para enviar grandes volumes de dados
+//     ChainBuilder enviarDadosGrandes = exec(
+//             http("Enviar Dados Grandes")
+//                     .post("/dados")
+//                     .body(StringBody("{\"data\": \"" + "x".repeat(10000) + "\"}")).asJson() // Enviar um payload grande
+//                     .check(status().is(200))
+//     ).pause(1);
+//     // Definição do cenário de teste para volume de dados
+//     ScenarioBuilder volumeTest = scenario("Volume Test")
+//             .exec(enviarDadosGrandes);
+//     {
+//         // Configuração do cenário de teste com injeção de usuários combinando diferentes tipos de testes
+//         setUp(
+//                 // Teste de Carga
+//                 usuarios.injectOpen(rampUsers(10).during(10)), // Injeção de 10 usuários ao longo de 10 segundos
+//                 // Teste de Estresse
+//                 usuarios.injectOpen(
+//                         incrementUsersPerSec(5) // Incrementa 5 usuários por segundo
+//                                 .times(5) // Por 5 vezes
+//                                 .eachLevelLasting(10) // Cada nível dura 10 segundos
+//                                 .startingFrom(10) // Começando com 10 usuários por segundo
+//                 ),
+//                 // Teste de Pico
+//                 usuarios.injectOpen(
+//                         atOnceUsers(100) // Injetar 100 usuários de uma vez
+//                 ),
+//                 // Teste de Capacidade
+//                 usuarios.injectOpen(
+//                         rampUsers(1000).during(60) // Injetar 1000 usuários ao longo de 60 segundos
+//                 ),
+//                 // Teste de Endurance
+//                 usuarios.injectOpen(
+//                         constantUsersPerSec(10).during(3600) // 10 usuários por segundo durante 1 hora
+//                 ),
+//                 // Teste de Volume
+//                 volumeTest.injectOpen(
+//                         constantUsersPerSec(5).during(600) // 5 usuários por segundo durante 10 minutos
+//                 ),
+//                 // Teste de Confiabilidade
+//                 usuarios.injectOpen(
+//                         constantUsersPerSec(20).during(1800) // 20 usuários por segundo durante 30 minutos
+//                 )
+//         ).protocols(httpProtocol); // Aplicação do protocolo HTTP configurado
+//     }
+// }
+// Teste de Carga:
+// Objetivo: Avaliar o desempenho do sistema sob uma carga específica de usuários simultâneos.
+// Configuração: Injetar 10 usuários ao longo de 10 segundos.
+// Código:
+// Teste de Estresse:
+// Objetivo: Determinar o ponto de falha do sistema ao aumentar a carga.
+// Configuração: Aumentar a carga em 5 usuários por segundo, 5 vezes, cada nível durando 10 segundos, começando com 10 usuários por segundo.
+// Teste de Pico:
+// Objetivo: Avaliar o comportamento do sistema sob uma carga de pico repentina.
+// Configuração: Injetar 100 usuários de uma vez.
+// Teste de Capacidade:
+// Objetivo: Determinar a capacidade máxima do sistema.
+// Configuração: Injetar 1000 usuários ao longo de 60 segundos.
+// Teste de Endurance:
+// Objetivo: Verificar a estabilidade do sistema ao longo de um período prolongado.
+// Configuração: Manter uma carga constante de 10 usuários por segundo durante 1 hora.
+// Teste de Volume:
+// Objetivo: Avaliar o comportamento do sistema ao processar uma grande quantidade de dados.
+// Configuração: Enviar grandes volumes de dados em cada requisição.
+// Teste de Confiabilidade:
+// Objetivo: Avaliar a confiabilidade do sistema sob condições normais de operação.
+// Configuração: Simular a carga esperada em um ambiente de produção.
