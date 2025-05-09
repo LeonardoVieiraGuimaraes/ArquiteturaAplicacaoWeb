@@ -10,4 +10,5 @@ import com.api.crud.models.Department;
 @Repository
 public interface DepartmentRepository extends JpaRepository<Department, Long> {
     // Esta interface herda métodos de JpaRepository para operações CRUD
+    
 }

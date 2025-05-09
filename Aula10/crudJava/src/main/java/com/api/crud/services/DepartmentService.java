@@ -36,6 +36,19 @@ public class DepartmentService {
         return departmentRepository.save(department);
     }
 
+    // Método para atualizar um departamento existente
+    public Department update(Long id, Department department) {
+        // Verifica se o departamento existe pelo ID
+        if (departmentRepository.existsById(id)) {
+            // Se existir, atualiza o departamento com os novos dados
+            department.setId(id);
+            return departmentRepository.save(department);
+        } else {
+            // Se não existir, retorna null ou pode lançar uma exceção
+            return null;
+        }
+    }
+
     // Método para deletar um departamento pelo ID
     public void deleteById(Long id) {
         // Chama o método deleteById do repositório para deletar o departamento pelo ID

@@ -10,5 +10,5 @@ import com.api.crud.models.Employee;
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     // Esta interface herda métodos de JpaRepository para operações CRUD
-    // Não é necessário adicionar métodos adicionais aqui, a menos que você precise de consultas personalizadas
+
 }
