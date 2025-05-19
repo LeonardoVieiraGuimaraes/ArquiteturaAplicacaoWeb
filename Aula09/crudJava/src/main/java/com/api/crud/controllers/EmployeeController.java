@@ -53,22 +53,10 @@ public class EmployeeController {
     // Método para atualizar um funcionário existente
     @PutMapping("/{id}")
     public ResponseEntity<Employee> updateEmployee(@PathVariable Long id, @RequestBody Employee employeeDetails) {
-        // Chama o serviço para obter um funcionário pelo ID
-        Optional<Employee> employee = employeeService.findById(id);
-        if (employee.isPresent()) {
-            // Atualiza os detalhes do funcionário
-            Employee updatedEmployee = employee.get();
-            updatedEmployee.setFirstName(employeeDetails.getFirstName());
-            updatedEmployee.setLastName(employeeDetails.getLastName());
-            updatedEmployee.setDepartment(employeeDetails.getDepartment());
-            updatedEmployee.setBirthdate(employeeDetails.getBirthdate());
-            updatedEmployee.setCv(employeeDetails.getCv());
-            // Salva o funcionário atualizado e retorna 200 OK
-            return ResponseEntity.ok(employeeService.save(updatedEmployee));
-        } else {
-            // Retorna 404 Not Found se o funcionário não for encontrado
-            return ResponseEntity.notFound().build();
-        }
+        // Chama o serviço para atualizar o funcionário existente
+        Employee updatedEmployee = employeeService.update(id, employeeDetails);
+        // Retorna o funcionário atualizado se encontrado, caso contrário, retorna 404 Not Found
+        return updatedEmployee != null ? ResponseEntity.ok(updatedEmployee) : ResponseEntity.notFound().build();
     }
 
     // Método para deletar um funcionário pelo ID

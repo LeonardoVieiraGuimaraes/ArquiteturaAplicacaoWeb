@@ -53,18 +53,10 @@ public class DepartmentController {
     // Método para atualizar um departamento existente
     @PutMapping("/{id}")
     public ResponseEntity<Department> updateDepartment(@PathVariable Long id, @RequestBody Department departmentDetails) {
-        // Chama o serviço para buscar o departamento pelo ID
-        Optional<Department> department = departmentService.findById(id);
-        if (department.isPresent()) {
-            // Atualiza os detalhes do departamento
-            Department updatedDepartment = department.get();
-            updatedDepartment.setTitle(departmentDetails.getTitle());
-            // Salva o departamento atualizado e retorna 200 OK
-            return ResponseEntity.ok(departmentService.save(updatedDepartment));
-        } else {
-            // Retorna 404 Not Found se o departamento não for encontrado
-            return ResponseEntity.notFound().build();
-        }
+        // Chama o serviço para atualizar o departamento existente
+        Department updatedDepartment = departmentService.update(id, departmentDetails);
+        // Retorna o departamento atualizado se encontrado, caso contrário retorna 404 Not Found
+        return updatedDepartment != null ? ResponseEntity.ok(updatedDepartment) : ResponseEntity.notFound().build();  
     }
 
     // Método para deletar um departamento pelo ID

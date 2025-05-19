@@ -36,6 +36,19 @@ public class EmployeeService {
         return employeeRepository.save(employee);
     }
 
+    // Método para atualizar um funcionário existente
+    public Employee update(Long id, Employee employee) {
+        // Verifica se o funcionário existe pelo ID
+        if (employeeRepository.existsById(id)) {
+            // Se existir, atualiza o funcionário com os novos dados
+            employee.setId(id);
+            return employeeRepository.save(employee);
+        } else {
+            // Se não existir, retorna null ou pode lançar uma exceção
+            return null;
+        }
+    }
+
     // Método para deletar um funcionário pelo ID
     public void deleteById(Long id) {
         // Chama o método deleteById do repositório para deletar o funcionário pelo ID
