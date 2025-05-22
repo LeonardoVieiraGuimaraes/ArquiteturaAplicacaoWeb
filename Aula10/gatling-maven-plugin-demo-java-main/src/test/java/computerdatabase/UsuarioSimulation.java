@@ -5,6 +5,7 @@ package computerdatabase;
 import io.gatling.javaapi.core.ChainBuilder;
 import static io.gatling.javaapi.core.CoreDsl.StringBody;
 import static io.gatling.javaapi.core.CoreDsl.exec;
+import static io.gatling.javaapi.core.CoreDsl.incrementUsersPerSec;
 import static io.gatling.javaapi.core.CoreDsl.jsonPath;
 import static io.gatling.javaapi.core.CoreDsl.rampUsers;
 import static io.gatling.javaapi.core.CoreDsl.scenario;
@@ -67,15 +68,15 @@ public class UsuarioSimulation extends Simulation {
         // Configuração do cenário de teste com injeção de usuários
         setUp(
                 // Teste de Carga
-                usuarios.injectOpen(rampUsers(5).during(10)) // Injeção de 5 usuários ao longo de 10 segundos
+                // usuarios.injectOpen(rampUsers(5).during(10)) // Injeção de 5 usuários ao longo de 10 segundos
 
-        // //  Teste de Estresse
-        // usuarios.injectOpen(
-        //         incrementUsersPerSec(5) // Incrementa 5 usuários por segundo
-        //                 .times(5) // Por 5 vezes
-        //                 .eachLevelLasting(10) // Cada nível dura 10 segundos
-        //                 .startingFrom(10) // Começando com 10 usuários por segundo
-        // )
+        //  Teste de Estresse
+        usuarios.injectOpen(
+                incrementUsersPerSec(5) // Incrementa 5 usuários por segundo
+                        .times(5) // Por 5 vezes
+                        .eachLevelLasting(10) // Cada nível dura 10 segundos
+                        .startingFrom(10) // Com1eçando com 10 usuários por segundo
+        )
         ).protocols(httpProtocol); // Aplicação do protocolo HTTP configurado
     }
 }

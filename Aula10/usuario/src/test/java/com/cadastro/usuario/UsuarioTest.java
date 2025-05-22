@@ -143,21 +143,21 @@ public class UsuarioTest {
     }
 
     // Teste para o método somar do controlador, que está incorreto
-    // @Test
-    // void testSomarErro() {
-    //     int a = 1;
-    //     int b = 2;
-    //     int resultadoEsperado = 10;
+    @Test
+    void testSomarErro() {
+        int a = 1;
+        int b = 2;
+        int resultadoEsperado = 3;
 
-    //     // Define o comportamento do método somar do controlador
-    //     when(usuarioController.somar(a, b)).thenReturn(3);
+        // Define o comportamento do método somar do controlador
+        when(usuarioController.somar(a, b)).thenReturn(3);
 
-    //     // Chama o método do controlador
-    //     int resultado = usuarioController.somar(a, b);
+        // Chama o método do controlador
+        int resultado = usuarioController.somar(a, b);
 
-    //     // Verifica se o resultado é o esperado (este teste falhará)
-    //     assertEquals(resultadoEsperado, resultado, "O resultado da soma está incorreto");
-    //     // Verifica se o método somar do serviço foi chamado uma vez
-    //     verify(usuarioService, times(1)).somar(a, b);
-    // }
+        // Verifica se o resultado é o esperado (este teste falhará)
+        assertEquals(resultadoEsperado, resultado, "O resultado da soma está incorreto");
+        // Verifica se o método somar do serviço foi chamado uma vez
+        verify(usuarioService, times(1)).somar(a, b);
+    }
 }
