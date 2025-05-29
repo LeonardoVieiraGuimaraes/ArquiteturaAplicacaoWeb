@@ -34,18 +34,18 @@ public class SecurityConfig {
 
                 .anyRequest().authenticated() // Qualquer outra requisição requer autenticação
                 )
-                // .formLogin(form -> form // Habilita o formulário de login padrão do Spring Boot
-                // .permitAll() // Permite acesso à página de login sem autenticação
-                // )
-                // .httpBasic(_ -> {
-                //     // Configura autenticação HTTP Basic
-                // }) // Habilita autenticação HTTP Basic
+                .formLogin(form -> form // Habilita o formulário de login padrão do Spring Boot
+                .permitAll() // Permite acesso à página de login sem autenticação
+                )
+                .httpBasic(_ -> {
+                    // Configura autenticação HTTP Basic
+                }); // Habilita autenticação HTTP Basic
                 // Configura o logout
 
-                .formLogin(formLoginCustomizer -> formLoginCustomizer
-                .loginPage("/login") // Define a URL da página de login
-                .defaultSuccessUrl("/index", true) // Redireciona para /index após login bem-sucedido
-                .permitAll() // Permite acesso à página de login sem autenticação
+                // .formLogin(formLoginCustomizer -> formLoginCustomizer
+                // .loginPage("/login") // Define a URL da página de login
+                // .defaultSuccessUrl("/index", true) // Redireciona para /index após login bem-sucedido
+                // .permitAll() // Permite acesso à página de login sem autenticação
                 // )
                 // .logout(logout -> logout
                 // .logoutUrl("/logout") // Define a URL de logout
@@ -56,25 +56,25 @@ public class SecurityConfig {
                 // )
                 // .exceptionHandling(exception -> exception
                 // .accessDeniedPage("/access-denied") // Define uma página personalizada para erros de acesso negado
-                );
+                // );
         return http.build();
     }
 
-    @Bean
-    public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
-        UserDetails user = User.builder()
-                .username("user")
-                .password(passwordEncoder.encode("123"))
-                .roles("USER") // Define a role USER para o usuário padrão
-                .build();
+    // @Bean
+    // public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
+    //     UserDetails user = User.builder()
+    //             .username("user")
+    //             .password(passwordEncoder.encode("123"))
+    //             .roles("USER") // Define a role USER para o usuário padrão
+    //             .build();
 
-        UserDetails admin = User.builder()
-                .username("admin")
-                .password(passwordEncoder.encode("123"))
-                .roles("ADMIN") // Define a role ADMIN para o usuário padrão
-                .build();
-        return new InMemoryUserDetailsManager(user, admin);
-    }
+    //     UserDetails admin = User.builder()
+    //             .username("admin")
+    //             .password(passwordEncoder.encode("123"))
+    //             .roles("ADMIN") // Define a role ADMIN para o usuário padrão
+    //             .build();
+    //     return new InMemoryUserDetailsManager(user, admin);
+    // }
 
     // @Bean
     // public UserDetailsService userDetailsService(DataSource dataSource) {
@@ -85,6 +85,6 @@ public class SecurityConfig {
     // }
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(10); // Define o encoder de senha como BCrypt com força 10
+        return new BCryptPasswordEncoder(); // Define o encoder de senha como BCrypt com força 10
     }
 }
