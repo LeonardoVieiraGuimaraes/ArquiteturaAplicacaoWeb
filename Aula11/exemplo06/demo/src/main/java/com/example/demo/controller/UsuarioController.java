@@ -42,7 +42,9 @@ public class UsuarioController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Usuario> updateUser(@PathVariable Long id, @RequestBody Usuario usuario) {
-        return ResponseEntity.of(usuarioService.updateUser(id, usuario));
+        return usuarioService.updateUser(id, usuario)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
@@ -55,6 +57,8 @@ public class UsuarioController {
 
     @GetMapping("/search")
     public ResponseEntity<Usuario> findByUsername(@RequestParam String username) {
-        return ResponseEntity.of(usuarioService.findByUsername(username));
+        return usuarioService.findByUsername(username)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 }
