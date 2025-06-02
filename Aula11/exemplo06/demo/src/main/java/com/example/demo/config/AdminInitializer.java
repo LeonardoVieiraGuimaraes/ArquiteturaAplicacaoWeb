@@ -1,5 +1,7 @@
 package com.example.demo.config;
 
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -17,7 +19,9 @@ public class AdminInitializer {
     @Bean
     public CommandLineRunner createAdmin(UsuarioService usuarioService) {
         return args -> {
-            if (usuarioService.findByUsername("admin").isEmpty()) {
+            // Ajuste: use Optional<Usuario> corretamente
+            Optional<Usuario> adminOpt = usuarioService.findByUsername("admin");
+            if (!adminOpt.isPresent()) {
                 logger.info("Criando usuário admin padrão...");
                 Usuario admin = new Usuario();
                 admin.setUsername("admin");
@@ -30,7 +34,24 @@ public class AdminInitializer {
                 usuarioService.createUser(admin);
                 logger.info("Usuário admin criado com sucesso!");
             } else {
-                logger.info("Usuário admin já existe. Nenhuma ação realizada.");
+                Usuario adminExistente = adminOpt.get();
+                // Corrige roles do admin existente caso estejam ausentes ou erradas
+                boolean precisaAtualizar = false;
+                String[] roles = adminExistente.getRoles();
+                if (roles == null || roles.length == 0 || !roles[0].equals("ROLE_ADMIN")) {
+                    adminExistente.setRoles(new String[]{"ROLE_ADMIN"});
+                    precisaAtualizar = true;
+                }
+                if (!adminExistente.isEnabled()) {
+                    adminExistente.setEnabled(true);
+                    precisaAtualizar = true;
+                }
+                if (precisaAtualizar) {
+                    usuarioService.createUser(adminExistente);
+                    logger.info("Usuário admin já existia, mas foi atualizado (roles e/ou enabled).");
+                } else {
+                    logger.info("Usuário admin já existe. Nenhuma ação realizada.");
+                }
             }
         };
     }

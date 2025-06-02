@@ -21,13 +21,10 @@ public class CustomUsuarioDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Usuario usuario = usuarioService.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
-        if (!usuario.isEnabled()) {
-            throw new UsernameNotFoundException("Usuário desabilitado");
-        }
-        // Se usuario.getRoles() retorna String[], use diretamente cada string como nome da role
-        return User.builder()
+        // Busca Optional<Usuario> e trata corretamente
+        return usuarioService.findByUsername(username)
+                .filter(Usuario::isEnabled)
+                .map(usuario -> User.builder()
                 .username(usuario.getUsername())
                 .password(usuario.getPassword())
                 .authorities(
@@ -35,6 +32,7 @@ public class CustomUsuarioDetailsService implements UserDetailsService {
                                 .map(SimpleGrantedAuthority::new)
                                 .toList()
                 )
-                .build();
+                .build())
+                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado ou desabilitado"));
     }
 }

@@ -27,7 +27,10 @@ public class UsuarioService {
     }
 
     public Usuario createUser(Usuario usuario) {
-        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+        String senha = usuario.getPassword();
+        if (!senha.startsWith("$2a$")) { // só criptografa se não estiver criptografada
+            usuario.setPassword(passwordEncoder.encode(senha));
+        }
         return usuarioRepository.save(usuario);
     }
 
@@ -49,6 +52,7 @@ public class UsuarioService {
         return false;
     }
 
+    // Retorna Optional<Usuario> para uso seguro no service de autenticação
     public Optional<Usuario> findByUsername(String username) {
         return usuarioRepository.findByUsername(username);
     }
