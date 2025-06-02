@@ -7,8 +7,9 @@
 </head>
 <body>
     <div class="container mt-4">
-        <h2>Cadastrar Autor</h2>
+        <h2 th:text="${author.id != null} ? 'Editar Autor' : 'Cadastrar Autor'"></h2>
         <form th:action="@{/authors}" method="post" th:object="${author}">
+            <input type="hidden" th:if="${author.id != null}" th:field="*{id}">
             <div class="mb-3">
                 <label class="form-label">Nome</label>
                 <input type="text" class="form-control" th:field="*{nome}" required>

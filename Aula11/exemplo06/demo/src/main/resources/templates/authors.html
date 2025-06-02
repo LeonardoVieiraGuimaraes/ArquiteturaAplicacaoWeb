@@ -21,6 +21,7 @@
                     <th>Nome</th>
                     <th>Data de Nascimento</th>
                     <th>Nacionalidade</th>
+                    <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
@@ -31,6 +32,12 @@
                         <span th:if="${author.dataNascimento == null}"></span>
                     </td>
                     <td th:text="${author.nacionalidade}"></td>
+                    <td>
+                        <a th:href="@{'/authors/form?id=' + ${author.id}}" class="btn btn-sm btn-primary">Editar</a>
+                        <form th:action="@{'/authors/' + ${author.id} + '/delete'}" method="post" style="display:inline;" onsubmit="return confirm('Deseja realmente excluir este autor?');">
+                            <button type="submit" class="btn btn-sm btn-danger">Excluir</button>
+                        </form>
+                    </td>
                 </tr>
             </tbody>
         </table>

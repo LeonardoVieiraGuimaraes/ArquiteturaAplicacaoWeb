@@ -25,23 +25,23 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Gera IDs automaticamente como Long
     private Long id; // Identificador único do livro
 
-    @NotBlank(message = "ISBN é obrigatório") // Validação: não pode ser nulo ou vazio
+    @NotBlank(message = "ISBN é obrigatório")
     private String isbn; // Código ISBN do livro
 
-    @NotBlank(message = "Título é obrigatório") // Validação: não pode ser nulo ou vazio
+    @NotBlank(message = "Título é obrigatório")
     private String titulo; // Título do livro
 
-    @NotNull(message = "Data de publicação é obrigatória") // Validação: não pode ser nulo
+    @NotNull(message = "Data de publicação é obrigatória")
     private LocalDate dataPublicacao; // Data de publicação do livro
 
-    @NotBlank(message = "Gênero é obrigatório") // Validação: não pode ser nulo ou vazio
+    @NotBlank(message = "Gênero é obrigatório")
     private String genero; // Gênero do livro
 
-    @NotNull(message = "Preço é obrigatório") // Validação: não pode ser nulo
-    @Positive(message = "O preço deve ser positivo") // Validação: deve ser maior que zero
+    @NotNull(message = "Preço é obrigatório")
+    @Positive(message = "O preço deve ser positivo")
     private Double preco; // Preço do livro
 
-    @ManyToOne // Relacionamento muitos-para-um com a entidade Author
-    @JoinColumn(name = "autor_id", nullable = false) // Define a chave estrangeira para o autor
+    @ManyToOne
+    @JoinColumn(name = "autor_id", nullable = false)
     private Author autor; // Autor do livro
 }

@@ -12,8 +12,9 @@
         </div>
     </nav>
     <div class="container mt-4">
-        <h2>Cadastrar Livro</h2>
+        <h2 th:text="${book.id != null} ? 'Editar Livro' : 'Cadastrar Livro'"></h2>
         <form th:action="@{/books}" method="post" th:object="${book}">
+            <input type="hidden" th:if="${book.id != null}" th:field="*{id}">
             <div class="mb-3">
                 <label class="form-label">ISBN</label>
                 <input type="text" class="form-control" th:field="*{isbn}" required>

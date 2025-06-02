@@ -6,6 +6,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 /**
@@ -22,7 +24,12 @@ public class Author {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Gera IDs automaticamente como Long
     private Long id; // Identificador único do autor
 
+    @NotBlank(message = "Nome é obrigatório")
     private String nome; // Nome do autor
+
+    @NotNull(message = "Data de nascimento é obrigatória")
     private LocalDate dataNascimento; // Alterado para LocalDate
+
+    @NotBlank(message = "Nacionalidade é obrigatória")
     private String nacionalidade; // Nacionalidade do autor
 }

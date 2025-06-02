@@ -43,8 +43,8 @@
                     <td th:text="${book.preco}"></td>
                     <td>
                         <a th:href="@{'/books/form?id=' + ${book.id}}" class="btn btn-sm btn-primary">Editar</a>
-                        <form th:action="@{'/books/' + ${book.id} + '/delete'}" method="post" style="display:inline;">
-                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Deseja realmente excluir este livro?');">Excluir</button>
+                        <form th:action="@{'/books/' + ${book.id} + '/delete'}" method="post" style="display:inline;" onsubmit="return confirm('Deseja realmente excluir este livro?');">
+                            <button type="submit" class="btn btn-sm btn-danger">Excluir</button>
                         </form>
                     </td>
                 </tr>

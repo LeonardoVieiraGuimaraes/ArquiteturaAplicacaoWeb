@@ -3,9 +3,12 @@ package com.example.demo.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.service.AuthorService;
@@ -38,8 +41,9 @@ public class BookViewController {
      * Exibe o formulário de cadastro de livro.
      */
     @GetMapping("/books/form")
-    public String bookForm(Model model) {
-        model.addAttribute("book", new com.example.demo.model.Book());
+    public String bookForm(@RequestParam(value = "id", required = false) Long id, Model model) {
+        com.example.demo.model.Book book = (id != null) ? bookService.getBookById(id).orElse(new com.example.demo.model.Book()) : new com.example.demo.model.Book();
+        model.addAttribute("book", book);
         model.addAttribute("autores", authorService.getAllAuthors());
         return "bookform";
     }
@@ -55,6 +59,17 @@ public class BookViewController {
         }
         bookService.saveBook(book);
         redirectAttributes.addFlashAttribute("successMessage", "Livro cadastrado com sucesso!");
+        return "redirect:/books";
+    }
+
+    @PostMapping("/books/{id}/delete")
+    public String deleteBook(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        boolean deleted = bookService.deleteBook(id);
+        if (deleted) {
+            redirectAttributes.addFlashAttribute("successMessage", "Livro excluído com sucesso!");
+        } else {
+            redirectAttributes.addFlashAttribute("errorMessage", "Livro não encontrado.");
+        }
         return "redirect:/books";
     }
 }
