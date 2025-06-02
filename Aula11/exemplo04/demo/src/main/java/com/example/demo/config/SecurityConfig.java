@@ -36,7 +36,8 @@ public class SecurityConfig {
                 // Permite acesso a /login para todos
                 .requestMatchers("/login").permitAll()
                 // POST, PUT, DELETE em /api/books e /api/authors somente para ADMIN
-                .requestMatchers(HttpMethod.POST, "/api/books").hasAuthority("ROLE_ADMIN")
+                .requestMatchers(HttpMethod.POST, "/api/books").hasAuthority("ROLE_ADMIN").
+                requestMatchers(HttpMethod.GET, "/api/books").hasAuthority("ROLE_ADMIN")
                 .requestMatchers(HttpMethod.PUT, "/api/books").hasAuthority("ROLE_ADMIN")
                 .requestMatchers(HttpMethod.DELETE, "/api/books").hasAuthority("ROLE_ADMIN")
                 .requestMatchers(HttpMethod.POST, "/api/authors").hasAuthority("ROLE_ADMIN")

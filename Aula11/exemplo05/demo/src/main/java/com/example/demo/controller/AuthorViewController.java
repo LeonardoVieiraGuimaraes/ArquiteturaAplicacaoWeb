@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.demo.model.Author;
 import com.example.demo.service.AuthorService;
 
 import jakarta.validation.Valid;
@@ -37,7 +38,7 @@ public class AuthorViewController {
      */
     @GetMapping("/authors/form")
     public String authorForm(Model model) {
-        model.addAttribute("author", new com.example.demo.model.Author());
+        model.addAttribute("author", new Author());
         return "authorform";
     }
 
@@ -45,7 +46,7 @@ public class AuthorViewController {
      * Processa o cadastro de um novo autor.
      */
     @PostMapping("/authors")
-    public String saveAuthor(@Valid @ModelAttribute("author") com.example.demo.model.Author author, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+    public String saveAuthor(@Valid @ModelAttribute("author") Author author, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             return "authorform";
         }

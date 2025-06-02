@@ -65,7 +65,7 @@ public class SecurityConfig {
         // A senha é codificada usando o encoder (BCrypt).
         UserDetails user = User.builder()
                 .username("user")
-                .password(encoder.encode("senha"))
+                .password(encoder.encode("123"))
                 .roles("USER")
                 .build();
 
@@ -73,7 +73,7 @@ public class SecurityConfig {
         // Também utiliza o encoder para codificar a senha.
         UserDetails admin = User.builder()
                 .username("admin")
-                .password(encoder.encode("senha"))
+                .password(encoder.encode("4321"))
                 .roles("ADMIN")
                 .build();
 
