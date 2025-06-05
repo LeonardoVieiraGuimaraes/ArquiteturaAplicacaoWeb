@@ -5,6 +5,10 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+<<<<<<< HEAD
+=======
+import org.springframework.security.access.prepost.PreAuthorize;
+>>>>>>> f400c99298f0bdfad30d99dc5f226b5b7a51dbc8
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +30,10 @@ public class AuthorController {
     @Autowired // Injeta automaticamente a dependência do serviço AuthorService
     private AuthorService authorService;
 
+<<<<<<< HEAD
+=======
+    @PreAuthorize("hasRole('ADMIN')")
+>>>>>>> f400c99298f0bdfad30d99dc5f226b5b7a51dbc8
     @PostMapping // Define o endpoint para criar um novo autor
     public ResponseEntity<Author> saveAuthor(@Valid @RequestBody Author author) {
         Author savedAuthor = authorService.saveAuthor(author); // Salva o autor usando o serviço
@@ -44,12 +52,20 @@ public class AuthorController {
         return author.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build()); // Retorna o autor ou 404 (Not Found)
     }
 
+<<<<<<< HEAD
+=======
+    @PreAuthorize("hasRole('ADMIN')")
+>>>>>>> f400c99298f0bdfad30d99dc5f226b5b7a51dbc8
     @PutMapping("/{id}") // Define o endpoint para atualizar um autor pelo ID
     public ResponseEntity<Author> updateAuthor(@PathVariable Long id, @Valid @RequestBody Author updatedAuthor) {
         Optional<Author> author = authorService.updateAuthor(id, updatedAuthor); // Atualiza o autor usando o serviço
         return author.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build()); // Retorna o autor atualizado ou 404 (Not Found)
     }
 
+<<<<<<< HEAD
+=======
+    @PreAuthorize("hasRole('ADMIN')")
+>>>>>>> f400c99298f0bdfad30d99dc5f226b5b7a51dbc8
     @DeleteMapping("/{id}") // Define o endpoint para deletar um autor pelo ID
     public ResponseEntity<Void> deleteAuthor(@PathVariable Long id) {
         boolean deleted = authorService.deleteAuthor(id); // Deleta o autor usando o serviço

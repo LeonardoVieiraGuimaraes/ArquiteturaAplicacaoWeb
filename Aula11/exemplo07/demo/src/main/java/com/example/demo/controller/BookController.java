@@ -5,6 +5,10 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+<<<<<<< HEAD
+=======
+import org.springframework.security.access.prepost.PreAuthorize;
+>>>>>>> f400c99298f0bdfad30d99dc5f226b5b7a51dbc8
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +30,10 @@ public class BookController {
     @Autowired // Injeta automaticamente a dependência do serviço BookService
     private BookService bookService;
 
+<<<<<<< HEAD
+=======
+    @PreAuthorize("hasRole('ADMIN')")
+>>>>>>> f400c99298f0bdfad30d99dc5f226b5b7a51dbc8
     @PostMapping // Define o endpoint para criar um novo livro
     public ResponseEntity<Book> saveBook(@Valid @RequestBody Book book) {
         Book savedBook = bookService.saveBook(book); // Salva o livro usando o serviço
@@ -44,12 +52,20 @@ public class BookController {
         return book.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build()); // Retorna o livro ou 404 (Not Found)
     }
 
+<<<<<<< HEAD
+=======
+    @PreAuthorize("hasRole('ADMIN')")
+>>>>>>> f400c99298f0bdfad30d99dc5f226b5b7a51dbc8
     @PutMapping("/{id}") // Define o endpoint para atualizar um livro pelo ID
     public ResponseEntity<Book> updateBook(@PathVariable Long id, @Valid @RequestBody Book updatedBook) {
         Optional<Book> book = bookService.updateBook(id, updatedBook); // Atualiza o livro usando o serviço
         return book.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build()); // Retorna o livro atualizado ou 404 (Not Found)
     }
 
+<<<<<<< HEAD
+=======
+    @PreAuthorize("hasRole('ADMIN')")
+>>>>>>> f400c99298f0bdfad30d99dc5f226b5b7a51dbc8
     @DeleteMapping("/{id}") // Define o endpoint para deletar um livro pelo ID
     public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
         boolean deleted = bookService.deleteBook(id); // Deleta o livro usando o serviço

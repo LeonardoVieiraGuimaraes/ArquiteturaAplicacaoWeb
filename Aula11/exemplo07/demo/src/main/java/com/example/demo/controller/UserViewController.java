@@ -1,10 +1,17 @@
 package com.example.demo.controller;
 
+<<<<<<< HEAD
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+=======
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+>>>>>>> f400c99298f0bdfad30d99dc5f226b5b7a51dbc8
 
 import com.example.demo.model.User;
 import com.example.demo.service.RoleService;
@@ -16,8 +23,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserViewController {
 
+<<<<<<< HEAD
     private static final Logger logger = LoggerFactory.getLogger(UserViewController.class);
 
+=======
+>>>>>>> f400c99298f0bdfad30d99dc5f226b5b7a51dbc8
     private final UserService userService;
     private final RoleService roleService;
 

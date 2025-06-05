@@ -4,6 +4,10 @@ import com.example.demo.model.Role;
 import com.example.demo.service.RoleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+<<<<<<< HEAD
+=======
+import org.springframework.security.access.prepost.PreAuthorize;
+>>>>>>> f400c99298f0bdfad30d99dc5f226b5b7a51dbc8
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,6 +16,10 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/roles")
 @RequiredArgsConstructor
+<<<<<<< HEAD
+=======
+@PreAuthorize("hasRole('ADMIN')")
+>>>>>>> f400c99298f0bdfad30d99dc5f226b5b7a51dbc8
 public class RoleController {
 
     private final RoleService roleService;

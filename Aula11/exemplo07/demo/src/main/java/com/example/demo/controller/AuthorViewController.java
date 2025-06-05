@@ -1,15 +1,25 @@
 package com.example.demo.controller;
 
+<<<<<<< HEAD
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
+=======
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+>>>>>>> f400c99298f0bdfad30d99dc5f226b5b7a51dbc8
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+<<<<<<< HEAD
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+=======
+>>>>>>> f400c99298f0bdfad30d99dc5f226b5b7a51dbc8
 
 import com.example.demo.model.Author;
 import com.example.demo.service.AuthorService;
@@ -49,19 +59,32 @@ public class AuthorViewController {
     /**
      * Processa o cadastro de um novo autor.
      */
+<<<<<<< HEAD
     @PostMapping("/authors")
     public String saveAuthor(@Valid @ModelAttribute("author") Author author, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+=======
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/authors")
+    public String saveAuthor(@Valid @ModelAttribute("author") Author author, BindingResult result, Model model) {
+>>>>>>> f400c99298f0bdfad30d99dc5f226b5b7a51dbc8
         if (result.hasErrors()) {
             return "authorform";
         }
         authorService.saveAuthor(author);
+<<<<<<< HEAD
         redirectAttributes.addFlashAttribute("successMessage", "Autor cadastrado com sucesso!");
         return "redirect:/authors";
+=======
+        model.addAttribute("successMessage", "Autor cadastrado com sucesso!");
+        model.addAttribute("authors", authorService.getAllAuthors());
+        return "authors";
+>>>>>>> f400c99298f0bdfad30d99dc5f226b5b7a51dbc8
     }
 
     /**
      * Processa a exclusão de um autor existente.
      */
+<<<<<<< HEAD
     @PostMapping("/authors/{id}/delete")
     public String deleteAuthor(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         boolean deleted = authorService.deleteAuthor(id);
@@ -71,5 +94,18 @@ public class AuthorViewController {
             redirectAttributes.addFlashAttribute("errorMessage", "Autor não encontrado.");
         }
         return "redirect:/authors";
+=======
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/authors/{id}/delete")
+    public String deleteAuthor(@PathVariable Long id, Model model) {
+        boolean deleted = authorService.deleteAuthor(id);
+        if (deleted) {
+            model.addAttribute("successMessage", "Autor excluído com sucesso!");
+        } else {
+            model.addAttribute("errorMessage", "Autor não encontrado.");
+        }
+        model.addAttribute("authors", authorService.getAllAuthors());
+        return "authors";
+>>>>>>> f400c99298f0bdfad30d99dc5f226b5b7a51dbc8
     }
 }

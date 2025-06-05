@@ -1,9 +1,16 @@
 package com.example.demo.controller;
 
+<<<<<<< HEAD
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
+=======
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+>>>>>>> f400c99298f0bdfad30d99dc5f226b5b7a51dbc8
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -51,6 +58,10 @@ public class BookViewController {
     /**
      * Processa o cadastro de um novo livro.
      */
+<<<<<<< HEAD
+=======
+    @PreAuthorize("hasRole('ADMIN')")
+>>>>>>> f400c99298f0bdfad30d99dc5f226b5b7a51dbc8
     @PostMapping("/books")
     public String saveBook(@Valid @ModelAttribute("book") com.example.demo.model.Book book, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
@@ -62,6 +73,10 @@ public class BookViewController {
         return "redirect:/books";
     }
 
+<<<<<<< HEAD
+=======
+    @PreAuthorize("hasRole('ADMIN')")
+>>>>>>> f400c99298f0bdfad30d99dc5f226b5b7a51dbc8
     @PostMapping("/books/{id}/delete")
     public String deleteBook(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         boolean deleted = bookService.deleteBook(id);
