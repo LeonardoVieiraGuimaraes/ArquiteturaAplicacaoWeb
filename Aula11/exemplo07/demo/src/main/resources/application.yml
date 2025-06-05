@@ -1,0 +1,55 @@
+spring:
+  application:
+    name: demo # Nome da aplicação Spring Boot
+  datasource:
+    # url: jdbc:h2:file:./src/main/resources/data/demo-db # Caminho do banco de dados H2 (arquivo)
+    url: jdbc:h2:mem:demo-db
+    driver-class-name: org.h2.Driver # Driver JDBC do H2
+    username: sa # Usuário padrão do H2
+    password: # Senha em branco para o H2
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect # Dialeto do Hibernate para H2
+    hibernate:
+      ddl-auto: update # Atualiza o schema do banco automaticamente
+  h2:
+    console:
+      enabled: true # Habilita o console web do H2
+      path: /h2-console # Caminho de acesso ao console H2
+      settings:
+        web-allow-others: true # Permite acesso ao console H2 de outros hosts
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          # ==========================
+          # CONFIGURAÇÃO PARA CHAVE ASSIMÉTRICA (PÚBLICA/PRIVADA)
+          # ==========================
+
+          # Opção 1: issuer-uri (recomendado para produção, RS256/RS512/ES256/PS256 etc)
+          issuer-uri: https://seu-authorization-server.com/realms/sua-realm
+
+          # Opção 2: jwk-set-uri (caso não tenha issuer-uri)
+          # jwk-set-uri: https://idp.example.com/.well-known/jwks.json
+
+          # Opção 3: public-key-location (caso queira informar a chave pública diretamente)
+          # public-key-location: classpath:jwt-public.pem
+
+          # Exemplo de algoritmo aceito (pode ser RS256, RS512, ES256, ES512, PS256, etc)
+          jws-algorithms: RS512
+
+server:
+  servlet:
+    context-path: / # Contexto raiz da aplicação
+
+# ==========================
+# Opções de Algoritmo para jws-algorithms:
+# RS256 — RSA usando SHA-256 (assimétrico, padrão para JWT)
+# RS384 — RSA usando SHA-384 (assimétrico)
+# RS512 — RSA usando SHA-512 (assimétrico)
+# ES256 — ECDSA usando P-256 e SHA-256 (assimétrico)
+# ES384 — ECDSA usando P-384 e SHA-384 (assimétrico)
+# ES512 — ECDSA usando P-521 e SHA-512 (assimétrico)
+# PS256 — RSASSA-PSS usando SHA-256 e MGF1 com SHA-256 (assimétrico)
+# PS384 — RSASSA-PSS usando SHA-384 e MGF1 com SHA-384 (assimétrico)
+# PS512 — RSASSA-PSS usando SHA-512 e MGF1 com SHA-512 (assimétrico)
+# ==========================

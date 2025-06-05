@@ -1,0 +1,16 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4" th:fragment="navbar">
+    <div class="container">
+        <a class="navbar-brand" th:href="@{/home}">Biblioteca</a>
+        <div class="d-flex align-items-center ms-auto">
+            <div sec:authorize="isAuthenticated()">
+                Olá, <span sec:authentication="name"></span>!
+                <form th:action="@{/logout}" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-outline-light btn-sm ms-2">Sair</button>
+                </form>
+            </div>
+            <div sec:authorize="!isAuthenticated()">
+                <a th:href="@{/login}" class="btn btn-outline-light btn-sm ms-2">Entrar</a>
+            </div>
+        </div>
+    </div>
+</nav>
