@@ -1,0 +1,82 @@
+spring:
+  application:
+    name: demo # Nome da aplicação Spring Boot
+
+  datasource:
+    url: jdbc:h2:file:./data/demo-db # Caminho do banco de dados H2 (arquivo local)
+    driver-class-name: org.h2.Driver # Driver JDBC do H2
+    username: sa # Usuário padrão do H2
+    password: # Senha em branco (padrão do H2)
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect # Dialeto do Hibernate para H2
+    hibernate:
+      ddl-auto: update # Atualiza o schema do banco automaticamente conforme as entidades
+
+  h2:
+    console:
+      enabled: true # Habilita o console web do H2
+      path: /h2-console # Caminho para acessar o console
+      settings:
+        web-allow-others: true # Permite acesso ao console de outros hosts
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          secret-key: KJH98d!kLop1Zx4VbncT7eQaWmRtYu12
+  
+server:
+  servlet:
+    context-path: / # Define o contexto raiz da aplicação ("/")
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+
+
+# =============================================================================
+# Este arquivo application.yml centraliza todas as configurações da aplicação Spring Boot.
+# Aqui você define propriedades como banco de dados, console H2, JPA, e principalmente
+# as opções de segurança para JWT (JSON Web Token) do Resource Server.
+#
+# A seção 'spring.security.oauth2.resourceserver.jwt' permite escolher o tipo de criptografia
+# para validação dos tokens JWT recebidos pela API:
+#
+# - secret-key: Para tokens HS256 (simétrico, recomendado apenas para testes/desenvolvimento).
+# - public-key-location: Para tokens RS256 (assimétrico, usando chave pública local).
+# - jwk-set-uri: Para tokens RS256/ES256, usando um servidor de autorização externo (Keycloak, Auth0, Cognito).
+# - issuer-uri: Para descoberta automática das chaves públicas via OpenID Connect (produção).
+#
+# Apenas uma dessas opções deve ser usada por vez!
+# =============================================================================
+
+# =============================================================================
+# Diferença entre JWT e login tradicional
+# -----------------------------------------------------------------------------
+# Aspecto              | Login Tradicional (Sessão HTTP)         | JWT (JSON Web Token)
+# ---------------------|-----------------------------------------|-------------------------------
+# Como funciona        | Após login, o servidor cria uma sessão  | Após login, o servidor gera um
+#                      | e armazena estado (sessão) em memória   | token JWT assinado, que é enviado
+#                      | ou DB. O cliente recebe um cookie de    | ao cliente e armazenado localmente
+#                      | sessão.                                 | (localStorage, cookie, etc).
+# Armazenamento        | Sessão fica no servidor.                | Token fica no cliente.
+# Estado do servidor   | Estado mantido no servidor (stateful).  | Sem estado no servidor (stateless).
+# Escalabilidade       | Pode ser mais difícil escalar porque o  | Facilita escalabilidade, pois não
+#                      | servidor mantém estado.                 | depende do servidor para sessão.
+# Envio do token       | Cookie de sessão enviado automaticamente | Token JWT deve ser enviado manualmente
+#                      | pelo navegador em cada requisição.      | (ex: header Authorization: Bearer <token>).
+# Segurança            | Cookie seguro, pode usar HttpOnly, e    | Token JWT pode estar vulnerável a XSS
+#                      | CSRF pode ser protegido mais facilmente.| se armazenado em localStorage; precisa
+#                      |                                         | de cuidado extra.
+# Expiração            | Sessão expira no servidor; servidor     | Token tem expiração embutida e não pode
+#                      | pode invalidar sessão.                  | ser invalidado antes do prazo (a menos
+#                      |                                         | que o servidor mantenha lista de tokens).
+# Uso típico           | Aplicações web tradicionais, onde o     | APIs RESTful, microsserviços, aplicações
+#                      | frontend e backend estão no mesmo       | mobile, SPAs que consomem APIs separadas.
+#                      | domínio.                                |
+# Complexidade         | Configuração mais simples para apps web | Requer manipulação de tokens, filtro JWT, etc.
+#                      | tradicionais.                           |
+# Suporte de logout    | Fácil invalidar sessão no servidor.     | Logout requer remover o token no cliente
+#                      |                                         | ou implementar blacklist no servidor.
+# =============================================================================
