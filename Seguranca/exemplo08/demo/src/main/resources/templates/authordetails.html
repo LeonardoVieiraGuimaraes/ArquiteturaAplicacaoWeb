@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalhes do Autor</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+    <div class="container mt-4">
+        <h2>Detalhes do Autor</h2>
+        <div th:if="${errorMessage}">
+            <div class="alert alert-danger" th:text="${errorMessage}"></div>
+        </div>
+        <div th:if="${author != null}">
+            <dl class="row">
+                <dt class="col-sm-3">Nome</dt>
+                <dd class="col-sm-9" th:text="${author.nome} ?: '-'"></dd>
+
+                <dt class="col-sm-3">Data de Nascimento</dt>
+                <dd class="col-sm-9" th:text="${author.dataNascimento} ?: '-'"></dd>
+
+                <dt class="col-sm-3">Nacionalidade</dt>
+                <dd class="col-sm-9" th:text="${author.nacionalidade} ?: '-'"></dd>
+
+                <dt class="col-sm-3">Cadastrado por</dt>
+                <dd class="col-sm-9">
+                    <span th:if="${author.user != null}">
+                        <span th:text="${author.user.nomeCompleto}"></span>
+                        <span th:each="role : ${author.user.roles}">
+                            (<span th:text="${role.displayName}"></span>)
+                        </span>
+                    </span>
+                    <span th:if="${author.user == null}">-</span>
+                </dd>
+            </dl>
+        </div>
+        <a th:href="@{/authors}" class="btn btn-secondary">Voltar</a>
+    </div>
+</body>
+</html>

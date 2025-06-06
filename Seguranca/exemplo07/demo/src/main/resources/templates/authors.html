@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Autores</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div th:replace="fragments/navbar :: navbar"></div>
+    <div class="container">
+        <h2 class="mb-4">Lista de Autores</h2>
+        <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+        <a class="btn btn-success mb-3" th:href="@{/authors/form}">Cadastrar Autor</a>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Data de Nascimento</th>
+                    <th>Nacionalidade</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="author : ${authors}">
+                    <td th:text="${author.nome}"></td>
+                    <td>
+                        <span th:if="${author.dataNascimento != null}" th:text="${#temporals.format(author.dataNascimento, 'dd/MM/yyyy')}"></span>
+                        <span th:if="${author.dataNascimento == null}"></span>
+                    </td>
+                    <td th:text="${author.nacionalidade}"></td>
+                    <td>
+                        <a th:href="@{'/authors/form?id=' + ${author.id}}" class="btn btn-sm btn-primary">Editar</a>
+                        <form th:action="@{'/authors/' + ${author.id} + '/delete'}" method="post" style="display:inline;" onsubmit="return confirm('Deseja realmente excluir este autor?');">
+                            <button type="submit" class="btn btn-sm btn-danger">Excluir</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <a th:href="@{/home}" class="btn btn-secondary mt-3">Voltar para Home</a>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

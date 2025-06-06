@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Funções</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div th:replace="fragments/navbar :: navbar"></div>
+    <div class="container">
+        <h2 class="mb-4">Lista de Funções</h2>
+        <a class="btn btn-success mb-3" th:href="@{/roles/form}">Cadastrar Função</a>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome Técnico</th>
+                    <th>Nome Amigável</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="role : ${roles}">
+                    <td th:text="${role.id}"></td>
+                    <td th:text="${role.name}"></td>
+                    <td th:text="${role.displayName}"></td>
+                    <td>
+                        <a th:href="@{'/roles/form?id=' + ${role.id}}" class="btn btn-sm btn-primary">Editar</a>
+                        <form th:action="@{'/roles/' + ${role.id} + '/delete'}" method="post" style="display:inline;" onsubmit="return confirm('Deseja realmente excluir esta função?');">
+                            <button type="submit" class="btn btn-sm btn-danger">Excluir</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <a th:href="@{/home}" class="btn btn-secondary mt-3">Voltar para Home</a>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

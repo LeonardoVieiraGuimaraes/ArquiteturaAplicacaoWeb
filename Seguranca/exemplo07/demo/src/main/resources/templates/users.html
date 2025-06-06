@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Usuários</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div th:replace="fragments/navbar :: navbar"></div>
+    <div class="container">
+        <h2 class="mb-4">Lista de Usuários</h2>
+        <a class="btn btn-success mb-3" th:href="@{/users/form}">Cadastrar Usuário</a>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nome Completo</th>
+                    <th>CPF</th>
+                    <th>E-mail</th>
+                    <th>Username</th>
+                    <th>Ativo</th>
+                    <th>Funções</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="user : ${users}">
+                    <td th:text="${user.nomeCompleto}"></td>
+                    <td th:text="${user.cpf}"></td>
+                    <td th:text="${user.email}"></td>
+                    <td th:text="${user.username}"></td>
+                    <td>
+                        <span th:text="${user.enabled ? 'Sim' : 'Não'}"></span>
+                    </td>
+                    <td>
+                        <span th:each="role : ${user.roles}">
+                            <span th:text="${role.displayName}"></span><br>
+                        </span>
+                    </td>
+                    <td>
+                        <a th:href="@{'/users/form?id=' + ${user.id}}" class="btn btn-sm btn-primary">Editar</a>
+                        <form th:action="@{'/users/' + ${user.id} + '/delete'}" method="post" style="display:inline;" onsubmit="return confirmDelete(event);">
+                            <button type="submit" class="btn btn-sm btn-danger">Excluir</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <a th:href="@{/home}" class="btn btn-secondary mt-3">Voltar para Home</a>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    function confirmDelete(event) {
+        return confirm('Deseja realmente excluir este usuário?');
+    }
+    </script>
+</body>
+</html>
