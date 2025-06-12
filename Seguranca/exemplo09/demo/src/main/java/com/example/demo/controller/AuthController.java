@@ -1,23 +1,30 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.User;
-import com.example.demo.service.UserService;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import java.nio.charset.StandardCharsets;
+import java.util.Date;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.*;
-import com.nimbusds.jose.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.model.User;
+import com.example.demo.service.UserService;
+import com.nimbusds.jose.JOSEException;
+import com.nimbusds.jose.JWSAlgorithm;
+import com.nimbusds.jose.JWSHeader;
+import com.nimbusds.jose.JWSSigner;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
 
-import java.nio.charset.StandardCharsets;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/auth")
@@ -34,11 +41,13 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthRequest request) {
+        System.out.println("Tentando login para: " + request.getUsername());
         if (request.getUsername() == null || request.getPassword() == null) {
             return ResponseEntity.badRequest().body("Username e senha são obrigatórios.");
         }
         Optional<User> userOpt = userService.findByUsername(request.getUsername())
                 .filter(user -> passwordEncoder.matches(request.getPassword(), user.getPassword()));
+        System.out.println("Usuário encontrado? " + userOpt.isPresent());
         if (userOpt.isPresent()) {
             return generateTokenResponse(userOpt.get());
         }
@@ -50,16 +59,17 @@ public class AuthController {
             if (secretKey.getBytes(StandardCharsets.UTF_8).length < 32) {
                 return ResponseEntity.status(500).body("A chave secreta JWT precisa ter pelo menos 32 bytes (256 bits)");
             }
-            List<String> roles = user.getRoles().stream()
+            // Troque para string separada por espaço
+            String scope = user.getRoles().stream()
                     .map(r -> r.getName())
-                    .collect(Collectors.toList());
+                    .collect(Collectors.joining(" "));
 
             Date now = new Date();
             Date exp = new Date(now.getTime() + EXPIRATION_MILLIS);
 
             JWTClaimsSet claims = new JWTClaimsSet.Builder()
                     .subject(user.getUsername())
-                    .claim("scope", roles)
+                    .claim("scope", scope)
                     .issueTime(now)
                     .expirationTime(exp)
                     .build();
@@ -80,12 +90,14 @@ public class AuthController {
 
     @Data
     public static class AuthRequest {
+
         private String username;
         private String password;
     }
 
     @Data
     public static class AuthResponse {
+
         private final String token;
     }
 }

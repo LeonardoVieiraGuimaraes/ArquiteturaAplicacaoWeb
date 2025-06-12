@@ -1,7 +1,11 @@
 global:
-  scrape_interval: 15s
-  evaluation_interval: 15s
+  scrape_interval: 15s # Intervalo padrão de coleta de métricas
+  evaluation_interval: 15s # Intervalo de avaliação de regras
 
+rule_files:
+  - "alert.rules.yml" # Inclui o arquivo de regras de alerta
+
+# rule_files pode ser usado para incluir arquivos de regras de alerta
 # rule_files:
 #   - "first.rules"
 #   - "second.rules"
@@ -9,29 +13,10 @@ global:
 scrape_configs:
   - job_name: prometheus
     static_configs:
-      - targets: ['localhost:9090']
+      - targets: ["localhost:9090"] # Monitora o próprio Prometheus
 
-  - job_name: 'spring-actuator'
-    metrics_path: '/actuator/prometheus'
-    scrape_interval: 5s
+  - job_name: "spring-actuator"
+    metrics_path: "/actuator/prometheus" # Caminho das métricas expostas pelo Spring Boot
+    scrape_interval: 5s # Intervalo de coleta para o Spring Boot
     static_configs:
-      - targets: ['host.docker.internal:8080']
-
-# global:
-#   scrape_interval: 15s
-#   evaluation_interval: 15s
-
-# # rule_files:
-# #   - "first.rules"
-# #   - "second.rules"
-
-# scrape_configs:
-#   - job_name: prometheus
-#     static_configs:
-#       - targets: ['localhost:9090']
-
-#   - job_name: 'spring-actuator'
-#     metrics_path: '/actuator/prometheus'
-#     scrape_interval: 5s
-#     static_configs:
-#       - targets: ['localhost:8080']
+      - targets: ["host.docker.internal:8080"] # Endereço da aplicação Spring Boot (host para container)

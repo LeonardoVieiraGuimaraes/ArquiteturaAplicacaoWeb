@@ -2,17 +2,22 @@ management:
   endpoints:
     web:
       exposure:
-        include: "*"
+        include: "*" # Expõe todos os endpoints do actuator via HTTP (inclusive /actuator/prometheus)
   endpoint:
     prometheus:
-      enabled: true
+      enabled: true # Habilita o endpoint /actuator/prometheus para exportação de métricas no formato Prometheus
     info:
-      enabled: true
+      enabled: true # Habilita o endpoint /actuator/info para informações da aplicação
     health:
-      enabled: true
+      enabled: true # Habilita o endpoint /actuator/health para status de saúde da aplicação
     metrics:
-      enabled: true
+      enabled: true # Habilita o endpoint /actuator/metrics para métricas gerais
     loggers:
-      enabled: true
+      enabled: true # Habilita o endpoint /actuator/loggers para configuração de loggers em tempo real
     mappings:
-      enabled: true
+      enabled: true # Habilita o endpoint /actuator/mappings para visualizar o mapeamento de endpoints da aplicação
+
+logging:
+  level:
+    root: INFO # Define o nível de log padrão para a aplicação
+    com.seuprojeto.monitoramento: DEBUG # Define o nível de log DEBUG para a sua base de código (ajuste o pacote conforme seu projeto)
