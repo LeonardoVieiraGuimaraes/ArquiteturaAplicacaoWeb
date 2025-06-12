@@ -81,6 +81,7 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
+<<<<<<< HEAD
         <!-- Remova se não for usar Authorization Server -->
         <!--
         <dependency>
@@ -88,6 +89,9 @@
             <artifactId>spring-security-oauth2-authorization-server</artifactId>
         </dependency>
         -->
+=======
+       
+>>>>>>> 5143a694945bb164057e5e8620ed5a4abb482903
     </dependencies>
 
     <build>
