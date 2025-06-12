@@ -34,7 +34,9 @@ public class UserService {
     public Optional<User> updateUser(Long id, User user) {
         return userRepository.findById(id).map(existingUser -> {
             existingUser.setUsername(user.getUsername());
-            existingUser.setPassword(passwordEncoder.encode(user.getPassword()));
+            if (!user.getPassword().equals(existingUser.getPassword())) {
+                existingUser.setPassword(passwordEncoder.encode(user.getPassword()));
+            }
             existingUser.setEnabled(user.isEnabled());
             existingUser.setRoles(user.getRoles());
             existingUser.setNomeCompleto(user.getNomeCompleto());

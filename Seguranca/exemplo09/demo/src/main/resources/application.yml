@@ -25,7 +25,7 @@ spring:
       resourceserver:
         jwt:
           secret-key: KJH98d!kLop1Zx4VbncT7eQaWmRtYu12
-  
+
 server:
   servlet:
     context-path: / # Define o contexto raiz da aplicação ("/")
@@ -33,8 +33,6 @@ server:
 logging:
   level:
     org.springframework.security: DEBUG
-
-
 # =============================================================================
 # Este arquivo application.yml centraliza todas as configurações da aplicação Spring Boot.
 # Aqui você define propriedades como banco de dados, console H2, JPA, e principalmente

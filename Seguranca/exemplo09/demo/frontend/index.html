@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Teste API JWT</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 2em;
+      }
+      input,
+      button {
+        margin: 0.5em 0;
+      }
+      textarea {
+        width: 100%;
+        height: 100px;
+      }
+      .token {
+        word-break: break-all;
+        background: #eee;
+        padding: 0.5em;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Login</h2>
+    <input id="username" placeholder="Usuário" value="admin" /><br />
+    <input
+      id="password"
+      type="password"
+      placeholder="Senha"
+      value="admin431"
+    /><br />
+    <button onclick="login()">Login</button>
+    <div id="loginResult"></div>
+    <hr />
+    <h2>Requisição autenticada</h2>
+    <button onclick="getUsers()">Listar Usuários (ADMIN)</button>
+    <button onclick="getBooks()">Listar Livros (Público)</button>
+    <div id="apiResult"></div>
+    <script>
+      // Defina a URL base da API (ajuste se necessário)
+      const API_URL = "http://localhost:8080";
+
+      let token = "";
+
+      function login() {
+        document.getElementById("loginResult").innerText = "Enviando...";
+        fetch(API_URL + "/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            username: document.getElementById("username").value,
+            password: document.getElementById("password").value,
+          }),
+        })
+          .then(async (r) => {
+            let contentType = r.headers.get("content-type");
+            let data;
+            if (contentType && contentType.includes("application/json")) {
+              data = await r.json();
+            } else {
+              data = await r.text();
+            }
+            if (r.ok && data.token) {
+              token = data.token;
+              document.getElementById("loginResult").innerHTML =
+                "<b>Token JWT:</b><div class='token'>" + token + "</div>";
+            } else {
+              document.getElementById("loginResult").innerText =
+                typeof data === "string" ? data : JSON.stringify(data);
+            }
+          })
+          .catch((e) => (document.getElementById("loginResult").innerText = e));
+      }
+
+      function getUsers() {
+        if (!token) {
+          alert("Faça login primeiro!");
+          return;
+        }
+        document.getElementById("apiResult").innerText = "Carregando...";
+        fetch(API_URL + "/api/users", {
+          headers: { Authorization: "Bearer " + token },
+        })
+          .then((r) => r.json())
+          .then(
+            (data) =>
+              (document.getElementById("apiResult").innerText = JSON.stringify(
+                data,
+                null,
+                2
+              ))
+          )
+          .catch((e) => (document.getElementById("apiResult").innerText = e));
+      }
+
+      function getBooks() {
+        document.getElementById("apiResult").innerText = "Carregando...";
+        fetch(API_URL + "/api/books", {
+          headers: token ? { Authorization: "Bearer " + token } : {},
+        })
+          .then((r) => r.json())
+          .then(
+            (data) =>
+              (document.getElementById("apiResult").innerText = JSON.stringify(
+                data,
+                null,
+                2
+              ))
+          )
+          .catch((e) => (document.getElementById("apiResult").innerText = e));
+      }
+    </script>
+  </body>
+</html>

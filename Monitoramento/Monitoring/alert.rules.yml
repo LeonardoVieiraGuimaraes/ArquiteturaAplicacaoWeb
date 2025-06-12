@@ -1,0 +1,38 @@
+groups:
+  - name: exemplo-alertas # Nome do grupo de regras de alerta
+    rules:
+      - alert: UsoElevadoDeCPU # Nome do alerta
+        expr: process_cpu_usage > 0.8 # Expressão PromQL: dispara se o uso de CPU for maior que 80%
+        for: 1m # A condição deve ser verdadeira por pelo menos 1 minuto para acionar o alerta
+        labels:
+          severity: warning # Rótulo de severidade do alerta
+        annotations:
+          summary: "Uso de CPU acima de 80% por mais de 1 minuto" # Resumo exibido no alerta
+          description: "A aplicação está utilizando mais de 80% da CPU." # Descrição detalhada do alerta
+
+      - alert: MemoriaLivreBaixa # Alerta para pouca memória livre na JVM
+        expr: jvm_memory_free_bytes < 100000000 # Menos de 100MB livres
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Memória livre da JVM abaixo de 100MB por mais de 2 minutos"
+          description: "A aplicação está com pouca memória livre disponível."
+
+      - alert: ErrosHttp5xx # Alerta para muitos erros HTTP 5xx
+        expr: sum(rate(http_server_requests_seconds_count{status=~"5.."}[1m])) > 0
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Erros HTTP 5xx detectados"
+          description: "A aplicação está retornando erros HTTP 5xx nos últimos minutos."
+
+      - alert: AlertaSempreAtivo # Alerta que sempre será acionado (para teste)
+        expr: vector(1) == 1 # Esta expressão é sempre verdadeira
+        for: 10s
+        labels:
+          severity: info
+        annotations:
+          summary: "Alerta de teste sempre ativo"
+          description: "Este alerta é apenas para teste e estará sempre ativo."
