@@ -2,7 +2,7 @@ groups:
   - name: exemplo-alertas # Nome do grupo de regras de alerta
     rules:
       - alert: UsoElevadoDeCPU # Nome do alerta
-        expr: process_cpu_usage > 0.8 # Expressão PromQL: dispara se o uso de CPU for maior que 80%
+        expr: process_cpu_usage > 0.001 # Expressão PromQL: dispara se o uso de CPU for maior que 80%
         for: 1m # A condição deve ser verdadeira por pelo menos 1 minuto para acionar o alerta
         labels:
           severity: warning # Rótulo de severidade do alerta
