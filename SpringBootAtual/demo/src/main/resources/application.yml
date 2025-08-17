@@ -1,0 +1,62 @@
+
+# application.yml - Configuração centralizada do Spring Boot
+
+spring:
+  application:
+    name: demo # Nome da aplicação
+
+  datasource: # Configuração do banco de dados
+    url: jdbc:h2:mem:demo;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE # H2 em memória para dev/teste
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  jpa:
+    hibernate:
+      ddl-auto: update # Atualiza o schema automaticamente
+    show-sql: true # Exibe SQL no console
+    properties:
+      hibernate:
+        format_sql: true # Formata o SQL para facilitar leitura
+
+  cache:
+    type: caffeine # Usa Caffeine para cache de alta performance
+
+# Configuração do servidor
+server:
+  port: 8080 # Porta padrão da aplicação
+
+# Configuração do Springdoc OpenAPI (Swagger)
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
+# Monitoramento e endpoints do Actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*' # Expõe todos os endpoints do Actuator
+  endpoint:
+    health:
+      show-details: always # Mostra detalhes de saúde
+  prometheus:
+    metrics:
+      export:
+        enabled: true # Exporta métricas para Prometheus (moderno)
+
+# Configuração de logging
+logging:
+  level:
+    root: INFO # Nível padrão
+    org.springframework.web: DEBUG # Debug para web
+
+# Exemplo de configuração para Keycloak
+keycloak:
+  realm: demo
+  auth-server-url: http://localhost:8081
+  resource: demo-app
+  public-client: true
+  bearer-only: true

@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:24.0.1
+    container_name: keycloak
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    command: start-dev
+    ports:
+      - "8081:8080"
+    restart: unless-stopped
+
+  app:
+    image: openjdk:21-jdk
+    container_name: springboot-app
+    depends_on:
+      - keycloak
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./target/demo-0.0.1-SNAPSHOT.jar:/app/demo.jar
+    command: ["java", "-jar", "/app/demo.jar"]
+    restart: unless-stopped
