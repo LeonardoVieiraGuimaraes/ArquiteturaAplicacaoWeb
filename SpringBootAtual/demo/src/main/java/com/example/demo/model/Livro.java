@@ -3,10 +3,7 @@
 package com.example.demo.model;
 
 
-import jakarta.persistence.Entity; // Indica que esta classe é uma entidade JPA
-import jakarta.persistence.GeneratedValue; // Geração automática do ID
-import jakarta.persistence.GenerationType; // Estratégia de geração do ID
-import jakarta.persistence.Id; // Indica o campo chave primária
+import jakarta.persistence.*;
 
 
 @Entity // Marca a classe como uma entidade JPA
@@ -16,7 +13,9 @@ public class Livro {
     private Long id;
 
     private String titulo; // Título do livro
-    private String autor;  // Autor do livro
+    @ManyToOne
+    @JoinColumn(name = "autor_id")
+    private Autor autor;  // Autor do livro
     private String isbn;   // ISBN do livro
 
     // Getters e Setters
@@ -25,8 +24,8 @@ public class Livro {
     public void setId(Long id) { this.id = id; }
     public String getTitulo() { return titulo; }
     public void setTitulo(String titulo) { this.titulo = titulo; }
-    public String getAutor() { return autor; }
-    public void setAutor(String autor) { this.autor = autor; }
+    public Autor getAutor() { return autor; }
+    public void setAutor(Autor autor) { this.autor = autor; }
     public String getIsbn() { return isbn; }
     public void setIsbn(String isbn) { this.isbn = isbn; }
 }

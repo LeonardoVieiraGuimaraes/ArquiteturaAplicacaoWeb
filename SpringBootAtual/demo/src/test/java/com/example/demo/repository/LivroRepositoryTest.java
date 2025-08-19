@@ -1,6 +1,7 @@
 package com.example.demo.repository;
 
 import com.example.demo.model.Livro;
+import com.example.demo.model.Autor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +21,14 @@ public class LivroRepositoryTest {
     @DisplayName("Deve salvar e buscar um livro pelo ID")
     void testSalvarEBuscarLivro() {
         // Cria e salva um livro
-        Livro livro = new Livro();
-        livro.setTitulo("Clean Code");
-        livro.setAutor("Robert C. Martin");
-        livro.setIsbn("9780132350884");
-        Livro salvo = livroRepository.save(livro);
+    Autor autor = new Autor();
+    autor.setNome("Robert C. Martin");
+
+    Livro livro = new Livro();
+    livro.setTitulo("Clean Code");
+    livro.setAutor(autor);
+    livro.setIsbn("9780132350884");
+    Livro salvo = livroRepository.save(livro);
 
         // Busca pelo ID
         Optional<Livro> encontrado = livroRepository.findById(salvo.getId());

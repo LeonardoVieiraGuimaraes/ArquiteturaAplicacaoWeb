@@ -21,9 +21,27 @@ public class LivroController {
         return livroService.listarTodos();
     }
 
+    // Endpoint GET /livros/{id} - retorna um livro por id
+    @GetMapping("/{id}")
+    public LivroDTO buscarPorId(@PathVariable Long id) {
+        return livroService.buscarPorId(id);
+    }
+
     // Endpoint POST /livros - salva um novo livro
     @PostMapping
     public LivroDTO salvar(@RequestBody LivroDTO dto) {
         return livroService.salvar(dto);
+    }
+
+    // Endpoint PUT /livros/{id} - atualiza um livro
+    @PutMapping("/{id}")
+    public LivroDTO atualizar(@PathVariable Long id, @RequestBody LivroDTO dto) {
+        return livroService.atualizar(id, dto);
+    }
+
+    // Endpoint DELETE /livros/{id} - remove um livro
+    @DeleteMapping("/{id}")
+    public void deletar(@PathVariable Long id) {
+        livroService.deletar(id);
     }
 }

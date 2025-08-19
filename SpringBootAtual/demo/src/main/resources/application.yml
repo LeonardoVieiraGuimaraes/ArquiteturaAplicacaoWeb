@@ -5,6 +5,9 @@ spring:
   application:
     name: demo # Nome da aplicação
 
+  security:
+    enabled: false
+
   datasource: # Configuração do banco de dados
     url: jdbc:h2:mem:demo;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE # H2 em memória para dev/teste
     driver-class-name: org.h2.Driver

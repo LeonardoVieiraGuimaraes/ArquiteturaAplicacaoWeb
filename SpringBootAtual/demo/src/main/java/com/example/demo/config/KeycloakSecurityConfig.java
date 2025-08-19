@@ -3,7 +3,6 @@ package com.example.demo.config;
 
 import org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver;
 import org.keycloak.adapters.springsecurity.authentication.KeycloakAuthenticationProvider;
-import org.keycloak.adapters.springsecurity.config.KeycloakWebSecurityConfigurerAdapter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -31,13 +30,12 @@ public class KeycloakSecurityConfig {
         return provider;
     }
 
-    // Configuração moderna de segurança usando SecurityFilterChain
+    // Configuração moderna de segurança para liberar todos os endpoints (teste)
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/livros/**").hasRole("USER") // Protege endpoints de livros
                 .anyRequest().permitAll()
             );
         return http.build();
