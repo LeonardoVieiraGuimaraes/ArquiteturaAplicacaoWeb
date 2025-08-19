@@ -11,18 +11,24 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
 import org.springframework.security.web.SecurityFilterChain;
 
-@Configuration
-@EnableWebSecurity
-@EnableMethodSecurity
+@Configuration // Indica que esta classe contém beans de configuração
+@EnableWebSecurity // Ativa a configuração de segurança web do Spring
+@EnableMethodSecurity // Permite usar anotações de segurança em métodos (@PreAuthorize)
 public class KeycloakSecurityConfig {
 
-    // Bean para resolver configurações do Keycloak via application.yml
+    /**
+     * Bean para resolver configurações do Keycloak via application.yml
+     * Permite usar as propriedades do Keycloak no arquivo application.yml
+     */
     @Bean
     public KeycloakSpringBootConfigResolver keycloakConfigResolver() {
         return new KeycloakSpringBootConfigResolver();
     }
 
-    // Bean para configurar o provedor de autenticação do Keycloak
+    /**
+     * Bean para configurar o provedor de autenticação do Keycloak
+     * Responsável por mapear as roles do Keycloak para o Spring Security
+     */
     @Bean
     public KeycloakAuthenticationProvider keycloakAuthenticationProvider() {
         KeycloakAuthenticationProvider provider = new KeycloakAuthenticationProvider();
@@ -30,13 +36,33 @@ public class KeycloakSecurityConfig {
         return provider;
     }
 
-    // Configuração moderna de segurança para liberar todos os endpoints (teste)
+    /**
+     * Configuração moderna de segurança para liberar todos os endpoints (ambiente de teste)
+     * Permite acesso irrestrito a todos os endpoints da API
+     */
+    // @Bean
+    // public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    //     http
+    //         .csrf(csrf -> csrf.disable()) // Desabilita proteção CSRF para facilitar testes
+    //         .authorizeHttpRequests(auth -> auth
+    //             .anyRequest().permitAll() // Permite acesso a qualquer endpoint
+    //         );
+    //     return http.build();
+    // }
+
+    /*
+     * Configuração para proteger endpoints com Keycloak (produção)
+     * Exemplo: protege /livros/** para usuários com role USER e /autores/** para ADMIN
+     * Para ativar, descomente este método e comente o de teste acima
+     */
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChainKeycloak(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf.disable())
+            .csrf(csrf -> csrf.disable()) // Desabilita CSRF
             .authorizeHttpRequests(auth -> auth
-                .anyRequest().permitAll()
+                .requestMatchers("/livros/**").hasRole("USER") // Apenas usuários com role USER acessam livros
+                .requestMatchers("/autores/**").hasRole("ADMIN") // Apenas ADMIN acessam autores
+                .anyRequest().permitAll() // Outros endpoints liberados
             );
         return http.build();
     }

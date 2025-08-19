@@ -1,4 +1,5 @@
 // Service para Autor
+// Service para Autor
 package com.example.demo.service;
 
 import com.example.demo.model.Autor;
@@ -15,26 +16,44 @@ public class AutorService {
     @Autowired
     private AutorRepository autorRepository;
 
+    /**
+     * Lista todos os autores cadastrados
+     * @return lista de autores
+     */
     public List<AutorDTO> listarTodos() {
         return autorRepository.findAll().stream()
                 .map(this::toDTO)
                 .collect(Collectors.toList());
     }
 
-    // Busca um autor por id
+    /**
+     * Busca um autor por id
+     * @param id identificador do autor
+     * @return autor encontrado ou null
+     */
     public AutorDTO buscarPorId(Long id) {
         return autorRepository.findById(id)
                 .map(this::toDTO)
                 .orElse(null);
     }
 
+    /**
+     * Salva um novo autor
+     * @param dto dados do autor
+     * @return autor salvo
+     */
     public AutorDTO salvar(AutorDTO dto) {
         Autor autor = toEntity(dto);
         Autor salvo = autorRepository.save(autor);
         return toDTO(salvo);
     }
 
-    // Atualiza um autor existente
+    /**
+     * Atualiza um autor existente
+     * @param id identificador do autor
+     * @param dto dados atualizados
+     * @return autor atualizado
+     */
     public AutorDTO atualizar(Long id, AutorDTO dto) {
         Autor autor = autorRepository.findById(id).orElse(null);
         if (autor == null) return null;
@@ -43,11 +62,15 @@ public class AutorService {
         return toDTO(atualizado);
     }
 
-    // Deleta um autor por id
+    /**
+     * Deleta um autor por id
+     * @param id identificador do autor
+     */
     public void deletar(Long id) {
         autorRepository.deleteById(id);
     }
 
+    // Métodos auxiliares para conversão entre DTO e entidade
     private AutorDTO toDTO(Autor autor) {
         AutorDTO dto = new AutorDTO();
         dto.setId(autor.getId());

@@ -1,5 +1,6 @@
 
 // Service: regras de negócio e integração entre Controller e Repository
+// Service: regras de negócio e integração entre Controller e Repository
 package com.example.demo.service;
 
 import com.example.demo.model.Livro;
@@ -22,8 +23,11 @@ public class LivroService {
     @Autowired
     private AutorRepository autorRepository;
 
-    // Retorna todos os livros como DTO
-    // Usa cache para melhorar performance
+    /**
+     * Retorna todos os livros como DTO
+     * Usa cache para melhorar performance
+     * @return lista de livros
+     */
     @org.springframework.cache.annotation.Cacheable("livros")
     public List<LivroDTO> listarTodos() {
         return livroRepository.findAll().stream()
@@ -31,21 +35,34 @@ public class LivroService {
                 .collect(Collectors.toList());
     }
 
-    // Busca um livro por id
+    /**
+     * Busca um livro por id
+     * @param id identificador do livro
+     * @return livro encontrado ou null
+     */
     public LivroDTO buscarPorId(Long id) {
         return livroRepository.findById(id)
                 .map(this::toDTO)
                 .orElse(null);
     }
 
-    // Salva um novo livro a partir do DTO
+    /**
+     * Salva um novo livro a partir do DTO
+     * @param dto dados do livro
+     * @return livro salvo
+     */
     public LivroDTO salvar(LivroDTO dto) {
         Livro livro = toEntity(dto);
         Livro salvo = livroRepository.save(livro);
         return toDTO(salvo);
     }
 
-    // Atualiza um livro existente
+    /**
+     * Atualiza um livro existente
+     * @param id identificador do livro
+     * @param dto dados atualizados
+     * @return livro atualizado
+     */
     public LivroDTO atualizar(Long id, LivroDTO dto) {
         Livro livro = livroRepository.findById(id).orElse(null);
         if (livro == null) return null;
