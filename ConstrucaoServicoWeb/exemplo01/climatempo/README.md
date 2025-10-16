@@ -2,21 +2,21 @@
 
 Guia didático para consumir a API do Climatempo com Spring Boot, usando RestTemplate e variáveis de ambiente.
 
-## Índice
-- Visão geral
-- Requisitos
-- [Início Rápido](#-início-rápido)
-- Configuração de variáveis (.env)
-- Endpoints da aplicação
-- Exemplos de uso (curl/Postman)
-- Código por dentro (Controller e Service)
-- Erros comuns e troubleshooting
-- Ideias de testes
-- Exercícios propostos
-- Roteiro de aula (demo script)
-- Referências
+## 📑 Índice
+- [🎯 Visão geral](#visão-geral)
+- [📋 Requisitos](#requisitos)
+- [🚀 Início Rápido](#-início-rápido)
+- [⚙️ Configuração de variáveis (.env)](#configuração-de-variáveis-env)
+- [🌐 Endpoints da aplicação](#endpoints-da-aplicação)
+- [🧪 Exemplos de uso (curl/Postman)](#exemplos-de-uso-curlpostman)
+- [🔍 Código por dentro (Controller e Service)](#código-por-dentro-controller-e-service)
+- [🆘 Erros comuns e troubleshooting](#erros-comuns-e-troubleshooting)
+- [💡 Ideias de testes](#ideias-de-testes)
+- [📝 Exercícios propostos](#exercícios-propostos)
+- [🎓 Roteiro de aula (demo script)](#roteiro-de-aula-demo-script)
+- [📚 Referências](#referências)
 
-## Visão geral
+## 🎯 Visão geral
 Este exemplo mostra como integrar um serviço Spring Boot com a API pública do Climatempo:
 - Busca de análise sinóptica por país (ex.: BR)
 - Busca de dados climáticos por ID de localidade
@@ -26,7 +26,7 @@ Estrutura principal:
 - `ClimateService` monta as URLs e chama a API externa usando `RestTemplate`
 - Chave de API lida via variável de ambiente `CLIMATEMPO_API_KEY` (carregada por `.env` via spring-dotenv)
 
-## Requisitos
+## 📋 Requisitos
 - JDK 22 (projeto usa `<java.version>22</java.version>`)
 - Maven (use o wrapper fornecido: `mvnw`/`mvnw.cmd`)
 - Chave de API Climatempo válida (token)
@@ -41,7 +41,7 @@ Estrutura principal:
 
 Porta padrão: 8080.
 
-## Configuração de variáveis (.env)
+## ⚙️ Configuração de variáveis (.env)
 O projeto usa a dependência `spring-dotenv` para carregar automaticamente variáveis definidas em um arquivo `.env`.
 
 Crie o arquivo `.env` na pasta do projeto `climatempo` com o conteúdo:
@@ -54,7 +54,7 @@ Dicas:
 - Após criar ou alterar o `.env`, reinicie a aplicação.
 - Evite versionar `.env` com tokens reais.
 
-## Endpoints da aplicação
+## 🌐 Endpoints da aplicação
 - GET `/climate/{country}`
   - Ex.: `/climate/BR` — retorna análise sinóptica do Brasil
 - GET `/climate/rain/{id}`
@@ -62,7 +62,7 @@ Dicas:
 
 Observação: os dados retornados são JSON bruto da API externa (via Jackson `JsonNode`). O formato pode variar conforme a API do Climatempo.
 
-## Exemplos de uso (curl/Postman)
+## 🧪 Exemplos de uso (curl/Postman)
 - Sinóptica por país (BR):
   - `curl -s http://localhost:8080/climate/BR | jq`
 - Clima/temperatura por localidade (ex.: 6879):
@@ -70,7 +70,7 @@ Observação: os dados retornados são JSON bruto da API externa (via Jackson `J
 
 Se preferir Postman/Insomnia, importe duas requisições GET para as URLs acima.
 
-## Código por dentro (Controller e Service)
+## 🔍 Código por dentro (Controller e Service)
 - Controller: `com.api.climatempo.controller.ClimateController`
   - Base path: `/climate`
   - Métodos:
@@ -89,7 +89,7 @@ Sugestões de melhoria no código:
 - Tratar exceções e status não-2xx com `ResponseEntity` e `@ControllerAdvice`
 - Adotar `WebClient` (Reator) para IO não bloqueante quando apropriado
 
-## Erros comuns e troubleshooting
+## 🆘 Erros comuns e troubleshooting
 - 401/403: token ausente/ inválido
   - Verifique `.env` e reinicie a aplicação
   - Cheque se o token expirou
@@ -101,26 +101,26 @@ Sugestões de melhoria no código:
   - Confirme que o arquivo está na raiz do módulo (`climatempo/.env`)
   - Reinicie a aplicação após alterações
 
-## Ideias de testes
+## 💡 Ideias de testes
 - Unitários de Service com `MockRestServiceServer` (simula respostas da API externa)
 - Testes de integração do Controller com `@SpringBootTest` + `TestRestTemplate`
 - Casos de erro: status 4xx/5xx, JSON inválido
 
-## Exercícios propostos
+## 📝 Exercícios propostos
 1) Extrair `apiUrl` para `application.properties` e ler com `@Value`
 2) Criar um endpoint que liste cidades por nome e retorne IDs de localidade (usar endpoints públicos do Climatempo)
 3) Migrar de `RestTemplate` para `WebClient` e comparar desempenho
 4) Implementar cache simples (ex.: `@Cacheable`) para reduzir chamadas repetidas
 5) Padronizar respostas de erro com `@ControllerAdvice`
 
-## Roteiro de aula (demo script)
+## 🎓 Roteiro de aula (demo script)
 1) Mostrar `.env` e iniciar a aplicação
 2) Chamar `/climate/BR` e `/climate/rain/{id}` mostrando JSON
 3) Abrir `ClimateService` e explicar como a URL é montada
 4) Introduzir melhorias (config externa, tratamento de erros)
 5) Propor e acompanhar um dos exercícios (ex.: WebClient)
 
-## Referências
+## 📚 Referências
 - API Climatempo (documentação pública)
 - Spring Boot Web (RestTemplate/WebClient)
 - Jackson (JsonNode/ObjectMapper)

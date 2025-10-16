@@ -2,20 +2,20 @@
 
 Guia didático para consumir a API pública FIPE (Parallelum) com Spring Boot, usando RestTemplate.
 
-## Índice
-- Visão geral
-- Requisitos
-- [Início Rápido](#-início-rápido)
-- Endpoints da aplicação
-- Exemplos (curl/Postman)
-- Código por dentro (Controller e Service)
-- Erros comuns e troubleshooting
-- Ideias de testes
-- Exercícios propostos
-- Roteiro de aula
-- Referências
+## 📑 Índice
+- [🎯 Visão geral](#visão-geral)
+- [📋 Requisitos](#requisitos)
+- [🚀 Início Rápido](#-início-rápido)
+- [🌐 Endpoints da aplicação](#endpoints-da-aplicação)
+- [🧪 Exemplos (curl/Postman)](#exemplos-curlpostman)
+- [🔍 Código por dentro (Controller e Service)](#código-por-dentro-controller-e-service)
+- [🆘 Erros comuns e troubleshooting](#erros-comuns-e-troubleshooting)
+- [💡 Ideias de testes](#ideias-de-testes)
+- [📝 Exercícios propostos](#exercícios-propostos)
+- [🎓 Roteiro de aula](#roteiro-de-aula)
+- [📚 Referências](#referências)
 
-## Visão geral
+## 🎯 Visão geral
 Este exemplo mostra uma API Spring Boot que atua como "proxy" para a API FIPE (carros). Os endpoints internos expõem:
 - Lista de marcas
 - Modelos por marca
@@ -26,7 +26,7 @@ Estrutura principal:
 - `FipeController` expõe endpoints REST
 - `FipeService` chama a API FIPE usando `RestTemplate`
 
-## Requisitos
+## 📋 Requisitos
 - JDK 22
 - Maven (use o wrapper `mvnw`/`mvnw.cmd`)
 
@@ -41,7 +41,7 @@ Estrutura principal:
 
 Porta padrão: 8080.
 
-## Endpoints da aplicação
+## 🌐 Endpoints da aplicação
 - GET `/marcas` — lista de marcas
 - GET `/modelos/{marca}` — modelos de uma marca (id da marca, inteiro)
 - GET `/anos/{marca}/{modelo}` — anos para um modelo
@@ -49,7 +49,7 @@ Porta padrão: 8080.
 
 Observação: a API FIPE retorna JSON em formatos diferentes para cada endpoint. Este serviço retorna os JSONs brutos da FIPE (String).
 
-## Exemplos (curl/Postman)
+## 🧪 Exemplos (curl/Postman)
 - Marcas:
   - `curl -s http://localhost:8080/marcas | jq`
 - Modelos (marca 59):
@@ -59,7 +59,7 @@ Observação: a API FIPE retorna JSON em formatos diferentes para cada endpoint.
 - Valor (marca 59, modelo 5940, ano 2016-1):
   - `curl -s http://localhost:8080/valor/59/5940/2016-1 | jq`
 
-## Código por dentro (Controller e Service)
+## 🔍 Código por dentro (Controller e Service)
 - Controller: `com.api.fipe.controller.FipeController`
   - Injeta `FipeService` via construtor (boa prática de DI)
   - Mapeamentos:
@@ -80,7 +80,7 @@ Sugestões de melhoria:
 - Tratar erros e padronizar respostas (ex.: mapear 4xx/5xx em mensagens JSON)
 - Usar `WebClient` para chamadas não-bloqueantes quando fizer sentido
 
-## Erros comuns e troubleshooting
+## 🆘 Erros comuns e troubleshooting
 - 404: IDs de marca/modelo/ano inválidos
   - Verifique os IDs válidos consultando primeiro `/marcas` e `/modelos/{marca}`
 - Falha de DNS ou rede ao chamar parallelum.com.br
@@ -88,25 +88,25 @@ Sugestões de melhoria:
 - Resposta inesperada da FIPE (mudança de schema)
   - Atualize o código para refletir novo formato
 
-## Ideias de testes
+## 💡 Ideias de testes
 - Testes unitários do `FipeService` com `MockRestServiceServer`
 - Testes de integração dos endpoints (MockMvc)
 - Casos de erro (HTTP não-2xx)
 
-## Exercícios propostos
+## 📝 Exercícios propostos
 1) Refatorar para usar injeção de dependência: anotar `FipeService` com `@Service` e injetar no controller
 2) Adicionar suporte a motos e caminhões (trocar `carros` por `motos` ou `caminhoes`)
 3) Implementar cache para listas estáticas (`/marcas`)
 4) Adicionar paginação/filtragem no retorno de modelos
 5) Adotar `WebClient` e medir diferenças
 
-## Roteiro de aula
+## 🎓 Roteiro de aula
 1) Rodar a aplicação e explorar `/marcas` → `/modelos/{marca}` → `/anos/{marca}/{modelo}` → `/valor/{marca}/{modelo}/{ano}`
 2) Abrir `FipeService` e inspecionar chamadas HTTP
 3) Discutir melhorias (injeção, config externa, tratamento de erros)
 4) Propor exercício 1 (injeção) e testar
 
-## Referências
+## 📚 Referências
 - API FIPE (Parallelum): https://deividfortuna.github.io/fipe/
 - Spring Boot Web (RestTemplate/WebClient)
 - Testes com MockMvc e MockRestServiceServer
