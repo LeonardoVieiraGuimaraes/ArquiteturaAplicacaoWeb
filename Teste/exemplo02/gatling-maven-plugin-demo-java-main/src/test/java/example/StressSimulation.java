@@ -18,7 +18,7 @@ public class StressSimulation extends Simulation {
         .exec(
             // Executa uma requisição GET para o endpoint de produtos
             http("Requisição GET Produtos")
-                .get("/api/products") // Endpoint a ser testado
+                .get("/products") // Endpoint a ser testado (sem /api)
                 .check(status().is(200)) // Verifica se o status da resposta é 200 (OK)
         );
 
