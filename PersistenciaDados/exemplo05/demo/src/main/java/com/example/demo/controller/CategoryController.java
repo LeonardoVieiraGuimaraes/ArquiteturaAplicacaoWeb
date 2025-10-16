@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Category;
 import com.example.demo.service.CategoryService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -56,11 +57,11 @@ public class CategoryController {
 
     /**
      * POST /categories - Cria uma nova categoria
-     * @param category Dados da categoria a ser criada
+     * @param category Dados da categoria a ser criada (validados com @Valid)
      * @return Categoria criada com status 201 Created
      */
     @PostMapping
-    public ResponseEntity<Category> createCategory(@RequestBody Category category) {
+    public ResponseEntity<Category> createCategory(@Valid @RequestBody Category category) {
         try {
             Category createdCategory = categoryService.create(category);
             return ResponseEntity.status(HttpStatus.CREATED).body(createdCategory);
@@ -72,11 +73,11 @@ public class CategoryController {
     /**
      * PUT /categories/{id} - Atualiza uma categoria existente
      * @param id ID da categoria a ser atualizada
-     * @param category Novos dados da categoria
+     * @param category Novos dados da categoria (validados com @Valid)
      * @return Categoria atualizada ou 404 Not Found
      */
     @PutMapping("/{id}")
-    public ResponseEntity<Category> updateCategory(@PathVariable Long id, @RequestBody Category category) {
+    public ResponseEntity<Category> updateCategory(@PathVariable Long id, @Valid @RequestBody Category category) {
         return categoryService.update(id, category)
             .map(ResponseEntity::ok)
             .orElse(ResponseEntity.notFound().build());

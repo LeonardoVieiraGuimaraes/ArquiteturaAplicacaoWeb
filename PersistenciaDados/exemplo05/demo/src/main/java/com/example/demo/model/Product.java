@@ -2,6 +2,10 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
@@ -12,24 +16,45 @@ import java.util.Set;
  * Relacionamentos:
  * - Many-to-One com Category (vários produtos pertencem a uma categoria)
  * - Many-to-Many com Tag (um produto pode ter várias tags e uma tag pode estar em vários produtos)
+ * 
+ * Lombok:
+ * - @Data: gera getters, setters, toString, equals e hashCode
+ * - @NoArgsConstructor: gera construtor vazio (obrigatório para JPA)
+ * - @AllArgsConstructor: gera construtor com todos os campos
+ * 
+ * Bean Validation:
+ * - @NotBlank: campo não pode ser nulo ou vazio
+ * - @Size: define tamanho mínimo/máximo
+ * - @DecimalMin: valor mínimo para BigDecimal
+ * - @Min: valor mínimo para Integer
  */
 @Entity
 @Table(name = "products")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Nome é obrigatório")
+    @Size(min = 3, max = 100, message = "Nome deve ter entre 3 e 100 caracteres")
     @Column(nullable = false)
     private String name;
 
+    @Size(max = 1000, message = "Descrição não pode ter mais de 1000 caracteres")
     @Column(length = 1000)
     private String description;
 
+    @NotNull(message = "Preço é obrigatório")
+    @DecimalMin(value = "0.01", message = "Preço deve ser maior que zero")
     @Column(precision = 10, scale = 2)
     private BigDecimal price;
 
+    @NotNull(message = "Estoque é obrigatório")
+    @Min(value = 0, message = "Estoque não pode ser negativo")
     private Integer stock;
 
     /**
@@ -62,73 +87,14 @@ public class Product {
     )
     private Set<Tag> tags = new HashSet<>();
 
-    // Construtor vazio (obrigatório para JPA e desserialização)
-    public Product() {
-    }
-
-    // Construtor com campos principais
+    /**
+     * Construtor com campos principais (sem ID e relacionamentos)
+     */
     public Product(String name, String description, BigDecimal price, Integer stock) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.stock = stock;
-    }
-
-    // Getters e Setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public Integer getStock() {
-        return stock;
-    }
-
-    public void setStock(Integer stock) {
-        this.stock = stock;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    public Set<Tag> getTags() {
-        return tags;
-    }
-
-    public void setTags(Set<Tag> tags) {
-        this.tags = tags;
     }
 
     /**

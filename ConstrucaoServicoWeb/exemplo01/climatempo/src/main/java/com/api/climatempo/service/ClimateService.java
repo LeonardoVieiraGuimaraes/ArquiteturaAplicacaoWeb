@@ -12,8 +12,8 @@ import com.fasterxml.jackson.databind.ObjectMapper; // Importa a classe ObjectMa
 @Service // Define a classe como um serviço do Spring
 public class ClimateService {
 
-    // @Value("${climatempo.api.url}") // Injeta o valor da propriedade climatempo.api.url
-    private String apiUrl =  "https://apiadvisor.climatempo.com.br/api/v1"; // Injeta o valor da propriedade climatempo.api.url;
+    @Value("${climatempo.api.url}") // Injeta o valor da propriedade climatempo.api.url
+    private String apiUrl; // Base URL da API do Climatempo
 
 
     @Value("${climatempo.api.key}") // Injeta o valor da propriedade climatempo.api.key

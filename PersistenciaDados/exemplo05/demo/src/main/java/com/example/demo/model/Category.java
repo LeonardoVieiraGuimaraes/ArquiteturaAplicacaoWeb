@@ -1,25 +1,44 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Entidade Category - Representa uma categoria de produtos
  * Relacionamento: Uma categoria pode ter vários produtos (1:N)
+ * 
+ * Lombok:
+ * - @Data: gera getters, setters, toString, equals e hashCode
+ * - @NoArgsConstructor: gera construtor vazio (obrigatório para JPA)
+ * - @AllArgsConstructor: gera construtor com todos os campos
+ * 
+ * Bean Validation:
+ * - @NotBlank: campo não pode ser nulo ou vazio
+ * - @Size: define tamanho mínimo/máximo
  */
 @Entity
 @Table(name = "categories")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Nome da categoria é obrigatório")
+    @Size(min = 3, max = 50, message = "Nome deve ter entre 3 e 50 caracteres")
     @Column(nullable = false, unique = true)
     private String name;
 
+    @Size(max = 500, message = "Descrição não pode ter mais de 500 caracteres")
     @Column(length = 500)
     private String description;
 
@@ -35,47 +54,12 @@ public class Category {
     @JsonIgnore
     private List<Product> products = new ArrayList<>();
 
-    // Construtor vazio (obrigatório para JPA)
-    public Category() {
-    }
-
-    // Construtor com parâmetros
+    /**
+     * Construtor com campos principais (sem ID e relacionamentos)
+     */
     public Category(String name, String description) {
         this.name = name;
         this.description = description;
-    }
-
-    // Getters e Setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<Product> products) {
-        this.products = products;
     }
 
     /**

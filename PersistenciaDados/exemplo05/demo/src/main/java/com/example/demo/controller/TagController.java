@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Tag;
 import com.example.demo.service.TagService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -56,11 +57,11 @@ public class TagController {
 
     /**
      * POST /tags - Cria uma nova tag
-     * @param tag Dados da tag a ser criada
+     * @param tag Dados da tag a ser criada (validados com @Valid)
      * @return Tag criada com status 201 Created
      */
     @PostMapping
-    public ResponseEntity<Tag> createTag(@RequestBody Tag tag) {
+    public ResponseEntity<Tag> createTag(@Valid @RequestBody Tag tag) {
         try {
             Tag createdTag = tagService.create(tag);
             return ResponseEntity.status(HttpStatus.CREATED).body(createdTag);
@@ -72,11 +73,11 @@ public class TagController {
     /**
      * PUT /tags/{id} - Atualiza uma tag existente
      * @param id ID da tag a ser atualizada
-     * @param tag Novos dados da tag
+     * @param tag Novos dados da tag (validados com @Valid)
      * @return Tag atualizada ou 404 Not Found
      */
     @PutMapping("/{id}")
-    public ResponseEntity<Tag> updateTag(@PathVariable Long id, @RequestBody Tag tag) {
+    public ResponseEntity<Tag> updateTag(@PathVariable Long id, @Valid @RequestBody Tag tag) {
         return tagService.update(id, tag)
             .map(ResponseEntity::ok)
             .orElse(ResponseEntity.notFound().build());

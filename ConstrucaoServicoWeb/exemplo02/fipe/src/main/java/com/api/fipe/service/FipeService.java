@@ -1,9 +1,15 @@
 package com.api.fipe.service;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+@Service
 public class FipeService {
+
+    @Value("${fipe.api.base-url:https://parallelum.com.br/fipe/api/v1}")
+    private String baseUrl;
 
     private String consultarURL(String apiUrl) {
         RestTemplate restTemplate = new RestTemplate();
@@ -16,18 +22,18 @@ public class FipeService {
     }
 
     public String consultarMarcas() {
-        return consultarURL("https://parallelum.com.br/fipe/api/v1/carros/marcas");
+        return consultarURL(baseUrl + "/carros/marcas");
     }
 
     public String consultarModelos(int id) {
-        return consultarURL("https://parallelum.com.br/fipe/api/v1/carros/marcas/" + id + "/modelos");
+        return consultarURL(baseUrl + "/carros/marcas/" + id + "/modelos");
     }
 
     public String consultarAnos(int marca, int modelo) {
-        return consultarURL("https://parallelum.com.br/fipe/api/v1/carros/marcas/" + marca + "/modelos/" + modelo + "/anos");
+        return consultarURL(baseUrl + "/carros/marcas/" + marca + "/modelos/" + modelo + "/anos");
     }
 
     public String consultarValor(int marca, int modelo, String ano) {
-        return consultarURL("https://parallelum.com.br/fipe/api/v1/carros/marcas/" + marca + "/modelos/" + modelo + "/anos/" + ano);
+        return consultarURL(baseUrl + "/carros/marcas/" + marca + "/modelos/" + modelo + "/anos/" + ano);
     }
 }
