@@ -13,10 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.model.Product;
-import com.example.demo.service.ProductService;
+import com.example.demo.service.IProductService;
 
 // Indica que esta classe é um controlador REST
 @RestController
@@ -25,7 +24,7 @@ import com.example.demo.service.ProductService;
 public class ProductController {
     // Injeta uma instância de ProductService
     @Autowired
-    private ProductService productService;
+    private IProductService productService;
 
     // GET: Listar todos os produtos
     @GetMapping
@@ -55,10 +54,9 @@ public class ProductController {
 
     // POST: Adicionar um novo produto
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Product addProduct(@RequestBody Product product) {
-        // Chama o serviço para adicionar um novo produto
-        return productService.addProduct(product);
+    public ResponseEntity<Product> createProduct(@RequestBody Product product) {
+        Product saved = productService.createProduct(product);
+        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
     // PUT: Atualizar um produto existente

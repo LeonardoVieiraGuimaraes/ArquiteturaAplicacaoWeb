@@ -10,10 +10,19 @@ import com.example.demo.model.Product;
 import com.example.demo.repository.ProductRepository;
 
 @Service
-public class ProductService {
+public class ProductService implements IProductService {
     
     @Autowired
     private ProductRepository productRepository;
+
+    // Construtor vazio para Spring
+    public ProductService() {
+    }
+
+    // Construtor para testes que recebem um repository mock
+    public ProductService(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
 
     // GET: Retorna todos os produtos
     public List<Product> getAllProducts() {
@@ -32,6 +41,11 @@ public class ProductService {
 
     // POST: Adiciona um novo produto
     public Product addProduct(Product product) {
+        return createProduct(product);
+    }
+
+    // Nome alternativo usado pelos testes
+    public Product createProduct(Product product) {
         return productRepository.save(product);
     }
 
@@ -41,9 +55,18 @@ public class ProductService {
         if (existingProduct.isPresent()) {
             Product product = existingProduct.get();
             product.setName(updatedProduct.getName());
+            // Atualiza campos adicionais, se houver
+            if (updatedProduct.getDescription() != null) product.setDescription(updatedProduct.getDescription());
+            if (updatedProduct.getPrice() != null) product.setPrice(updatedProduct.getPrice());
+            if (updatedProduct.getStock() != null) product.setStock(updatedProduct.getStock());
             productRepository.save(product);
         }
         return existingProduct;
+    }
+
+    // Versão utilizada em alguns testes que esperam receber o produto atualizado
+    public Product updateProduct(Product product) {
+        return productRepository.save(product);
     }
 
     // DELETE: Remove um produto por ID
