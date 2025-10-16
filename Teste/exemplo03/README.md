@@ -2,22 +2,22 @@
 
 ## 📑 Índice
 
-1. [Início Rápido](#-início-rápido)
-2. [Instalação](#-instalação)
-3. [Estrutura do Projeto](#-estrutura-do-projeto)
-4. [Criando Testes](#-criando-testes)
+1. [🚀 Início Rápido](#-início-rápido)
+2. [⚙️ Instalação](#️-instalação)
+3. [🗂️ Estrutura do Projeto](#️-estrutura-do-projeto)
+4. [🛠️ Criando Testes](#️-criando-testes)
    - [Teste 1: Carga Básica](#-teste-1-teste-de-carga-básica)
    - [Teste 2: Stress](#-teste-2-teste-de-stress)
    - [Teste 3: Spike/Pico](#-teste-3-teste-de-picopike)
    - [Teste 4: Endurance](#-teste-4-teste-de-endurance)
    - [Teste Completo CRUD](#-criando-um-teste-completo-passo-a-passo)
-5. [Executando Testes](#-executando-os-testes)
-6. [Visualizando Resultados](#-visualizando-resultados)
-7. [Componentes do JMeter](#-principais-componentes-do-jmeter)
-8. [Comparação Gatling vs JMeter](#-comparação-gatling-vs-jmeter)
-9. [Boas Práticas](#-boas-práticas)
-10. [Troubleshooting](#-troubleshooting)
-11. [Recursos Adicionais](#-recursos-adicionais)
+5. [▶️ Executando Testes](#️-executando-os-testes)
+6. [📊 Visualizando Resultados](#-visualizando-resultados)
+7. [🔧 Componentes do JMeter](#-principais-componentes-do-jmeter)
+8. [⚔️ Comparação Gatling vs JMeter](#️-comparação-gatling-vs-jmeter)
+9. [✅ Boas Práticas](#-boas-práticas)
+10. [🆘 Troubleshooting](#-troubleshooting)
+11. [🔗 Recursos Adicionais](#-recursos-adicionais)
 
 ---
 

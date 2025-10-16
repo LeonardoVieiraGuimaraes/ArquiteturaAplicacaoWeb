@@ -2,19 +2,19 @@
 
 ## 📑 Índice
 
-1. [Visão Geral](#-visão-geral)
-2. [Início Rápido](#-início-rápido)
-3. [O que é MongoDB?](#-o-que-é-mongodb)
-4. [Estrutura do Projeto](#-estrutura-do-projeto)
-5. [Configuração: Docker vs Atlas](#-configuração-docker-vs-atlas)
-6. [Código Explicado Linha por Linha](#-código-explicado-linha-por-linha)
-7. [Endpoints da API](#-endpoints-da-api)
-8. [Testando a API](#-testando-a-api)
-9. [MongoDB vs SQL](#-mongodb-vs-sql-comparação-completa)
-10. [Dicas para Aula](#-dicas-para-aula-e-demonstração)
-11. [Exercícios Práticos](#-exercícios-práticos-para-alunos)
-12. [Troubleshooting](#-troubleshooting)
-13. [Recursos Adicionais](#-recursos-adicionais)
+1. [🎯 Visão Geral](#-visão-geral)
+2. [🚀 Início Rápido](#-início-rápido)
+3. [💡 O que é MongoDB?](#-o-que-é-mongodb)
+4. [🗂️ Estrutura do Projeto](#️-estrutura-do-projeto)
+5. [🔧 Configuração: Docker vs Atlas](#-configuração-docker-vs-atlas)
+6. [🔍 Código Explicado Linha por Linha](#-código-explicado-linha-por-linha)
+7. [🌐 Endpoints da API](#-endpoints-da-api)
+8. [🧪 Testando a API](#-testando-a-api)
+9. [⚔️ MongoDB vs SQL](#️-mongodb-vs-sql-comparação-completa)
+10. [🎓 Dicas para Aula](#-dicas-para-aula-e-demonstração)
+11. [📝 Exercícios Práticos](#-exercícios-práticos-para-alunos)
+12. [🆘 Troubleshooting](#-troubleshooting)
+13. [📚 Recursos Adicionais](#-recursos-adicionais)
 
 ---
 

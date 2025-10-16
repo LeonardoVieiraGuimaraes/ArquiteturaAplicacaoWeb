@@ -2,23 +2,23 @@
 
 ## 📑 Índice
 
-1. [Início Rápido](#-início-rápido)
-2. [Instalação](#-instalação)
-3. [Estrutura do Projeto](#-estrutura-do-projeto)
-4. [Conceitos Fundamentais](#-conceitos-fundamentais)
-5. [Criando Simulações Passo a Passo](#-criando-simulações-passo-a-passo)
+1. [🚀 Início Rápido](#-início-rápido)
+2. [⚙️ Instalação](#️-instalação)
+3. [🗂️ Estrutura do Projeto](#️-estrutura-do-projeto)
+4. [🎯 Conceitos Fundamentais](#-conceitos-fundamentais)
+5. [🛠️ Criando Simulações Passo a Passo](#️-criando-simulações-passo-a-passo)
    - [Simulação 1: Carga Básica (BasicSimulation)](#-simulação-1-carga-básica-basicsimulation)
    - [Simulação 2: Stress (StressSimulation)](#-simulação-2-stress-stresssimulation)
    - [Simulação 3: Spike (SpikeSimulation)](#-simulação-3-spike-spikesimulation)
    - [Simulação 4: Endurance (EnduranceSimulation)](#-simulação-4-endurance-endurancesimulation)
-6. [Executando os Testes](#-executando-os-testes)
-7. [Analisando Relatórios](#-analisando-relatórios)
-8. [Gatling DSL Explicado](#-gatling-dsl-explicado)
-9. [Comparação: Gatling vs JMeter](#-comparação-gatling-vs-jmeter)
-10. [Dicas para Aula](#-dicas-para-aula-e-demonstração)
-11. [Exercícios Práticos](#-exercícios-práticos-para-alunos)
-12. [Troubleshooting](#-troubleshooting)
-13. [Recursos Adicionais](#-recursos-adicionais)
+6. [▶️ Executando os Testes](#️-executando-os-testes)
+7. [📊 Analisando Relatórios](#-analisando-relatórios)
+8. [📝 Gatling DSL Explicado](#-gatling-dsl-explicado)
+9. [⚔️ Comparação: Gatling vs JMeter](#️-comparação-gatling-vs-jmeter)
+10. [🎓 Dicas para Aula](#-dicas-para-aula-e-demonstração)
+11. [📚 Exercícios Práticos](#-exercícios-práticos-para-alunos)
+12. [🆘 Troubleshooting](#-troubleshooting)
+13. [🔗 Recursos Adicionais](#-recursos-adicionais)
 
 ---
 

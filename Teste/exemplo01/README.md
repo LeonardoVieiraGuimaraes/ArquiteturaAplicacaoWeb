@@ -2,21 +2,21 @@
 
 ## 📑 Índice
 
-1. [Início Rápido](#-início-rápido)
-2. [Estrutura do Projeto](#-estrutura-do-projeto)
-3. [Conceitos Fundamentais](#-conceitos-fundamentais)
-4. [Criando Testes Passo a Passo](#-criando-testes-passo-a-passo)
+1. [🚀 Início Rápido](#-início-rápido)
+2. [🗂️ Estrutura do Projeto](#️-estrutura-do-projeto)
+3. [🎯 Conceitos Fundamentais](#-conceitos-fundamentais)
+4. [🛠️ Criando Testes Passo a Passo](#️-criando-testes-passo-a-passo)
    - [Teste 1: CRUD de Serviço](#-teste-1-crud-de-serviço)
    - [Teste 2: Endpoints do Controller](#-teste-2-endpoints-do-controller)
    - [Teste 3: Teste Completo (ProductFullTest)](#-teste-3-teste-completo-productfulltest)
-5. [Executando os Testes](#-executando-os-testes)
-6. [Analisando Resultados](#-analisando-resultados)
-7. [Anotações do Mockito Explicadas](#-anotações-do-mockito-explicadas)
-8. [Padrões de Teste (AAA Pattern)](#-padrões-de-teste-aaa-pattern)
-9. [Dicas para Aula](#-dicas-para-aula-e-demonstração)
-10. [Exercícios Práticos](#-exercícios-práticos-para-alunos)
-11. [Troubleshooting](#-troubleshooting)
-12. [Recursos Adicionais](#-recursos-adicionais)
+5. [▶️ Executando os Testes](#️-executando-os-testes)
+6. [📊 Analisando Resultados](#-analisando-resultados)
+7. [🏷️ Anotações do Mockito Explicadas](#️-anotações-do-mockito-explicadas)
+8. [🎯 Padrões de Teste (AAA Pattern)](#-padrões-de-teste-aaa-pattern)
+9. [🎓 Dicas para Aula](#-dicas-para-aula-e-demonstração)
+10. [📝 Exercícios Práticos](#-exercícios-práticos-para-alunos)
+11. [🆘 Troubleshooting](#-troubleshooting)
+12. [📚 Recursos Adicionais](#-recursos-adicionais)
 
 ---
 

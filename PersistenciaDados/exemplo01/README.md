@@ -2,19 +2,19 @@
 
 ## 📑 Índice
 
-1. [Visão Geral](#-visão-geral)
-2. [Início Rápido](#-início-rápido)
-3. [O que é Persistência em Memória?](#-o-que-é-persistência-em-memória)
-4. [Estrutura do Projeto](#-estrutura-do-projeto)
-5. [Código Explicado Linha por Linha](#-código-explicado-linha-por-linha)
-6. [Endpoints da API](#-endpoints-da-api)
-7. [Testando a API](#-testando-a-api)
-8. [Vantagens e Desvantagens](#-vantagens-e-desvantagens)
-9. [Comparação com Outras Formas de Persistência](#-comparação-com-outras-formas-de-persistência)
-10. [Dicas para Aula](#-dicas-para-aula-e-demonstração)
-11. [Exercícios Práticos](#-exercícios-práticos-para-alunos)
-12. [Troubleshooting](#-troubleshooting)
-13. [Próximos Passos](#-próximos-passos)
+1. [🎯 Visão Geral](#-visão-geral)
+2. [🚀 Início Rápido](#-início-rápido)
+3. [💡 O que é Persistência em Memória?](#-o-que-é-persistência-em-memória)
+4. [🗂️ Estrutura do Projeto](#️-estrutura-do-projeto)
+5. [🔍 Código Explicado Linha por Linha](#-código-explicado-linha-por-linha)
+6. [🌐 Endpoints da API](#-endpoints-da-api)
+7. [🧪 Testando a API](#-testando-a-api)
+8. [⚖️ Vantagens e Desvantagens](#️-vantagens-e-desvantagens)
+9. [📊 Comparação com Outras Formas de Persistência](#-comparação-com-outras-formas-de-persistência)
+10. [🎓 Dicas para Aula](#-dicas-para-aula-e-demonstração)
+11. [📝 Exercícios Práticos](#-exercícios-práticos-para-alunos)
+12. [🆘 Troubleshooting](#-troubleshooting)
+13. [🚀 Próximos Passos](#-próximos-passos)
 
 ---
 
