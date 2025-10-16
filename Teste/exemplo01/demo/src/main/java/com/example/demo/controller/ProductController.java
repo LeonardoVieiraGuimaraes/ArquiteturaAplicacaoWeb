@@ -36,7 +36,7 @@ public class ProductController {
 
     // GET: Buscar produto por ID
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable String id) {
+    public ResponseEntity<Product> getProductById(@PathVariable Long id) {
         // Chama o serviço para obter um produto pelo ID
         Optional<Product> product = productService.getProductById(id);
         // Retorna o produto encontrado ou um status 404 se não encontrado
@@ -63,7 +63,7 @@ public class ProductController {
 
     // PUT: Atualizar um produto existente
     @PutMapping("/{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable String id, @RequestBody Product updatedProduct) {
+    public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product updatedProduct) {
         // Chama o serviço para atualizar um produto existente
         Optional<Product> product = productService.updateProduct(id, updatedProduct);
         // Retorna o produto atualizado ou um status 404 se não encontrado
@@ -73,7 +73,7 @@ public class ProductController {
 
     // DELETE: Remover um produto por ID
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable String id) {
+    public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
         // Chama o serviço para deletar um produto pelo ID
         boolean deleted = productService.deleteProduct(id);
         // Retorna um status 204 se deletado ou 404 se não encontrado

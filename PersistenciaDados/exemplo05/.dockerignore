@@ -1,0 +1,8 @@
+# Ignorar dados do volume do MariaDB
+mariadb_data/
+
+# Ignorar logs
+*.log
+
+# Ignorar arquivos temporários do Docker
+.dockerignore

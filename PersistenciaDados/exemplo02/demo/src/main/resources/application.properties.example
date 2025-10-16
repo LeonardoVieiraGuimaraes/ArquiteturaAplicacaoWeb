@@ -1,10 +1,10 @@
 spring.application.name=demo
 
 # ========================================
-# CONFIGURAÇÃO MONGODB LOCAL (DOCKER) - ATIVO
+# CONFIGURAÇÃO MONGODB LOCAL (DOCKER)
 # ========================================
-# MongoDB rodando em container Docker
-# Para iniciar: docker-compose up -d
+# Use esta configuração quando rodar MongoDB em Docker
+# Comando: docker-compose up -d
 
 spring.data.mongodb.host=localhost
 spring.data.mongodb.port=27017
@@ -14,9 +14,9 @@ spring.data.mongodb.password=root
 spring.data.mongodb.authentication-database=admin
 
 # ========================================
-# CONFIGURAÇÃO MONGODB ATLAS (NUVEM) - COMENTADO
+# CONFIGURAÇÃO MONGODB ATLAS (NUVEM)
 # ========================================
-# Para usar MongoDB Atlas na nuvem, comente a configuração acima
-# e descomente a linha abaixo:
+# Use esta configuração para MongoDB Atlas na nuvem
+# Comente a configuração acima e descomente a linha abaixo
 
 # spring.data.mongodb.uri=mongodb+srv://leonardovieiraxy:okHXviB3zYBAOgdf@cluster0.zh78p5f.mongodb.net/productdb?retryWrites=true&w=majority

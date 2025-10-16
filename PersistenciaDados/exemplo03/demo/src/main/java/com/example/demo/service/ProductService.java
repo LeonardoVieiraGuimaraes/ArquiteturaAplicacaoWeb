@@ -21,7 +21,7 @@ public class ProductService {
     }
 
     // GET: Busca um produto por ID
-    public Optional<Product> getProductById(String id) {
+    public Optional<Product> getProductById(Long id) {
         return productRepository.findById(id);
     }
 
@@ -36,7 +36,7 @@ public class ProductService {
     }
 
     // PUT: Atualiza um produto existente
-    public Optional<Product> updateProduct(String id, Product updatedProduct) {
+    public Optional<Product> updateProduct(Long id, Product updatedProduct) {
         Optional<Product> existingProduct = productRepository.findById(id);
         if (existingProduct.isPresent()) {
             Product product = existingProduct.get();
@@ -47,7 +47,7 @@ public class ProductService {
     }
 
     // DELETE: Remove um produto por ID
-    public boolean deleteProduct(String id) {
+    public boolean deleteProduct(Long id) {
         if (productRepository.existsById(id)) {
             productRepository.deleteById(id);
             return true;
