@@ -1,4 +1,4 @@
-package computerdatabase;
+package example;
 
 import io.gatling.javaapi.core.*;
 import io.gatling.javaapi.http.*;
