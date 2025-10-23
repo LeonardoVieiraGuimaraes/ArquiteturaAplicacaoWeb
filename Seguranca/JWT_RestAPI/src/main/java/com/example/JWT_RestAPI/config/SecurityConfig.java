@@ -17,23 +17,44 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
+/**
+ * Configurações de segurança HTTP com Spring Security.
+ * <p>
+ * Define as regras de autorização para os endpoints, desativa CSRF para APIs stateless
+ * e configura usuários em memória para simplificar o exemplo.
+ */
 public class SecurityConfig {
 
+    /**
+     * Define a cadeia de filtros de segurança (autorização, CSRF, autenticação básica, etc.).
+     * @param http builder de segurança HTTP do Spring
+     * @return chain de filtros configurada
+     * @throws Exception em caso de erro de configuração
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(AbstractHttpConfigurer::disable)
+        // Em APIs REST com JWT, geralmente mantemos CSRF desabilitado (stateless)
+        .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers(HttpMethod.POST, "/login/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/username/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/user/**").permitAll()
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
+            // Endpoints públicos
+            .requestMatchers(HttpMethod.POST, "/login/**").permitAll()
+            .requestMatchers(HttpMethod.GET, "/username/**").permitAll()
+            .requestMatchers(HttpMethod.GET, "/user/**").permitAll()
+            // Endpoints restritos
+            .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest()
                         .authenticated()
-                ).httpBasic(Customizer.withDefaults());
+        )
+        // Autenticação HTTP Basic apenas para exemplo; em produção, prefira Bearer JWT
+        .httpBasic(Customizer.withDefaults());
         return http.build();
     }
 
+    /**
+     * Serviço de usuários em memória para fins de demonstração.
+     * Em produção, substitua por UserDetailsService que consulta base de dados.
+     */
     @Bean
     public UserDetailsService userDetailsService() {
         UserDetails user = User.builder()
@@ -49,6 +70,9 @@ public class SecurityConfig {
         return new InMemoryUserDetailsManager(user,admin);
     }
 
+    /**
+     * PasswordEncoder padrão (BCrypt) para codificar/validar senhas.
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

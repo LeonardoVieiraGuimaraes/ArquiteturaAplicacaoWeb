@@ -7,7 +7,11 @@ import io.jsonwebtoken.security.Keys;
 import javax.crypto.SecretKey;
 import java.util.Date;
 
-// Os métodos usados nesta classe são de uma versão antiga do jjwt
+/**
+ * Versão antiga do utilitário JWT usando APIs pre-0.12.x do JJWT.
+ * <p>
+ * Mantida apenas para referência histórica de migração.
+ */
 @Deprecated
 public class JwtUtil_Old {
     // É comum guardar essa SECRET_KEY separadamente em um arquivo de configuração
