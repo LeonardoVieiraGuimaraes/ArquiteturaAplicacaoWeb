@@ -1,0 +1,76 @@
+{
+  "id": null,
+  "uid": "pedido-dashboard",
+  "title": "Pedido Service - Visão Geral",
+  "timezone": "browser",
+  "schemaVersion": 38,
+  "version": 1,
+  "refresh": "10s",
+  "panels": [
+    {
+      "type": "stat",
+      "title": "Pedidos por segundo",
+      "gridPos": {"x": 0, "y": 0, "w": 8, "h": 6},
+      "targets": [
+        {
+          "expr": "rate(business_pedidos_criados_total[5m])",
+          "legendFormat": "pedidos/s"
+        }
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "Valor médio do pedido (5m)",
+      "gridPos": {"x": 8, "y": 0, "w": 8, "h": 6},
+      "targets": [
+        {
+          "expr": "rate(business_pedidos_valor_sum[5m]) / rate(business_pedidos_valor_count[5m])",
+          "legendFormat": "BRL"
+        }
+      ]
+    },
+    {
+      "type": "graph",
+      "title": "Latência média /pedidos",
+      "gridPos": {"x": 0, "y": 6, "w": 12, "h": 8},
+      "targets": [
+        {
+          "expr": "sum(rate(http_server_requests_seconds_sum{uri=\"/pedidos\"}[5m])) / sum(rate(http_server_requests_seconds_count{uri=\"/pedidos\"}[5m]))",
+          "legendFormat": "latência média (s)"
+        }
+      ],
+      "yaxes": [
+        {"format": "s"},
+        {"format": "short"}
+      ]
+    },
+    {
+      "type": "graph",
+      "title": "Taxa de erros 5xx",
+      "gridPos": {"x": 12, "y": 6, "w": 12, "h": 8},
+      "targets": [
+        {
+          "expr": "sum(rate(http_server_requests_seconds_count{status=~\"5..\"}[5m]))",
+          "legendFormat": "5xx/s"
+        }
+      ]
+    },
+    {
+      "type": "graph",
+      "title": "CPU e GC (JVM)",
+      "gridPos": {"x": 0, "y": 14, "w": 24, "h": 8},
+      "targets": [
+        {
+          "expr": "sum(jvm_memory_used_bytes) by (area)",
+          "legendFormat": "mem usada {{area}}"
+        },
+        {
+          "expr": "sum(rate(jvm_gc_pause_seconds_sum[5m]))",
+          "legendFormat": "GC pause (s/s)"
+        }
+      ]
+    }
+  ],
+  "templating": {"list": []},
+  "annotations": {"list": []}
+}

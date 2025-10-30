@@ -1,5 +1,13 @@
 version: '3.8'
 services:
+  app:
+    build: .
+    container_name: pedido-service
+    ports:
+      - "8080:8080"
+    environment:
+      - JAVA_OPTS=-Xms256m -Xmx512m
+
   prometheus:
     image: prom/prometheus:latest
     container_name: prometheus
@@ -10,6 +18,8 @@ services:
       - ./prometheus/alert.rules.yml:/etc/prometheus/alert.rules.yml:ro
     command:
       - --config.file=/etc/prometheus/prometheus.yml
+    depends_on:
+      - app
 
   grafana:
     image: grafana/grafana:latest
@@ -20,6 +30,7 @@ services:
       - prometheus
     volumes:
       - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources:ro
+      - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards:ro
     environment:
       - GF_SECURITY_ADMIN_USER=admin
       - GF_SECURITY_ADMIN_PASSWORD=admin
