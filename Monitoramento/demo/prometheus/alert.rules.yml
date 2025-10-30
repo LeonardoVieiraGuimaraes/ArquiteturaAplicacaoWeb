@@ -1,0 +1,29 @@
+groups:
+  - name: pedido-service-alerts
+    rules:
+      - alert: HighLatencyPedidos
+        expr: (sum(rate(http_server_requests_seconds_sum{uri="/pedidos",status!~"5.."}[5m])) / sum(rate(http_server_requests_seconds_count{uri="/pedidos",status!~"5.."}[5m]))) > 1
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Latência alta no endpoint /pedidos"
+          description: "Média de latência do /pedidos acima de 1s nos últimos 5m"
+
+      - alert: HighErrorRate5xx
+        expr: (sum(rate(http_server_requests_seconds_count{status=~"5.."}[5m])) / sum(rate(http_server_requests_seconds_count[5m]))) > 0.05
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Taxa de erros 5xx acima de 5%"
+          description: "> 5% de respostas 5xx nos últimos 5m"
+
+      - alert: DropInOrderCreation
+        expr: rate(business_pedidos_criados_total[10m]) < 0.1
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Queda na criação de pedidos"
+          description: "Taxa de criação de pedidos caiu abaixo de 0.1 req/s (ajuste conforme baseline)"
