@@ -27,6 +27,109 @@ A aplicação iniciará em `http://localhost:8080`.
 
 As informações (título, descrição, contato e licença) são configuradas em `com.example.demo.config.OpenApiConfig`.
 
+### Como customizar a documentação do Swagger/OpenAPI
+
+A documentação é gerada automaticamente pelo springdoc. Você pode customizar de várias formas:
+
+1) Metadados globais (título, descrição, versão, contato, licença, servidores)
+
+- Arquivo/classe: `com.example.demo.config.OpenApiConfig`
+- Edite o bean `OpenAPI` para ajustar título, descrição, contato, licença e servidores:
+
+```java
+@Bean
+public OpenAPI customOpenAPI() {
+  return new OpenAPI()
+    .info(new Info()
+      .title("Demo API — Autores e Livros")
+      .description("Exemplo de API com JPA, DTOs, validação e Swagger")
+      .version("v1")
+      .contact(new Contact().name("Seu Nome").email("seu@email").url("https://seusite"))
+      .license(new License().name("MIT").url("https://opensource.org/licenses/MIT")))
+    .externalDocs(new ExternalDocumentation()
+      .description("Docs Extras")
+      .url("https://link-externo"))
+    .servers(List.of(
+      new Server().url("http://localhost:8080").description("Local"),
+      new Server().url("https://api.exemplo.com").description("Produção")
+    ));
+}
+```
+
+2) Agrupar endpoints por contexto (menus no Swagger UI)
+
+- Adicione beans `GroupedOpenApi` para criar grupos por caminho ou pacote:
+
+```java
+@Bean
+public GroupedOpenApi autoresGroup() {
+  return GroupedOpenApi.builder()
+    .group("Autores")
+    .pathsToMatch("/api/authors/**")
+    .build();
+}
+
+@Bean
+public GroupedOpenApi livrosGroup() {
+  return GroupedOpenApi.builder()
+    .group("Livros")
+    .pathsToMatch("/api/books/**")
+    .build();
+}
+```
+
+3) Anotações nos Controllers/DTOs
+
+- Em classes controller, use `@Tag(name, description)` para descrever o grupo.
+- Em métodos, use `@Operation(summary, description)` e `@ApiResponses` para status e exemplos.
+- Em parâmetros, use `@Parameter` para descrição/constraints.
+- Em DTOs/campos, use `@Schema` para descrever tipos, formatos, exemplos.
+- Para esconder endpoints da doc, use `@Hidden` (ou `@Operation(hidden = true)`).
+
+Exemplo de método documentado:
+
+```java
+@Operation(summary = "Cria um livro", description = "Cria um livro vinculado a um autor existente")
+@ApiResponses({
+  @ApiResponse(responseCode = "201", description = "Criado",
+    content = @Content(
+      mediaType = "application/json",
+      schema = @Schema(implementation = BookResponse.class),
+      examples = @ExampleObject(
+        name = "Exemplo de retorno",
+        value = "{\n  \"id\": 1,\n  \"title\": \"Dom Casmurro\",\n  \"authorId\": 1,\n  \"authorName\": \"Machado de Assis\"\n}"
+      )
+    )
+  ),
+  @ApiResponse(responseCode = "400", description = "Requisição inválida"),
+  @ApiResponse(responseCode = "404", description = "Autor não encontrado")
+})
+public ResponseEntity<BookResponse> create(@Valid @RequestBody BookRequest request) { ... }
+```
+
+4) Opções do Swagger UI via `application.properties`
+
+```properties
+# Caminhos
+springdoc.swagger-ui.path=/swagger-ui.html
+springdoc.api-docs.path=/v3/api-docs
+
+# UI/UX
+springdoc.swagger-ui.doc-expansion=none           # none | list | full
+springdoc.swagger-ui.tagsSorter=alpha             # alpha | method | none
+springdoc.swagger-ui.operationsSorter=alpha       # alpha | method | none
+springdoc.swagger-ui.display-request-duration=true
+springdoc.swagger-ui.tryItOutEnabled=true
+
+# Tipos padrão
+springdoc.default-produces-media-type=application/json
+springdoc.default-consumes-media-type=application/json
+```
+
+5) Segurança (opcional)
+
+- Você pode definir `SecurityScheme` (ex.: Bearer JWT) e referenciar com `@SecurityRequirement` nos métodos. Isso exibe o cadeado "Authorize" no Swagger UI.
+
 ## Console do H2
 
 - URL: http://localhost:8080/h2-console
@@ -85,14 +188,40 @@ Resposta:
 
 ## Estrutura do projeto
 
-- `model/` — Entidades JPA (`Author`, `Book`)
-- `repository/` — Repositórios Spring Data JPA
-- `service/` — Regras de negócio e transações
-- `controller/` — Camada web (REST), validação de entrada
-- `dto/` — DTOs de entrada/saída
-- `mapper/` — Conversão entidade <-> DTO
-- `exception/` — Exceções e handler global
-- `config/OpenApiConfig` — Config do Swagger; `config/DataLoader` — dados iniciais
+- Raiz do projeto:
+  - `pom.xml` — dependências e configuração do Maven/Spring Boot.
+  - `mvnw`, `mvnw.cmd` — wrappers do Maven (não precisa instalar Maven).
+  - `HELP.md` — ajuda padrão do Spring Initializr.
+
+- `src/main/java/com/example/demo/`
+  - `DemoApplication.java` — classe principal que inicia o Spring Boot.
+  - `config/`
+    - `OpenApiConfig` — metadados do Swagger/OpenAPI e (opcional) grupos `GroupedOpenApi`.
+    - `DataLoader` — popula dados iniciais em memória no startup.
+  - `controller/` — REST Controllers: recebem requests, validam `@Valid` e orquestram services.
+  - `service/` — regras de negócio; transações `@Transactional`; chama repositórios e mappers.
+  - `repository/` — interfaces Spring Data JPA (`JpaRepository`) para acesso ao banco.
+  - `model/` — entidades JPA mapeadas (`@Entity`) e relacionamentos (Author 1:N Book).
+  - `dto/` — objetos de transporte (Request/Response) com validação (Jakarta Validation).
+  - `mapper/` — conversão entre entidades e DTOs (isola formatação/transformação).
+  - `exception/` — exceções e handler global (`@ControllerAdvice`) para 400/404/500.
+
+- `src/main/resources/`
+  - `application.properties` — configurações (H2, JPA, springdoc, etc.).
+  - `static/` — arquivos estáticos (HTML/CSS/JS) servidos diretamente (não usado aqui).
+  - `templates/` — templates de view (Thymeleaf/Freemarker) caso fosse MVC server-side (não usado aqui).
+
+- `src/test/java/com/example/demo/`
+  - `DemoApplicationTests` — teste básico de contexto.
+  - `ApiDocsIT` — teste de integração para `/v3/api-docs` (Swagger funcionando).
+
+- `target/` — arquivos gerados de build (classes compiladas, jar, etc.).
+
+### Camadas e fluxo (para aula)
+
+Request HTTP → `controller` (valida DTO) → `service` (negócio/transação) → `repository` (JPA/H2)
+
+Resposta: entidade → `mapper` → DTO de saída → JSON para o cliente.
 
 ## Dados iniciais
 
